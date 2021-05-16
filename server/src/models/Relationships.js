@@ -5,5 +5,5 @@ const User = require('./User');
 module.exports = (sequelize) => {
   // Set up Relationship between Families Table and Users Table
   Family.hasMany(User);
-  User.belongsTo(Family, { foreignKey: 'id' });
+  User.belongsTo(Family, { foreignKey: 'FamilyId' });
 };
