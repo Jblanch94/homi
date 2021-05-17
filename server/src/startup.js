@@ -1,11 +1,13 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const sequelize = require('./config/db');
 const passport = require('passport');
 const initRelationships = require('./models/Relationships');
-const authRoutes = require('./routes/auth');
 require('./config/passport');
+
+// Routes
+const authRoutes = require('./routes/auth');
+const familyRoutes = require('./routes/family');
 
 class Startup {
   constructor() {
@@ -22,6 +24,7 @@ class Startup {
 
     // routes
     this.app.use(`${this.baseUrl}/auth`, authRoutes);
+    this.app.use(`${this.baseUrl}/family`, familyRoutes);
 
     // run the application on specificed port
     this.app.listen(this.PORT, () => {

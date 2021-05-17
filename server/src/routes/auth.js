@@ -5,9 +5,6 @@ const passport = require('passport');
 const router = Router();
 const authController = new AuthController();
 
-// Route creates a Family object
-router.post('/family', authController.createFamily);
-
 // Route registers a user for a family
 router.post(
   '/family/:familyId/user/register',

@@ -21,6 +21,10 @@ const Family = sequelize.define(
         const hashedPassword = await bcrypt.hash(family.password, 10);
         family.password = hashedPassword;
       },
+      beforeUpdate: async (family, options) => {
+        const hashedPassword = await bcrypt.hash(family.password, 10);
+        family.password = hashedPassword;
+      },
     },
   }
 );
