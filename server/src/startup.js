@@ -18,9 +18,7 @@ class Startup {
     // middlewares
     this.app.use(express.json());
     this.app.use(cookieParser());
-    this.app.use(session({ secret: 'jfdsahfkjdsahfklhdsakfl' }));
     this.app.use(passport.initialize());
-    this.app.use(passport.session());
 
     // routes
     this.app.use(`${this.baseUrl}/auth`, authRoutes);

@@ -1,22 +1,16 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const JwtStrategy = require('passport-jwt').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 const Family = require('../models/Family');
+const { ExtractJwt } = require('passport-jwt');
+const jwtGenerator = require('../utils/jwtGenerator');
+require('dotenv').config();
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findByPk(id, (err, user) => {
-    done(err, user);
-  });
-});
-
-// Authentication strategy for registering a user as a member of the family
+// Middleware for registering a user as a member of the family
 passport.use(
-  'local-register',
+  'register-user',
   new LocalStrategy(
     {
       usernameField: 'email',
@@ -25,61 +19,111 @@ passport.use(
     },
     async (req, email, password, done) => {
       try {
-        const user = await User.findOne({ where: { email: email } });
-        if (user) {
-          return done(null, false);
-        } else {
-          const userData = {
-            ...req.body,
-            FamilyId: parseInt(req.params.familyId),
-          };
-          const newUser = await User.create(userData);
-          console.log(newUser);
-
-          return done(null, newUser);
-        }
+        // create user with the provided parameters
+        const userData = {
+          ...req.body,
+          FamilyId: parseInt(req.params.familyId),
+        };
+        const newUser = await User.create(userData);
+        return done(null, newUser);
       } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         done(err);
       }
     }
   )
 );
 
-// Authentication Strategy for authenticating a user upon logging in successfully
+// Middleware for logging in a user
 passport.use(
-  'local-login',
+  'login-user',
   new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true,
-    },
-    async (req, email, password, done) => {
+    { usernameField: 'email', passwordField: 'password' },
+    async (email, password, done) => {
       try {
-        // find the user with the specified email
-        const user = await User.findOne({ where: { email: email } });
+        // find user by the email
+        const user = await User.findOne({ where: { email } });
         if (user == null) {
-          return done(null, false, { message: 'Could not verify credentials' });
+          return done(null, false, { message: 'Invalid credentials' });
         }
 
-        // use the provided Family Id to get the password
+        // find the associated family
         const family = await Family.findByPk(user.FamilyId);
         if (family == null) {
-          return done(null, false, { message: 'Could not verify credentials' });
+          return done(null, false, { message: 'Invalid credentials' });
         }
 
-        // compare the password provided with the stored family password
         const validPassword = await bcrypt.compare(password, family.password);
-
-        // if successful return the authenticated user
-        if (validPassword) {
-          return done(null, user);
+        if (!validPassword) {
+          return done(null, false, { message: 'Invalid credentials' });
         }
-        return done(null, false, { message: 'Could not verify credentials' });
+        done(null, user);
       } catch (err) {
+        console.error(err.message);
         done(err);
       }
     }
   )
 );
+
+const cookieExtractor = (req) => {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies.refreshToken;
+  }
+
+  return token;
+};
+
+// Middleware for refreshing a token
+(() => {
+  const options = {};
+  options.jwtFromRequest = cookieExtractor;
+  options.secretOrKey = process.env.JWT_SECRET;
+
+  passport.use(
+    'refreshToken',
+    new JwtStrategy(options, async (jwt_payload, done) => {
+      try {
+        const user = await User.findByPk(jwt_payload.user.id);
+
+        if (user == null) {
+          return done, false, { message: 'Could not verify user' };
+        }
+
+        // generate new tokens and return both tokens
+        const accessToken = jwtGenerator(jwt_payload);
+        const refreshToken = jwtGenerator(jwt_payload);
+
+        return done(null, { accessToken, refreshToken });
+      } catch (err) {
+        done(err, false);
+      }
+    })
+  );
+})();
+
+// Middleware for verifying user is authenticated
+(() => {
+  const options = {};
+  options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+  options.secretOrKey = process.env.JWT_SECRET;
+
+  passport.use(
+    'authenticate',
+    new JwtStrategy(options, async (jwt_payload, done) => {
+      try {
+        const user = await User.findByPk(jwt_payload.user.id);
+
+        if (user == null) {
+          return done(null, false, { message: 'Could not verify user' });
+        }
+
+        return done(null, user);
+      } catch (err) {
+        console.log(err);
+        done(err);
+      }
+    })
+  );
+})();
