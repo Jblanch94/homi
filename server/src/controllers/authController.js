@@ -1,19 +1,17 @@
 const HttpResponse = require('../HttpResponse');
-const AuthService = require('../services/AuthService');
-const sequelize = require('../config/db');
 const passport = require('passport');
 const jwtGenerator = require('../utils/jwtGenerator');
 
 class AuthController {
   registerUser(req, res) {
-    new HttpResponse('Successfully created user', 201, req.user).send(req, res);
+    new HttpResponse('Successfully created user', true, req.user).created(res);
   }
 
   async loginUser(req, res, next) {
     passport.authenticate('login-user', async (err, user, info) => {
       try {
         if (!user) {
-          return new HttpResponse(info.message, 404).send(req, res);
+          return new HttpResponse(info.message, false).notFound(res);
         }
 
         if (err) {
@@ -32,9 +30,9 @@ class AuthController {
           res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
           });
-          return new HttpResponse('Successfully logged in user', 200, {
+          return new HttpResponse('Successfully logged in user', true, {
             accessToken,
-          }).send(req, res);
+          }).ok(res);
         });
       } catch (err) {
         return next(err);
@@ -45,7 +43,9 @@ class AuthController {
   refreshToken(req, res) {
     const { accessToken, refreshToken } = req.user;
     res.cookie('refreshToken', refreshToken, { httpOnly: true });
-    new HttpResponse('Successfully reauthenticated user', 200, { accessToken });
+    new HttpResponse('Successfully reauthenticated user', true, {
+      accessToken,
+    }).ok(res);
   }
 }
 

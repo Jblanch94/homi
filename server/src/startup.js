@@ -8,6 +8,7 @@ require('./config/passport');
 // Routes
 const authRoutes = require('./routes/auth');
 const familyRoutes = require('./routes/family');
+const userRoutes = require('./routes/user');
 
 class Startup {
   constructor() {
@@ -25,6 +26,7 @@ class Startup {
     // routes
     this.app.use(`${this.baseUrl}/auth`, authRoutes);
     this.app.use(`${this.baseUrl}/family`, familyRoutes);
+    this.app.use(`${this.baseUrl}/user`, userRoutes);
 
     // run the application on specificed port
     this.app.listen(this.PORT, () => {

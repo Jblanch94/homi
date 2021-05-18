@@ -24,4 +24,12 @@ router.patch(
   familyController.editFamily
 );
 
+// Router for deleting a family, requires authentication and admin status
+router.delete(
+  '/:familyId',
+  passport.authenticate('authenticate', { session: false }),
+  requireAdmin,
+  familyController.deleteFamily
+);
+
 module.exports = router;
