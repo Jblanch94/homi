@@ -4,6 +4,7 @@ const sequelize = require('./config/db');
 const passport = require('passport');
 const initRelationships = require('./models/Relationships');
 require('./config/passport');
+const errorHandler = require('./middlewares/errorHandler');
 
 // Routes
 const authRoutes = require('./routes/auth');
@@ -42,6 +43,9 @@ class Startup {
     } catch (err) {
       console.error('unable to connect to database: ', err);
     }
+
+    // error handling middleware
+    this.app.use(errorHandler);
   }
 }
 
