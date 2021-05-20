@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { Op } = require('sequelize');
 
 class UserService {
   async fetchUserById(userId, familyId) {
@@ -36,7 +37,7 @@ class UserService {
   }
 
   async registerUser(userDetails, familyId) {
-    const user = await User.create({ userDetails, FamilyId: familyId });
+    const user = await User.create({ ...userDetails, FamilyId: familyId });
     return user;
   }
 
@@ -48,12 +49,16 @@ class UserService {
   async updateUser(userDetails, userId, familyId) {
     const user = await this.fetchUserById(userId, familyId);
     const admin = await this.isAdmin(userId, familyId);
-    const updatedUser = await User.update({
-      email: userDetails.email || email,
-      age: userDetails.age || age,
-      profileUrl: userDetails.profileUrl || profileUrl,
-      isAdmin: admin ? userDetails.isAdmin || isAdmin : isAdmin,
-    });
+    console.log('');
+    const updatedUser = await User.update(
+      {
+        email: userDetails.email || user.email,
+        age: userDetails.age || user.age,
+        profileUrl: userDetails.profileUrl || user.profileUrl,
+        isAdmin: admin ? userDetails.isAdmin || user.isAdmin : user.isAdmin,
+      },
+      { where: { id: userId } }
+    );
     return updatedUser;
   }
 }

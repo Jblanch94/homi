@@ -5,7 +5,12 @@ const FamilyService = require('../services/FamilyService');
 class FamilyController {
   constructor() {
     this.familyService = new FamilyService(sequelize);
+    this.registerFamily = this.registerFamily.bind(this);
+    this.fetchFamilyById = this.fetchFamilyById.bind(this);
+    this.deleteFamily = this.deleteFamily.bind(this);
+    this.editFamily = this.editFamily.bind(this);
   }
+
   async registerFamily(req, res, next) {
     const { name, password } = req.body;
     try {

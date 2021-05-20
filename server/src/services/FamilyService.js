@@ -35,10 +35,10 @@ class FamilyService {
     return users;
   }
 
-  async editFamilyDetails(family, { name, password }) {
+  async editFamilyDetails(family, { name }) {
+    console.log('editing', family);
     await family.update({
       name: name || family.name,
-      password: password || family.password,
     });
     await family.save();
   }

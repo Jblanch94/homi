@@ -6,6 +6,11 @@ class UserController {
   constructor() {
     this.userService = new UserService();
     this.familyService = new FamilyService();
+    this.fetchUserById = this.fetchUserById.bind(this);
+    this.deleteUserById = this.deleteUserById.bind(this);
+    this.fetchUsersByFamilyId = this.fetchUsersByFamilyId.bind(this);
+    this.registerUser = this.registerUser.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
 
   async fetchUserById(req, res, next) {
@@ -17,10 +22,10 @@ class UserController {
 
       // if user is null return a not found status
       if (user === null) {
-        return new HttpResponse('User not found', false).notFound();
+        return new HttpResponse('User not found', false).notFound(res);
       }
       // return user details
-      new HttpResponse('Successfully fetched user', true, user).ok(req);
+      new HttpResponse('Successfully fetched user', true, user).ok(res);
     } catch (err) {
       console.error(err);
       next(err);
@@ -89,7 +94,7 @@ class UserController {
     try {
       // check if user already exists
       // if user exists return user already exsits
-      const user = this.userService.fetchUserByEmail(email);
+      const user = await this.userService.fetchUserByEmail(email);
       if (user !== null) {
         return new HttpResponse('Email already exists', false).badRequest(res);
       }
@@ -118,7 +123,8 @@ class UserController {
         User has permissions if they are an admin or owner of user profile
        */
       const hasPermissions =
-        (await isAdmin(userId, familyId)) || req.user.id === userId;
+        (await this.userService.isAdmin(req.user.id, familyId)) ||
+        req.user.id === parseInt(userId);
       if (!hasPermissions) {
         return new HttpResponse('Not Authorized', false).notAuthorized(res);
       }
