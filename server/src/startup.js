@@ -10,6 +10,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const authRoutes = require('./routes/auth');
 const familyRoutes = require('./routes/family');
 const userRoutes = require('./routes/user');
+const birthdayRoutes = require('./routes/birthday');
 
 class Startup {
   constructor() {
@@ -28,6 +29,7 @@ class Startup {
     this.app.use(`${this.baseUrl}/auth`, authRoutes);
     this.app.use(`${this.baseUrl}/family`, familyRoutes);
     this.app.use(`${this.baseUrl}/user`, userRoutes);
+    this.app.use(`${this.baseUrl}/birthday`, birthdayRoutes);
 
     // run the application on specificed port
     this.app.listen(this.PORT, () => {
@@ -39,7 +41,7 @@ class Startup {
       await sequelize.authenticate();
       initRelationships(sequelize);
       console.log('connection has been made successfully');
-      // await sequelize.sync({ force: true });
+      await sequelize.sync();
     } catch (err) {
       console.error('unable to connect to database: ', err);
     }

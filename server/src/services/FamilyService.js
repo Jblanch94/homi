@@ -2,10 +2,6 @@ const Family = require('../models/Family');
 const User = require('../models/User');
 
 class FamilyService {
-  constructor(sequelize) {
-    this.sequelize = sequelize;
-  }
-
   async createFamily(familyData) {
     // create a new Row in database with Family model
     const newFamily = Family.build(familyData);
@@ -36,7 +32,6 @@ class FamilyService {
   }
 
   async editFamilyDetails(family, { name }) {
-    console.log('editing', family);
     await family.update({
       name: name || family.name,
     });
