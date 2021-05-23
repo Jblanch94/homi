@@ -5,6 +5,7 @@ const Birthday = require('./Birthday');
 const Recipe = require('./Recipe');
 const Tag = require('./Tag');
 const Grocery = require('./Grocery');
+const Category = require('./Category');
 
 module.exports = (sequelize) => {
   // Set up Relationship between Families Table and Users Table
@@ -34,4 +35,8 @@ module.exports = (sequelize) => {
   // Set up Relationship between Grocery Table and Family Table
   Family.hasMany(Grocery);
   Grocery.belongsTo(Family);
+
+  // Set up Relationship between Grocery Table and Category Table
+  Grocery.belongsToMany(Category, { through: 'GroceryCategories' });
+  Category.belongsToMany(Grocery, { through: 'GroceryCategories' });
 };
