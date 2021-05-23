@@ -112,7 +112,7 @@ class BirthdayController {
     try {
       // fetch family by id
       // if family not found then return not found
-      const family = await this.familyService.findFamilyByName(familyId);
+      const family = await this.familyService.fetchFamilyById(familyId);
       if (family === null) {
         return new HttpResponse('Family not found', false).notFound(res);
       }

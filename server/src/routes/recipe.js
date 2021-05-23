@@ -40,13 +40,6 @@ router.patch(
   recipeController.editRecipe
 );
 
-// Route for searching for recipes
-router.get(
-  '/family/:familyId?term=:term',
-  passport.authenticate('authenticate', { session: false }),
-  recipeController.searchRecipes
-);
-
 // Route for deleting a tag from the recipe
 router.delete(
   '/:recipeId/tag/:tagId',

@@ -15,7 +15,8 @@ class RecipeController {
     this.fetchRecipeById = this.fetchRecipeById.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
-    this.searchRecipes = this.searchRecipes.bind(this);
+    this.deleteTag = this.deleteTag.bind(this);
+    this.addTagToRecipe = this.addTagToRecipe.bind(this);
   }
 
   async addRecipe(req, res, next) {
@@ -34,11 +35,13 @@ class RecipeController {
         userId
       );
 
-      // insert tags into Tag Table
-      const recipeTags = await this.tagService.insertTags(tags);
+      if (tags) {
+        // insert tags into Tag Table
+        const recipeTags = await this.tagService.insertTags(tags);
 
-      // insert ids of recipe and tags into RecipeTags Table
-      await this.recipeTagService.insertRecipeTags(newRecipe.id, recipeTags);
+        // insert ids of recipe and tags into RecipeTags Table
+        await this.recipeTagService.insertRecipeTags(newRecipe.id, recipeTags);
+      }
 
       new HttpResponse('Successfully created new recipe', true, {
         newRecipe,
@@ -52,6 +55,7 @@ class RecipeController {
 
   async fetchRecipes(req, res, next) {
     const { familyId } = req.params;
+    const { term } = req.query;
     try {
       // fetch family by id
       // return not found if family is null
@@ -60,8 +64,12 @@ class RecipeController {
         return new HttpResponse('Family not found', false).notFound(res);
       }
 
-      // fetch all recipes for the family id, returning the name and description
-      const recipes = this.recipeService.fetchRecipes(familyId);
+      let recipes;
+      if (!term) {
+        recipes = await this.recipeService.fetchRecipes(familyId);
+      } else {
+        recipes = await this.recipeService.searchRecipes(term);
+      }
 
       new HttpResponse('Successfully retrieved all recipes', true, recipes).ok(
         res
@@ -83,7 +91,8 @@ class RecipeController {
       }
 
       // fetch associated tags with the recipe id
-      const tags = this.recipeTagService.fetchRecipeTags(recipeId);
+      const recipeTags = await this.recipeTagService.fetchRecipeTags(recipeId);
+      const tags = await this.tagService.fetchTags(recipeTags);
 
       // return recipe details with tags
       new HttpResponse('Successfully fetched recipe', true, {
@@ -147,25 +156,6 @@ class RecipeController {
       await this.recipeService.editRecipe(req.body, recipeId, familyId);
 
       new HttpResponse('Successfully updated recipe', true).ok(res);
-    } catch (err) {
-      console.error(err);
-      next(err);
-    }
-  }
-
-  async searchRecipes(req, res, next) {
-    const { familyId } = req.params;
-    const { term } = req.query;
-    try {
-      const family = await this.familyService.fetchFamilyById(familyId);
-      if (family === null) {
-        return new HttpResponse('Family not found', false).notFound(res);
-      }
-
-      const recipes = await this.recipeService.searchRecipes(term);
-      new HttpResponse('Successfully searched for recipes', true, recipes).ok(
-        res
-      );
     } catch (err) {
       console.error(err);
       next(err);

@@ -43,7 +43,7 @@ class Startup {
       await sequelize.authenticate();
       initRelationships(sequelize);
       console.log('connection has been made successfully');
-      await sequelize.sync({ force: true });
+      await sequelize.sync();
     } catch (err) {
       console.error('unable to connect to database: ', err);
     }

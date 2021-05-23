@@ -21,7 +21,7 @@ router.get(
 
 // delete a birthday for a given family id
 router.delete(
-  ':birthdayId/family/:familyId',
+  '/:birthdayId/family/:familyId',
   passport.authenticate('authenticate', { session: false }),
   birthdayController.deleteBirthday
 );

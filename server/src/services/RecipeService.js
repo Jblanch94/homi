@@ -40,13 +40,9 @@ class RecipeService {
   async searchRecipes(term) {
     const recipes = await Recipe.findAll({
       where: {
-        [Op.or]: [
-          { name: { [Op.like]: `${term}%` } },
-          { description: { [Op.like]: `${term}%` } },
-          { preparation: { [Op.like]: `${term}%` } },
-          { ingredients: { [Op.like]: `${term}%` } },
-          { notes: { [Op.like]: `${term}%` } },
-        ],
+        name: {
+          [Op.like]: `${term}%`,
+        },
       },
     });
 
