@@ -12,6 +12,7 @@ const familyRoutes = require('./routes/family');
 const userRoutes = require('./routes/user');
 const birthdayRoutes = require('./routes/birthday');
 const recipeRoutes = require('./routes/recipe');
+const groceryRoutes = require('./routes/grocery');
 
 class Startup {
   constructor() {
@@ -32,6 +33,7 @@ class Startup {
     this.app.use(`${this.baseUrl}/user`, userRoutes);
     this.app.use(`${this.baseUrl}/birthday`, birthdayRoutes);
     this.app.use(`${this.baseUrl}/recipe`, recipeRoutes);
+    this.app.use(`${this.baseUrl}/grocery`, groceryRoutes);
 
     // run the application on specificed port
     this.app.listen(this.PORT, () => {

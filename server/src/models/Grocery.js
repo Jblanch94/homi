@@ -7,10 +7,23 @@ const Grocery = sequelize.define('Grocery', {
     allowNull: false,
   },
 
+  details: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
   bought: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false,
+  },
+
+  quantity: {
+    type: DataTypes.SMALLINT,
+    allowNull: false,
+    validate: {
+      min: 0,
+    },
   },
 });
 
