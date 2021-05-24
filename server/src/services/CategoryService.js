@@ -15,6 +15,10 @@ class CategoryService {
       return this.insertCategory(category);
     });
   }
+
+  async fetchCategoryById(categoryId) {
+    return sequelize.models.Category.findByPk(categoryId);
+  }
 }
 
 module.exports = CategoryService;

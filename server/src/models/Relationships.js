@@ -6,6 +6,7 @@ const Recipe = require('./Recipe');
 const Tag = require('./Tag');
 const Grocery = require('./Grocery');
 const Category = require('./Category');
+const Task = require('./Task');
 
 module.exports = (sequelize) => {
   // Set up Relationship between Families Table and Users Table
@@ -39,4 +40,16 @@ module.exports = (sequelize) => {
   // Set up Relationship between Grocery Table and Category Table
   Grocery.belongsToMany(Category, { through: 'GroceryCategories' });
   Category.belongsToMany(Grocery, { through: 'GroceryCategories' });
+
+  // Set up Relationship between Family and Task Table
+  Family.hasMany(Task);
+  Task.belongsTo(Family);
+
+  // Set up Relationship between Task Table and Category Table
+  Task.belongsToMany(Category, { through: 'TaskCategories' });
+  Category.belongsToMany(Task, { through: 'TaskCategories' });
+
+  // Set up Relationship between Task Table and User Table
+  Task.belongsToMany(User, { through: 'AssignedTasks' });
+  User.belongsToMany(Task, { through: 'AssignedTasks' });
 };
