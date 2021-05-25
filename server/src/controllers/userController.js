@@ -1,6 +1,7 @@
 const HttpResponse = require('../HttpResponse');
 const UserService = require('../services/UserService');
 const FamilyService = require('../services/FamilyService');
+const cloudinary = require('cloudinary').v2;
 
 class UserController {
   constructor() {
@@ -99,9 +100,19 @@ class UserController {
         return new HttpResponse('Email already exists', false).badRequest(res);
       }
 
+      // take the image and upload it
+      const imageUrl = await cloudinary.uploader.upload(req.file, {
+        public_id: 'Homi/development',
+      });
+
+      console.log(imageUrl);
+
       // register user with family with provided details
       // return new user created
-      const newUser = await this.userService.registerUser(req.body, familyId);
+      const newUser = await this.userService.registerUser(
+        { ...req.body, profileUrl: imageUrl },
+        familyId
+      );
 
       if (newUser === null) {
         throw new Error('User could not be created');

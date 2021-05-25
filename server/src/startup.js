@@ -3,6 +3,7 @@ const sequelize = require('./config/db');
 const passport = require('passport');
 const initRelationships = require('./models/Relationships');
 require('./config/passport');
+require('./config/cloudinary');
 
 // Middleware
 const loadMiddleware = require('./loaders/middleware');
@@ -34,7 +35,7 @@ class Startup {
       await sequelize.authenticate();
       initRelationships(sequelize);
       console.log('connection has been made successfully');
-      await sequelize.sync();
+      await sequelize.sync({ alter: true });
     } catch (err) {
       console.error('unable to connect to database: ', err);
     }

@@ -1,10 +1,12 @@
 const { Router } = require('express');
 const passport = require('passport');
+const multer = require('multer');
 const UserController = require('../controllers/userController');
 const requireAdmin = require('../middlewares/requireAdmin');
 
 const router = Router();
 const userController = new UserController();
+const upload = multer({ dest: 'uploads/' });
 
 // Fetch a user profile by id for a specific family
 router.get(
@@ -35,6 +37,7 @@ router.post(
   '/register/family/:familyId',
   passport.authenticate('authenticate', { session: false }),
   requireAdmin,
+  upload.single('avatar'),
   userController.registerUser
 );
 
