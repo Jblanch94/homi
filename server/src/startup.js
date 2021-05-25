@@ -13,6 +13,7 @@ const userRoutes = require('./routes/user');
 const birthdayRoutes = require('./routes/birthday');
 const recipeRoutes = require('./routes/recipe');
 const groceryRoutes = require('./routes/grocery');
+const eventRoutes = require('./routes/event');
 
 class Startup {
   constructor() {
@@ -34,6 +35,7 @@ class Startup {
     this.app.use(`${this.baseUrl}/birthday`, birthdayRoutes);
     this.app.use(`${this.baseUrl}/recipe`, recipeRoutes);
     this.app.use(`${this.baseUrl}/grocery`, groceryRoutes);
+    this.app.use(`${this.baseUrl}/event`, eventRoutes);
 
     // run the application on specificed port
     this.app.listen(this.PORT, () => {

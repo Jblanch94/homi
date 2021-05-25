@@ -36,6 +36,12 @@ const Event = sequelize.define(
           throw new Error('Start time must be before the end time');
         }
       },
+
+      eventAfterCurrentDate() {
+        if (this.date.isBefore(DataTypes.DATE.NOW)) {
+          throw new Error('Event must be today or a later date');
+        }
+      },
     },
   }
 );
