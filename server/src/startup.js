@@ -1,19 +1,14 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const sequelize = require('./config/db');
 const passport = require('passport');
 const initRelationships = require('./models/Relationships');
 require('./config/passport');
-const errorHandler = require('./middlewares/errorHandler');
+
+// Middleware
+const loadMiddleware = require('./loaders/middleware');
 
 // Routes
-const authRoutes = require('./routes/auth');
-const familyRoutes = require('./routes/family');
-const userRoutes = require('./routes/user');
-const birthdayRoutes = require('./routes/birthday');
-const recipeRoutes = require('./routes/recipe');
-const groceryRoutes = require('./routes/grocery');
-const eventRoutes = require('./routes/event');
+const loadRoutes = require('./loaders/routes');
 
 class Startup {
   constructor() {
@@ -24,18 +19,10 @@ class Startup {
 
   async run() {
     // middlewares
-    this.app.use(express.json());
-    this.app.use(cookieParser());
-    this.app.use(passport.initialize());
+    loadMiddleware(this.app, passport);
 
     // routes
-    this.app.use(`${this.baseUrl}/auth`, authRoutes);
-    this.app.use(`${this.baseUrl}/family`, familyRoutes);
-    this.app.use(`${this.baseUrl}/user`, userRoutes);
-    this.app.use(`${this.baseUrl}/birthday`, birthdayRoutes);
-    this.app.use(`${this.baseUrl}/recipe`, recipeRoutes);
-    this.app.use(`${this.baseUrl}/grocery`, groceryRoutes);
-    this.app.use(`${this.baseUrl}/event`, eventRoutes);
+    loadRoutes(this.app, this.baseUrl);
 
     // run the application on specificed port
     this.app.listen(this.PORT, () => {
@@ -51,9 +38,6 @@ class Startup {
     } catch (err) {
       console.error('unable to connect to database: ', err);
     }
-
-    // error handling middleware
-    this.app.use(errorHandler);
   }
 }
 
