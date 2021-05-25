@@ -7,6 +7,7 @@ const Tag = require('./Tag');
 const Grocery = require('./Grocery');
 const Category = require('./Category');
 const Task = require('./Task');
+const Event = require('./Event');
 
 module.exports = (sequelize) => {
   // Set up Relationship between Families Table and Users Table
@@ -52,4 +53,12 @@ module.exports = (sequelize) => {
   // Set up Relationship between Task Table and User Table
   Task.belongsToMany(User, { through: 'AssignedTasks' });
   User.belongsToMany(Task, { through: 'AssignedTasks' });
+
+  // Set up Relationsihp between Event Table and Family Table
+  Family.hasMany(Event);
+  Event.belongsTo(Family);
+
+  // Set up Relationship between Event Table and User Table
+  User.hasMany(Event);
+  Event.belongsTo(User);
 };
