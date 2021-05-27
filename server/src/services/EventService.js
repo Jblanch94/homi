@@ -29,16 +29,25 @@ class EventService {
 
   //TODO:UPDATE TO GET EVENTS FOR A SPECIFIC MONTH
   async fetchEvents({ month }, familyId) {
-    return await Event.findAll({
-      where: {
-        FamilyId: familyId,
-        // {
-        //   date: {
-        //     [Op.between]: [new Date(month, (parseInt(month) + 1).toString())],
-        //   },
-        // },
-      },
-    });
+    try {
+      const date = new Date(month);
+      const upperDate = new Date(date.getFullYear(), date.getMonth() + 2, 0);
+      console.log(date);
+      console.log(upperDate);
+      return await Event.findAll({
+        where: {
+          FamilyId: familyId,
+          startTime: {
+            [Op.and]: [
+              { [Op.gte]: date.toISOString() },
+              { [Op.lte]: upperDate.toISOString() },
+            ],
+          },
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 }
 
