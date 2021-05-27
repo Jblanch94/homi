@@ -3,7 +3,8 @@ const { Op } = require('sequelize');
 
 class EventService {
   async createEvent(event, familyId, userId) {
-    return await Event.create({ ...event, Family: familyId, UserId: userId });
+    console.log(event);
+    return await Event.create({ ...event, FamilyId: familyId, UserId: userId });
   }
 
   async fetchEventById(eventId) {
@@ -18,7 +19,7 @@ class EventService {
 
   async updateEvent(eventDetails, event) {
     await event.update({
-      name: eventDetails.name || event.name,
+      title: eventDetails.title || event.title,
       description: eventDetails.description || event.description,
       date: eventDetails.date || event.date,
       startTime: eventDetails.startTime || event.startTime,
@@ -26,17 +27,16 @@ class EventService {
     });
   }
 
+  //TODO:UPDATE TO GET EVENTS FOR A SPECIFIC MONTH
   async fetchEvents({ month }, familyId) {
     return await Event.findAll({
       where: {
-        [Op.and]: [
-          { FamilyId: familyId },
-          {
-            date: {
-              [Op.between]: [new Date(month, (parseInt(month) + 1).toString())],
-            },
-          },
-        ],
+        FamilyId: familyId,
+        // {
+        //   date: {
+        //     [Op.between]: [new Date(month, (parseInt(month) + 1).toString())],
+        //   },
+        // },
       },
     });
   }

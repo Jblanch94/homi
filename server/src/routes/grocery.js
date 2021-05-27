@@ -10,13 +10,13 @@ const groceryController = new GroceryController();
 router.post(
   '/family/:familyId',
   passport.authenticate('authenticate', { session: false }),
-  groceryController
+  groceryController.createGroceryItem
 );
 
 // Route for fetching all grocery items for a specific family
 router.get(
   '/family/:familyId',
-  passport.authenticate('authenticate'),
+  passport.authenticate('authenticate', { session: false }),
   groceryController.fetchGroceries
 );
 

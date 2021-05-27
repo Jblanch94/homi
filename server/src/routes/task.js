@@ -23,7 +23,8 @@ router.get(
 // Route for fetching task for a given family id and task id
 router.get(
   '/:taskId/family/:familyId',
-  passport.authenticate('authenticate', { session: false })
+  passport.authenticate('authenticate', { session: false }),
+  taskController.fetchTaskById
 );
 
 // Route for deleting a task for a given family id and task id

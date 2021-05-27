@@ -11,7 +11,8 @@ class AssignedTaskService {
     const assignedTask = await AssignedTasks.findOne({
       where: { TaskId: taskId, UserId: userId },
     });
-    assignedTask === null ? false : true;
+    if (assignedTask === null) return false;
+    return true;
   }
 
   async removeUserFromTask(userId, taskId) {

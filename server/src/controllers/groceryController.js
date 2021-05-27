@@ -30,11 +30,16 @@ class GroceryController {
       }
 
       // Call Grocery Service to create a new Grocery object
-      const grocery = await this.groceryService.createGroceryItem(req.body);
+      const grocery = await this.groceryService.createGroceryItem(
+        req.body,
+        familyId,
+        req.user.id
+      );
 
       if (categories) {
         const foundOrCreatedCategories =
           await this.categoryService.insertCategories(categories);
+        console.log('categories', foundOrCreatedCategories);
         await this.groceryCategoriesService.insertGroceryCategories(
           grocery.id,
           foundOrCreatedCategories
@@ -90,6 +95,7 @@ class GroceryController {
         groceryId,
         familyId
       );
+      console.log(groceryDeletedCount);
       if (groceryDeletedCount <= 0) {
         throw new Error('Could not delete resource');
       }

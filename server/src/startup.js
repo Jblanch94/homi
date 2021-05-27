@@ -20,7 +20,7 @@ class Startup {
 
   async run() {
     // middlewares
-    loadMiddleware(this.app, passport);
+    loadMiddleware(express, this.app, passport);
 
     // routes
     loadRoutes(this.app, this.baseUrl);
@@ -35,7 +35,7 @@ class Startup {
       await sequelize.authenticate();
       initRelationships(sequelize);
       console.log('connection has been made successfully');
-      await sequelize.sync({ alter: true });
+      await sequelize.sync();
     } catch (err) {
       console.error('unable to connect to database: ', err);
     }

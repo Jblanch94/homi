@@ -1,7 +1,7 @@
 const cookieParser = require('cookie-parser');
-const errorHandler = require('./middlewares/errorHandler');
+const errorHandler = require('../middlewares/errorHandler');
 
-module.exports = function (app, passport) {
+module.exports = function (express, app, passport) {
   app.use(express.json());
   app.use(cookieParser());
   app.use(passport.initialize());

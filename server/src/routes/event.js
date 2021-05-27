@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const passport = require('passport');
 const EventController = require('../controllers/eventController');
+const requireAdmin = require('../middlewares/requireAdmin');
 
 const router = Router();
 const eventController = new EventController();
@@ -23,6 +24,7 @@ router.get(
 router.delete(
   '/:eventId/family/:familyId',
   passport.authenticate('authenticate', { session: false }),
+  requireAdmin,
   eventController.deleteEvent
 );
 

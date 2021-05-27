@@ -27,6 +27,32 @@ class EventController {
         return new HttpResponse('Family not found', false).notFound(res);
       }
 
+      //TODO: MAKE A HELPER FUNCTION TO PARSE DATE AND DO CONVERSION
+      // convert start time and end time to a date
+      const eventDate = new Date(req.body.date);
+      const eventDateMonth = eventDate.getMonth();
+      const eventDateYear = eventDate.getFullYear();
+      const eventDateDay = eventDate.getDate();
+      const startTimeHour = req.body.startTime.split(':')[0];
+      const endTimeHour = req.body.endTime.split(':')[0];
+      const startTimeMinute = req.body.startTime.split(':')[1];
+      const endTimeMinute = req.body.endTime.split(':')[1];
+      req.body.startTime = new Date(
+        eventDateYear,
+        eventDateMonth,
+        eventDateDay,
+        startTimeHour,
+        startTimeMinute
+      ).toISOString();
+
+      req.body.endTime = new Date(
+        eventDateYear,
+        eventDateMonth,
+        eventDateDay,
+        endTimeHour,
+        endTimeMinute
+      ).toISOString();
+
       // create new event with provided data
       const event = await this.eventService.createEvent(
         req.body,
@@ -54,7 +80,11 @@ class EventController {
       }
 
       // call event service to fetch all events with given query parameters
-      const events = await this.eventService.fetchEvents(req.query, familyId);
+      const events = await this.eventService.fetchEvents(
+        req.query,
+        familyId,
+        req.user.id
+      );
       new HttpResponse('Successfully fetched all events', true, events).ok(res);
     } catch (err) {
       console.error(err);
@@ -117,7 +147,7 @@ class EventController {
 
       // call event service to update event
       await this.eventService.updateEvent(req.body, event);
-      new HttpRespnose('Successfully updated event', true).ok(res);
+      new HttpResponse('Successfully updated event', true).ok(res);
     } catch (err) {
       console.error(err);
       next(err);

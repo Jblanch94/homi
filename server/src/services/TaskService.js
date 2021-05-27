@@ -11,32 +11,14 @@ class TaskService {
   async fetchTasks(familyId) {
     return await Task.findAll({
       where: { FamilyId: familyId },
-      include: [
-        {
-          model: sequelize.models.TaskCategories,
-          include: [Category],
-        },
-        {
-          model: sequelize.models.AssignedTasks,
-          include: [User],
-        },
-      ],
+      include: [sequelize.models.Category, sequelize.models.User],
     });
   }
 
   async fetchTaskById(taskId) {
     return await Task.findOne({
       where: { id: taskId },
-      include: [
-        {
-          model: sequelize.models.TaskCategories,
-          include: [Category],
-        },
-        {
-          model: sequelize.models.AssignedTasks,
-          include: [User],
-        },
-      ],
+      include: [sequelize.models.Category, sequelize.models.User],
     });
   }
 

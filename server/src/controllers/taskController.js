@@ -22,6 +22,7 @@ class TaskController {
     this.addCategoriesToTask = this.addCategoriesToTask.bind(this);
     this.removeCategoryFromTask = this.removeCategoryFromTask.bind(this);
     this.removeUserFromTask = this.removeUserFromTask.bind(this);
+    this.addUserToTask = this.addUserToTask.bind(this);
   }
 
   async createTask(req, res, next) {
@@ -162,6 +163,7 @@ class TaskController {
 
       // call service to update task details, notes or completion status
       await this.taskService.editTask(task, req.body);
+      new HttpResponse('Successfully updated task', true).ok(res);
     } catch (err) {
       console.error(err);
       next(err);
@@ -225,7 +227,7 @@ class TaskController {
       }
 
       // validate if category exists
-      const category = await this.categoryService.fetchCategoryById(catgoryId);
+      const category = await this.categoryService.fetchCategoryById(categoryId);
       if (category === null) {
         return new HttpResponse('Category not found', false).notFound(res);
       }
@@ -264,7 +266,7 @@ class TaskController {
       }
 
       // validate if user exists
-      const user = await this.userService.fetchUserById(userId);
+      const user = await this.userService.fetchUserById(userId, familyId);
       if (user === null) {
         return new HttpResponse('User not found', false).notFound(res);
       }
@@ -308,7 +310,7 @@ class TaskController {
       }
 
       // validate if user exists
-      const user = await this.userService.fetchUserById(userId);
+      const user = await this.userService.fetchUserById(userId, familyId);
       if (user === null) {
         return new HttpResponse('User not found', false).notFound(res);
       }
