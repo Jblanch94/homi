@@ -1,5 +1,14 @@
+import Routes from './Routes';
+import AppThemeProvider from './AppThemeProvider';
+
 const App = () => {
-  return <div>App</div>;
+  return (
+    <>
+      <AppThemeProvider>
+        <Routes />
+      </AppThemeProvider>
+    </>
+  );
 };
 
 export default App;
