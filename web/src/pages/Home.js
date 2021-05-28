@@ -1,17 +1,7 @@
-import { Button } from 'rebass';
-import { useTheme } from '@emotion/react';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
-  const theme = useTheme();
-  return (
-    <Button
-      sx={{
-        color: theme.colors.lightBlue,
-        background: theme.colors.blueGrotto,
-      }}>
-      Home
-    </Button>
-  );
+  return <Navbar />;
 };
 
 export default Home;
