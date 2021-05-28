@@ -37,7 +37,11 @@ class UserService {
   }
 
   async registerUser(userDetails, familyId) {
-    const user = await User.create({ ...userDetails, FamilyId: familyId });
+    const user = await User.create({
+      ...userDetails,
+      profileUrl: userDetails.profileUrl,
+      FamilyId: familyId,
+    });
     return user;
   }
 

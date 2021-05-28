@@ -27,13 +27,10 @@ class EventService {
     });
   }
 
-  //TODO:UPDATE TO GET EVENTS FOR A SPECIFIC MONTH
   async fetchEvents({ month }, familyId) {
     try {
       const date = new Date(month);
       const upperDate = new Date(date.getFullYear(), date.getMonth() + 2, 0);
-      console.log(date);
-      console.log(upperDate);
       return await Event.findAll({
         where: {
           FamilyId: familyId,

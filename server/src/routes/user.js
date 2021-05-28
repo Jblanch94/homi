@@ -37,7 +37,7 @@ router.post(
   '/register/family/:familyId',
   passport.authenticate('authenticate', { session: false }),
   requireAdmin,
-  upload.single('avatar'),
+  upload.single('profileUrl'),
   userController.registerUser
 );
 
