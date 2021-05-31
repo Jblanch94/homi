@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
     flexGrow: 1,
     alignItems: 'center',
   },
@@ -12,11 +13,18 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 
+  menuActive: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
   logo: {
     textDecoration: 'none',
     '&:hover': {
       color: theme.palette.secondary.main,
     },
+    flexGrow: 1,
   },
 
   loginLink: {
