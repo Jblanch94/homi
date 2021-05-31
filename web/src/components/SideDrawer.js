@@ -22,11 +22,12 @@ const SideDrawer = ({ navLinks }) => {
         onClick={toggleDrawer('right', true)}>
         <Menu />
       </IconButton>
+
       <Drawer
         anchor="right"
         open={active.right}
         onClose={toggleDrawer('right', false)}>
-        <SideDrawerList navLinks={navLinks} />
+        <SideDrawerList navLinks={navLinks} active={active.right} />
       </Drawer>
     </>
   );
