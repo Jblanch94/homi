@@ -1,7 +1,8 @@
-import { AppBar, Toolbar, Typography, Hidden } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import useStyles from './NavbarStyles';
 import SideDrawer from '../SideDrawer';
+import HideComponent from '../HideComponent';
 
 const Navbar = () => {
   const classes = useStyles();
@@ -12,7 +13,7 @@ const Navbar = () => {
           <Link to="/" className={classes.logo}>
             <Typography variant="h3">Homi</Typography>
           </Link>
-          <Hidden xsDown>
+          <HideComponent xsDown>
             <div className={classes.links}>
               <Link to="/login" className={classes.loginLink}>
                 <Typography variant="h6">Log in to Homi</Typography>
@@ -23,16 +24,16 @@ const Navbar = () => {
                 </Typography>
               </Link>
             </div>
-          </Hidden>
+          </HideComponent>
 
-          <Hidden smUp>
+          <HideComponent smUp>
             <SideDrawer
               navLinks={[
                 { title: 'Log in to Homi', path: '/login' },
                 { title: 'Sign up for Homi', path: '/sign-up' },
               ]}
             />
-          </Hidden>
+          </HideComponent>
         </Toolbar>
       </AppBar>
     </div>

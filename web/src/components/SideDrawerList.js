@@ -17,12 +17,17 @@ const SideDrawerList = ({ navLinks, active }) => {
           {navLinks.map(({ title, path }) => {
             return (
               <div key={title}>
-                <Link to={path} className={classes.loginLink}>
-                  <ListItem button>
+                <Link
+                  to={path}
+                  className={
+                    path === '/login' ? classes.loginLink : classes.signUpLink
+                  }>
+                  <ListItem>
                     <ListItemText primary={title} />
                   </ListItem>
                 </Link>
-                <Divider />
+
+                <Divider variant="inset" component="li" />
               </div>
             );
           })}
