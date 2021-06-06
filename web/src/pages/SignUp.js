@@ -3,11 +3,10 @@ import OwnerRegistration from '../components/OwnerRegistration/OwnerRegistration
 import familyRegistrationSchema from '../ValidationSchema/SignUpForm/FamilyRegistration';
 import userRegistrationSchema from '../ValidationSchema/SignUpForm/UserRegistration';
 
-import Wizard from '../components/Wizard';
+import Wizard from '../components/Wizard/Wizard';
 import WizardStep from '../components/WizardStep';
 
 const SignUp = () => {
-  console.log(userRegistrationSchema);
   return (
     <>
       <Wizard

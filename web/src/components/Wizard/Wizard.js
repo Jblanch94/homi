@@ -1,6 +1,7 @@
 import { useState, Children, cloneElement } from 'react';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { Formik, Form } from 'formik';
+import useStyles from './WizardStyles';
 
 const Wizard = ({ children, initialValues, onSubmit }) => {
   const [stepNumber, setStepNumber] = useState(0);
@@ -37,39 +38,50 @@ const Wizard = ({ children, initialValues, onSubmit }) => {
     });
   }
 
+  const classes = useStyles();
+
   return (
     <>
-      <Typography variant="h2">{step.props.title}</Typography>
+      <Typography variant="h2" className={classes.header}>
+        {step.props.title}
+      </Typography>
       <Formik
         initialValues={snapshot}
         onSubmit={handleSubmit}
         validationSchema={step.props.validationSchema}>
         {(props) => (
           <Form>
-            {renderFormChildren(props)}
-            <Grid container justify="space-between">
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  disabled={stepNumber === 0}
-                  onClick={() => {
-                    previous();
-                    console.log(props);
-                  }}>
-                  Previous
-                </Button>
+            <div className={classes.formGridContainer}>
+              <Grid container direction="column">
+                {renderFormChildren(props)}
+                <Grid
+                  container
+                  justify="space-between"
+                  className={classes.buttonsContainer}>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={stepNumber === 0}
+                      onClick={() => {
+                        previous();
+                        console.log(props);
+                      }}>
+                      Previous
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      disabled={props.isSubmitting}>
+                      {isLastStep ? 'Submit' : 'Next'}
+                    </Button>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  disabled={props.isSubmitting}>
-                  {isLastStep ? 'Submit' : 'Next'}
-                </Button>
-              </Grid>
-            </Grid>
+            </div>
           </Form>
         )}
       </Formik>

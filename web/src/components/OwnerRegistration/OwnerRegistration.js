@@ -7,11 +7,11 @@ const OwnerRegistration = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid container direction="column" spacing={3}>
-      <Grid item>
+    <>
+      <Grid item className={classes.dropZoneContainer}>
         <Dropzone {...props} />
       </Grid>
-      <Grid item xs={12} sm={8} className={classes.textInputContainer}>
+      <Grid item className={classes.textInputContainer}>
         <TextInput
           name="userName"
           id="userName"
@@ -21,7 +21,7 @@ const OwnerRegistration = (props) => {
           variant="outlined"
         />
       </Grid>
-      <Grid item xs={12} sm={8} className={classes.textInputContainer}>
+      <Grid item className={classes.textInputContainer}>
         <TextInput
           name="email"
           id="email"
@@ -31,7 +31,7 @@ const OwnerRegistration = (props) => {
           variant="outlined"
         />
       </Grid>
-      <Grid item xs={12} sm={8} className={classes.textInputContainer}>
+      <Grid item className={classes.textInputContainer}>
         <TextInput
           name="age"
           id="age"
@@ -41,7 +41,7 @@ const OwnerRegistration = (props) => {
           variant="outlined"
         />
       </Grid>
-    </Grid>
+    </>
   );
 };
 
