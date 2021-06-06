@@ -1,43 +1,18 @@
-import { useState, Children, cloneElement } from 'react';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { Formik, Form } from 'formik';
 import useStyles from './WizardStyles';
 
-const Wizard = ({ children, initialValues, onSubmit }) => {
-  const [stepNumber, setStepNumber] = useState(0);
-  const [snapshot, setSnapshot] = useState(initialValues);
-  const steps = Children.toArray(children);
-
-  const step = steps[stepNumber];
-  const totalSteps = steps.length;
-  const isLastStep = stepNumber === totalSteps - 1;
-
-  const next = (values) => {
-    setSnapshot(values);
-    setStepNumber(Math.min(stepNumber + 1, totalSteps - 1));
-  };
-
-  const previous = (values) => {
-    setSnapshot(values);
-    setStepNumber(Math.max(stepNumber - 1, 0));
-  };
-
-  const handleSubmit = async (values, bag) => {
-    if (isLastStep) {
-      return onSubmit(values, bag);
-    } else {
-      bag.setTouched({});
-      next(values);
-    }
-    console.log(values);
-  };
-
-  function renderFormChildren(props) {
-    return Children.map(step.props.children, (child, index) => {
-      return cloneElement(child, { ...props });
-    });
-  }
-
+const Wizard = ({
+  children,
+  step,
+  snapshot,
+  handleSubmit,
+  renderFormChildren,
+  stepNumber,
+  previousPage,
+  nextPage,
+  isLastStep,
+}) => {
   const classes = useStyles();
 
   return (
@@ -64,7 +39,7 @@ const Wizard = ({ children, initialValues, onSubmit }) => {
                       color="primary"
                       disabled={stepNumber === 0}
                       onClick={() => {
-                        previous();
+                        previousPage();
                         console.log(props);
                       }}>
                       Previous

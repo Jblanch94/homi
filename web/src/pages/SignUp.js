@@ -3,13 +3,13 @@ import OwnerRegistration from '../components/OwnerRegistration/OwnerRegistration
 import familyRegistrationSchema from '../ValidationSchema/SignUpForm/FamilyRegistration';
 import userRegistrationSchema from '../ValidationSchema/SignUpForm/UserRegistration';
 
-import Wizard from '../components/Wizard/Wizard';
+import WizardContainer from '../containers/WizardContainer';
 import WizardStep from '../components/WizardStep';
 
 const SignUp = () => {
   return (
     <>
-      <Wizard
+      <WizardContainer
         initialValues={{
           familyName: '',
           familyPassword: '',
@@ -32,7 +32,7 @@ const SignUp = () => {
           validationSchema={userRegistrationSchema}>
           <OwnerRegistration />
         </WizardStep>
-      </Wizard>
+      </WizardContainer>
     </>
   );
 };

@@ -1,19 +1,8 @@
-import { useState } from 'react';
 import { Drawer, IconButton } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 import SideDrawerList from './SideDrawerList';
 
-const SideDrawer = ({ navLinks }) => {
-  const [active, setActive] = useState({ right: false });
-
-  const toggleDrawer = (anchor, open) => (evt) => {
-    if (evt.type === 'keydown' && (evt.key === 'Tab' || evt.key === 'Shift')) {
-      return;
-    }
-
-    setActive({ [anchor]: open });
-  };
-
+const SideDrawer = ({ toggleDrawer, active, navLinks, ...props }) => {
   return (
     <>
       <IconButton

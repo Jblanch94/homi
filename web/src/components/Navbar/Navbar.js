@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import useStyles from './NavbarStyles';
-import SideDrawer from '../SideDrawer';
+import SideDrawerContainer from '../../containers/SideDrawerContainer';
 import HideComponent from '../HideComponent';
 
 const Navbar = () => {
@@ -27,7 +27,7 @@ const Navbar = () => {
           </HideComponent>
 
           <HideComponent smUp>
-            <SideDrawer
+            <SideDrawerContainer
               navLinks={[
                 { title: 'Log in to Homi', path: '/login' },
                 { title: 'Sign up for Homi', path: '/sign-up' },
