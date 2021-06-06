@@ -1,16 +1,13 @@
 import FamilyRegistrationForm from '../components/FamilyRegistrationForm/FamilyRegistrationForm';
 import OwnerRegistration from '../components/OwnerRegistration/OwnerRegistration';
 import familyRegistrationSchema from '../ValidationSchema/SignUpForm/FamilyRegistration';
+import userRegistrationSchema from '../ValidationSchema/SignUpForm/UserRegistration';
 
 import Wizard from '../components/Wizard';
 import WizardStep from '../components/WizardStep';
 
 const SignUp = () => {
-  // const onFileChange = (file) => {
-  //   console.log(file);
-  //   setFile(file);
-  // };
-
+  console.log(userRegistrationSchema);
   return (
     <>
       <Wizard
@@ -32,7 +29,8 @@ const SignUp = () => {
         </WizardStep>
         <WizardStep
           onSubmit={() => console.log('on step 2')}
-          title="Set up User Profile">
+          title="Set up User Profile"
+          validationSchema={userRegistrationSchema}>
           <OwnerRegistration />
         </WizardStep>
       </Wizard>

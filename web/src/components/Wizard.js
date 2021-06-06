@@ -31,7 +31,7 @@ const Wizard = ({ children, initialValues, onSubmit }) => {
     console.log(values);
   };
 
-  function passPropsToChildren(props) {
+  function renderFormChildren(props) {
     return Children.map(step.props.children, (child, index) => {
       return cloneElement(child, { ...props });
     });
@@ -46,7 +46,7 @@ const Wizard = ({ children, initialValues, onSubmit }) => {
         validationSchema={step.props.validationSchema}>
         {(props) => (
           <Form>
-            {passPropsToChildren(props)}
+            {renderFormChildren(props)}
             <Grid container justify="space-between">
               <Grid item>
                 <Button
