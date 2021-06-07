@@ -21,13 +21,16 @@ const WizardContainer = ({ children, initialValues, onSubmit }) => {
   };
 
   const handleSubmit = async (values, bag) => {
+    if (step.props.onSubmit) {
+      await step.props.onSubmit(values, bag);
+    }
+
     if (isLastStep) {
       return onSubmit(values, bag);
     } else {
       bag.setTouched({});
       nextPage(values);
     }
-    console.log(values);
   };
 
   function renderFormChildren(props) {

@@ -1,12 +1,18 @@
 import Routes from './Routes';
 import AppThemeProvider from './AppThemeProvider';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const App = () => {
+  const queryClient = new QueryClient();
   return (
     <>
-      <AppThemeProvider>
-        <Routes />
-      </AppThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppThemeProvider>
+          <Routes />
+        </AppThemeProvider>
+        <ReactQueryDevtools initialIsOpen />
+      </QueryClientProvider>
     </>
   );
 };
