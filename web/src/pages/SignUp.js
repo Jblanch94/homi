@@ -9,9 +9,7 @@ import { useMutation } from 'react-query';
 import familyAxios from '../axios/familyAxios';
 
 const SignUp = () => {
-  const family = useMutation((newFamily) =>
-    familyAxios.post('/homi/api/v1/family', newFamily)
-  );
+  const family = useMutation((newFamily) => familyAxios.post('/', newFamily));
 
   const handleSubmit = (values, ...args) => {
     // Handle two asynchorous requests
@@ -26,6 +24,7 @@ const SignUp = () => {
       console.error(err.message);
     }
   };
+
   return (
     <>
       <WizardContainer

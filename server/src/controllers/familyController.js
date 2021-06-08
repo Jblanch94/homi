@@ -21,16 +21,6 @@ class FamilyController {
           false
         ).badRequest(res);
       }
-      // Find a Family object by the name
-      const family = await this.familyService.findFamilyByName(name);
-
-      // Create a new Family object if no family object with the provided name was found
-      if (family !== null) {
-        return new HttpResponse(
-          'Family name already exists!',
-          false
-        ).badRequest(res);
-      }
 
       const newFamily = await this.familyService.createFamily(req.body);
       new HttpResponse(

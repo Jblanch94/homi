@@ -8,7 +8,6 @@ const Family = sequelize.define(
     name: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      unique: true,
     },
     password: {
       type: DataTypes.TEXT,
