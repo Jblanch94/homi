@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "npm run build ../web && node src/index.js"
   },
   "author": "Johnny Blanchard",
   "license": "ISC",
