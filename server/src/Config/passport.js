@@ -6,7 +6,10 @@ const User = require('../models/User');
 const Family = require('../models/Family');
 const { ExtractJwt } = require('passport-jwt');
 const jwtGenerator = require('../utils/jwtGenerator');
-require('dotenv').config();
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 // Middleware for registering a user as a member of the family
 passport.use(

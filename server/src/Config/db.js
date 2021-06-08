@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(
+const devConfig = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USERNAME,
   process.env.DB_PASSWORD,
@@ -11,5 +11,12 @@ const sequelize = new Sequelize(
     logging: (...msg) => console.log(msg),
   }
 );
+
+const prodConfig = new Sequelize(process.env.DB_URL, {
+  logging: (...msg) => console.log(msg),
+});
+
+const sequelize =
+  process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
 
 module.exports = sequelize;
