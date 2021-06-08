@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const sequelize = require('./config/db');
 const passport = require('passport');
 const initRelationships = require('./models/Relationships');
@@ -10,6 +11,7 @@ const loadMiddleware = require('./loaders/middleware');
 
 // Routes
 const loadRoutes = require('./loaders/routes');
+const { TableHints } = require('sequelize/types');
 
 class Startup {
   constructor() {
@@ -22,8 +24,14 @@ class Startup {
     // middlewares
     loadMiddleware(express, this.app, passport);
 
+    this.app.use(express.static(paht.resolve(__dirname, '../../web/build')));
+
     // routes
     loadRoutes(this.app, this.baseUrl);
+
+    this.app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../../web/build', 'index.html'));
+    });
 
     // run the application on specificed port
     this.app.listen(this.PORT, () => {
