@@ -14,7 +14,7 @@ const SignUp = () => {
   const handleSubmit = (values, ...args) => {
     // Handle two asynchorous requests
     // 1. Register Family and handle any errors
-    // 2. Register User with Family and handle any errors
+    // 2. Register User with Family and handle any error
     try {
       family.mutate({
         name: values.familyName,
