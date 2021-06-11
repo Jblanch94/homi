@@ -25,9 +25,13 @@ jobs:
 
   deploy:
     executor: heroku/default
+    heroku
     steps:
       - checkout
-      - heroku/install
+       - heroku/deploy-via-git:
+          pre-steps:
+            - checkout
+            - run: cd server && npm start
 
       - run:
           name: Deploy Master to Heroku
@@ -42,7 +46,4 @@ workflows:
   heroku_deploy:
     jobs:
       - deploy
-      - heroku/deploy-via-git:
-          pre-steps:
-            - checkout
-            - run: cd server && npm start
+     
