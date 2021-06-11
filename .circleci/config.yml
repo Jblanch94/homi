@@ -32,8 +32,6 @@ jobs:
 workflows:
   CI:
     jobs:
-      - web
-      - server
       - heroku/deploy-via-git:
         requires:
           - web
