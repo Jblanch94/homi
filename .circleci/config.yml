@@ -26,11 +26,20 @@ jobs:
   deploy:
     executor: heroku/default
     steps:
+      - checkout
+      - heroku/install
+      - run:
+          command: >
+            echo "The command above installs Heroku, the command below deploys.
+            What you do inbetween is up to you!"
       - heroku/deploy-via-git:
-        pre-steps:
-          - run: cd server
-        api-key: $HEROKU_API_KEY
-        app-name: $HEROKU_APP_NAME
+        pre-steps: cd server
+    # steps:
+    #   - heroku/deploy-via-git:
+    #     pre-steps:
+    #       - run: cd server
+    #     api-key: $HEROKU_API_KEY
+    #     app-name: $HEROKU_APP_NAME
 
 workflows:
   CI:
