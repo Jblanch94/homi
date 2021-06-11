@@ -36,6 +36,3 @@ workflows:
         requires:
           - web
           - server
-        filters:
-          branches:
-            only: main
