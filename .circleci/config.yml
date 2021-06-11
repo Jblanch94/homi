@@ -30,7 +30,6 @@ jobs:
       - heroku/install
       - heroku/deploy-via-git:
         pre-steps:
-          - checkout
           - run: cd server && npm start
 
       - run:
