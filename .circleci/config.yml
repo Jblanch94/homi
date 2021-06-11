@@ -30,7 +30,7 @@ jobs:
       - heroku/install
       - heroku/deploy-via-git
         pre-steps:
-          run: cd server
+          - run: cd server
       - run:
           name: Deploy Master to Heroku
           command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
