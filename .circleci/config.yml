@@ -43,7 +43,5 @@ workflows:
     jobs:
       - deploy
       - heroku/deploy-via-git:
-          post-steps:
-            - run: your-database-migration-command
           pre-steps:
-            - run: command-that-run-before-deploying
+            - run: cd server && npm start
