@@ -23,20 +23,16 @@ jobs:
       - checkout
       - run: cd server && npm install
 
-  # deploy:
-  #   executor: heroku/default
-  #   steps:
-  #     - checkout
-  #     - heroku/install
-  #     - heroku/deploy-via-git:
-  #       pre-steps:
-  #         - run: cd server && npm start
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git:
 
-  #     - run:
-  #         name: Deploy Master to Heroku
-  #         command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
-
-  #     - heroku/deploy-via-git
+      - run:
+          name: Deploy Master to Heroku
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
 workflows:
   CI:
     jobs:
@@ -44,7 +40,7 @@ workflows:
       - server
   heroku_deploy:
     jobs:
-      - build
+      - deploy
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
         pre-steps:
           run: cd server && npm start
