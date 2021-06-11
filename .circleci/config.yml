@@ -28,10 +28,10 @@ jobs:
     heroku
     steps:
       - checkout
-       - heroku/deploy-via-git:
-          pre-steps:
-            - checkout
-            - run: cd server && npm start
+      - heroku/deploy-via-git:
+        pre-steps:
+          - checkout
+          - run: cd server && npm start
 
       - run:
           name: Deploy Master to Heroku
