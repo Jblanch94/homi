@@ -44,4 +44,5 @@ workflows:
       - deploy
       - heroku/deploy-via-git:
           pre-steps:
+            - checkout
             - run: cd server && npm start
