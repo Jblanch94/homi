@@ -38,7 +38,12 @@ workflows:
           requires:
             - web
             - server
-          pre-steps:
-            - run:
-              command: cd server && npm start
-              name: Run Node Application
+          deploy:
+            pre-steps:
+              - run:
+                command: cd server && npm start
+                name: Run Node Application
+          # pre-steps:
+          #   - run:
+          #     command: cd server && npm start
+          #     name: Run Node Application
