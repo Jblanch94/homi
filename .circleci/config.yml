@@ -44,7 +44,7 @@ workflows:
         pre-steps:
           - run: cd server && npm start
           requires:
-            - build
+            - deploy
           filters:
             branches:
               only: master
