@@ -33,10 +33,7 @@ jobs:
           name: Deploy Master to Heroku
           command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
-      - deploy-via-git:
-        parameters:
-          pre-deploy:
-            - run: cd server
+      - heroku/deploy-via-git
 workflows:
   CI:
     jobs:
@@ -45,3 +42,8 @@ workflows:
   heroku_deploy:
     jobs:
       - deploy
+      - heroku/deploy-via-git:
+          post-steps:
+            - run: your-database-migration-command
+          pre-steps:
+            - run: command-that-run-before-deploying
