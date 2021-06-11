@@ -40,6 +40,6 @@ workflows:
     jobs:
       - web
       - server
-  deploy:
+  heroku_deploy:
     jobs:
       - deploy
