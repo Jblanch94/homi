@@ -11,7 +11,6 @@ const loadMiddleware = require('./loaders/middleware');
 
 // Routes
 const loadRoutes = require('./loaders/routes');
-const { TableHints } = require('sequelize/types');
 
 class Startup {
   constructor() {
