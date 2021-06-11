@@ -30,7 +30,7 @@ jobs:
       - heroku/install
       - heroku/deploy-via-git
         pre-deploy: 
-          default: [cd server]
+          default: cd server
           description: A list of pre-deployment steps
           type: steps
       - run:
