@@ -24,7 +24,7 @@ jobs:
       - run: cd server && npm install
 
   deploy:
-    jobs:
+    steps:
       - heroku/deploy-via-git:
         pre-steps:
           - run: cd server
