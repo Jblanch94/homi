@@ -29,18 +29,9 @@ jobs:
       - checkout
       - heroku/install
       - run:
-          command: >
-            echo "The command above installs Heroku, the command below deploys.
-            What you do inbetween is up to you!"
-      - heroku/deploy-via-git:
-        pre-steps: cd server
-        app-name: $HEROKU_APP_NAME
-    # steps:
-    #   - heroku/deploy-via-git:
-    #     pre-steps:
-    #       - run: cd server
-    #     api-key: $HEROKU_API_KEY
-    #     app-name: $HEROKU_APP_NAME
+          name: Deploy Master to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
 workflows:
   CI:
