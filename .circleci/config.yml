@@ -26,12 +26,12 @@ jobs:
       # The orb install-packages step will also automatically cache them for faster future runs.
       - node/install-packages:
         app-dir:
-          default: ~/app/web
+          default: /web
           description: Path to package.json for frontend React application
           type: string
       - node/install-packages:
         app-dir:
-          default: ~/app/server
+          default: /server
           description: Path to package.json for backend Express application
           type: string
       # If you are using yarn instead npm, remove the line above and uncomment the two lines below.
