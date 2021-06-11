@@ -28,11 +28,7 @@ jobs:
     steps:
       - checkout
       - heroku/install
-      - heroku/deploy-via-git:
 
-      - run:
-          name: Deploy Master to Heroku
-          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
 workflows:
   CI:
     jobs:
@@ -42,6 +38,9 @@ workflows:
     jobs:
       - deploy
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
+          - run:
+            name: Deploy Master to Heroku
+            command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git
         pre-steps:
           run: cd server && npm start
           requires:
