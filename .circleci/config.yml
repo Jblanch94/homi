@@ -25,14 +25,12 @@ jobs:
 
   deploy:
     jobs:
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
         pre-steps:
           - run: cd server
         parameters:
           api-key: $HEROKU_API_KEY
           app-name: $HEROKU_APP_NAME
-      
-
 
 workflows:
   CI:
