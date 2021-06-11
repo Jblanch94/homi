@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1
+  heroku: circleci/heroku@1.2.6
 
 jobs:
   web:
@@ -22,8 +23,22 @@ jobs:
       - checkout
       - run: cd server && npm install
 
+  deploy:
+    jobs:
+      - heroku/deploy-via-git
+        pre-steps:
+          - run: cd server
+        parameters:
+          api-key: $HEROKU_API_KEY
+          app-name: $HEROKU_APP_NAME
+      
+
+
 workflows:
   CI:
     jobs:
       - web
       - server
+  deploy:
+    jobs:
+      - deploy
