@@ -30,20 +30,17 @@ jobs:
     steps:
       - checkout
       - heroku/install
-      - run: cd server
-      - run: pwd
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
+          pre-steps:
+            - run: ls
+            - run: cd server
 
 workflows:
   CI:
     jobs:
       - web
       - server
-      - heroku/deploy-via-git:
-          pre-steps:
-            - run: pwd
-            - run: ls
-            - run: cd server
+      - heroku_deploy:
           requires:
             - web
             - server
