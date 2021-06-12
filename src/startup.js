@@ -1,10 +1,10 @@
 const express = require('express');
 const path = require('path');
-const sequelize = require('./config/db');
 const passport = require('passport');
 const initRelationships = require('./models/Relationships');
 require('./config/passport');
 require('./config/cloudinary');
+const sequelize = require('./config/db');
 
 // Middleware
 const loadMiddleware = require('./loaders/middleware');
