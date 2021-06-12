@@ -39,7 +39,9 @@ workflows:
       - web
       - server
       - heroku/deploy-via-git:
-          pre-steps: 
+          pre-steps:
+            - run: pwd
+            - run: ls
             - run: cd server
           requires:
             - web
