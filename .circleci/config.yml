@@ -30,10 +30,7 @@ jobs:
     steps:
       - checkout
       - heroku/install
-      - heroku/deploy-via-git:
-          steps:
-            - run: ls
-            - run: cd server
+      - heroku/deploy-via-git
 
 workflows:
   CI:
