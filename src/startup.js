@@ -23,13 +23,20 @@ class Startup {
     // middlewares
     loadMiddleware(express, this.app, passport);
 
-    this.app.use(express.static(path.resolve(__dirname, '../web/build')));
-
     // routes
     loadRoutes(this.app, this.baseUrl);
 
-    this.app.get('/*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, '../web/build', 'index.html'));
+    if (process.env.NODE_ENV === 'production') {
+      app.use(express.static(path.join(__dirname, '../web/build')));
+      app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../web', 'build', 'index.html'));
+      });
+    }
+
+    app.get('*', (req, res) => {
+      res.sendFile(
+        express.static(path.join(__dirname, 'web/build/index.html'))
+      );
     });
 
     // run the application on specificed port
