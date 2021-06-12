@@ -30,6 +30,7 @@ jobs:
       - checkout
       - heroku/install
       - run: cd server
+      - run: pwd
       - heroku/deploy-via-git
 
 workflows:
