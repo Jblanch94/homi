@@ -3,7 +3,7 @@ const path = require('path');
 const sequelize = require('./config/db');
 const passport = require('passport');
 const initRelationships = require('./models/Relationships');
-require('./config/passport');
+require('./config/db');
 require('./config/cloudinary');
 
 // Middleware
