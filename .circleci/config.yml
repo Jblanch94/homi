@@ -38,6 +38,6 @@ workflows:
       - web
       - server
       - heroku_deploy:
-        requires:
-          - server
-          - web
+          requires:
+            - server
+            - web
