@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - checkout
-      - run: cd server && npm install
+      - run: npm install
 
   heroku_deploy:
     docker:
