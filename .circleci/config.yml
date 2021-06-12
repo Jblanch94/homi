@@ -32,6 +32,8 @@ jobs:
       - run: cd server
       - run: pwd
       - heroku/deploy-via-git
+          pre-steps: 
+            - cd server
 
 workflows:
   CI:
