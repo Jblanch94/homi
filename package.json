@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "cd ./web && npm run build && cd ../ && node src/index.js"
+    "start": "node src/index.js",
+    "build": "cd ./web && npm run build"
   },
   "author": "Johnny Blanchard",
   "license": "ISC",
