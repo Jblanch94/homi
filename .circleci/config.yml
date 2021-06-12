@@ -37,4 +37,7 @@ workflows:
     jobs:
       - web
       - server
-      - heroku_deploy
+      - heroku_deploy:
+        requires:
+          - server
+          - web
