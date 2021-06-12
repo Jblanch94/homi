@@ -23,13 +23,13 @@ class Startup {
     // middlewares
     loadMiddleware(express, this.app, passport);
 
-    this.app.use(express.static(paht.resolve(__dirname, '../../web/build')));
+    this.app.use(express.static(path.resolve(__dirname, '../web/build')));
 
     // routes
     loadRoutes(this.app, this.baseUrl);
 
-    this.app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, '../../web/build', 'index.html'));
+    this.app.get('/*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../web/build', 'index.html'));
     });
 
     // run the application on specificed port
