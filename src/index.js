@@ -1,4 +1,7 @@
 const Startup = require('./startup');
 
 const startUp = new Startup();
-startUp.run();
+startup
+  .run()
+  .then()
+  .catch((err) => console.error(err));
