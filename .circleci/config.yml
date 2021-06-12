@@ -23,27 +23,22 @@ jobs:
       - checkout
       - run: cd server && npm install
 
-  deploy:
-    executor: heroku/default
+  heroku_deploy:
+    docker:
+      - image: cimg/node:15.1
     steps:
       - checkout
       - heroku/install
+      - run: cd server
+      - heroku/deploy-via-git
 
 workflows:
-  heroku_deploy:
-    jobs:
+  - web
+  - server
+  - heroku_deploy:
+    requires:
       - web
       - server
-      - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
-          requires:
-            - web
-            - server
-          deploy:
-            pre-steps:
-              - run:
-                command: cd server && npm start
-                name: Run Node Application
-          # pre-steps:
-          #   - run:
-          #     command: cd server && npm start
-          #     name: Run Node Application
+    filters:
+      branches:
+        only: master
