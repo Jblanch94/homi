@@ -20,6 +20,4 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-const sequelize = config;
-
-module.exports = sequelize;
+module.exports = config;
