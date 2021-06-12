@@ -11,6 +11,7 @@ jobs:
 
     steps:
       - checkout
+      - run: pwd
       - run: cd web && npm install
       - run: cd web && npm run test
       - run: cd web && npm run build
