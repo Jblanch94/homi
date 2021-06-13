@@ -1,4 +1,4 @@
-const sequelize = require('../Config/db');
+const sequelize = require('../config/db');
 
 class AssignedTaskService {
   async assignTaskToUser(taskId, userId) {

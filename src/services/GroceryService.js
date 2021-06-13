@@ -1,4 +1,4 @@
-const sequelize = require('../Config/db');
+const sequelize = require('../config/db');
 const Category = require('../models/Category');
 
 class GroceryService {

@@ -1,7 +1,7 @@
 const Task = require('../models/Task');
 const Category = require('../models/Category');
 const User = require('../models/User');
-const sequelize = require('../Config/db');
+const sequelize = require('../config/db');
 
 class TaskService {
   async createTask(task, familyId) {
