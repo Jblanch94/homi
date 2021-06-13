@@ -9,7 +9,9 @@ import { useMutation } from 'react-query';
 import familyAxios from '../axios/familyAxios';
 
 const SignUp = () => {
-  const family = useMutation((newFamily) => familyAxios.post('/', newFamily));
+  const family = useMutation((newFamily) =>
+    familyAxios.post('/homi/api/v1/', newFamily)
+  );
 
   const handleSubmit = (values, ...args) => {
     // Handle two asynchorous requests
