@@ -1,4 +1,4 @@
-const sequelize = require('../config/db');
+const sequelize = require('../Config/db');
 
 class TaskCategoriesService {
   async insertTaskCategories(taskId, categories) {

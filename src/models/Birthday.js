@@ -1,5 +1,5 @@
 const { DataTypes, DATE } = require('sequelize');
-const sequelize = require('../config/db');
+const sequelize = require('../Config/db');
 
 const Birthday = sequelize.define('Birthday', {
   name: {
