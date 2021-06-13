@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "heroku-postbuld": "cd ./web && npm install && npm run build"
+    "heroku-postbuild": "cd ./web && npm install && npm run build"
   },
   "author": "Johnny Blanchard",
   "license": "ISC",
