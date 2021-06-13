@@ -10,7 +10,7 @@ import familyAxios from '../axios/familyAxios';
 
 const SignUp = () => {
   const family = useMutation((newFamily) =>
-    familyAxios.post('/homi/api/v1/', newFamily)
+    familyAxios.post('/homi/api/v1/family', newFamily)
   );
 
   const handleSubmit = (values, ...args) => {
