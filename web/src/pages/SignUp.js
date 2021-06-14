@@ -8,6 +8,7 @@ const SignUp = ({
   handleSubmit,
   userRegistrationSchema,
   familyRegistrationSchema,
+  setValues,
 }) => {
   return (
     <>
@@ -20,7 +21,7 @@ const SignUp = ({
         <WizardStep
           title="Set up User Profile"
           validationSchema={userRegistrationSchema}>
-          <OwnerRegistration />
+          <OwnerRegistration setValues={setValues} />
         </WizardStep>
       </WizardContainer>
     </>

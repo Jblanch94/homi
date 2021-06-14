@@ -1,23 +1,24 @@
-const passport = require('passport');
-const bcrypt = require('bcrypt');
-const JwtStrategy = require('passport-jwt').Strategy;
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/User');
-const Family = require('../models/Family');
-const { ExtractJwt } = require('passport-jwt');
-const jwtGenerator = require('../utils/jwtGenerator');
+const passport = require("passport");
+const bcrypt = require("bcrypt");
+const JwtStrategy = require("passport-jwt").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
+const User = require("../models/User");
+const Family = require("../models/Family");
+const { ExtractJwt } = require("passport-jwt");
+const jwtGenerator = require("../utils/jwtGenerator");
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 
 // Middleware for registering a user as a member of the family
+//TODO: SET UP CLOUDINARY SO USER CAN UPLOAD PROFILE PICTURE
 passport.use(
-  'register-user',
+  "register-user",
   new LocalStrategy(
     {
-      usernameField: 'email',
-      passwordField: 'email',
+      usernameField: "email",
+      passwordField: "email",
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
@@ -39,26 +40,26 @@ passport.use(
 
 // Middleware for logging in a user
 passport.use(
-  'login-user',
+  "login-user",
   new LocalStrategy(
-    { usernameField: 'email', passwordField: 'password' },
+    { usernameField: "email", passwordField: "password" },
     async (email, password, done) => {
       try {
         // find user by the email
         const user = await User.findOne({ where: { email } });
         if (user == null) {
-          return done(null, false, { message: 'Invalid credentials' });
+          return done(null, false, { message: "Invalid credentials" });
         }
 
         // find the associated family
         const family = await Family.findByPk(user.FamilyId);
         if (family == null) {
-          return done(null, false, { message: 'Invalid credentials' });
+          return done(null, false, { message: "Invalid credentials" });
         }
 
         const validPassword = await bcrypt.compare(password, family.password);
         if (!validPassword) {
-          return done(null, false, { message: 'Invalid credentials' });
+          return done(null, false, { message: "Invalid credentials" });
         }
         done(null, user);
       } catch (err) {
@@ -85,13 +86,13 @@ const cookieExtractor = (req) => {
   options.secretOrKey = process.env.JWT_SECRET;
 
   passport.use(
-    'refreshToken',
+    "refreshToken",
     new JwtStrategy(options, async (jwt_payload, done) => {
       try {
         const user = await User.findByPk(jwt_payload.user.id);
 
         if (user == null) {
-          return done, false, { message: 'Could not verify user' };
+          return done, false, { message: "Could not verify user" };
         }
 
         // generate new tokens and return both tokens
@@ -113,13 +114,13 @@ const cookieExtractor = (req) => {
   options.secretOrKey = process.env.JWT_SECRET;
 
   passport.use(
-    'authenticate',
+    "authenticate",
     new JwtStrategy(options, async (jwt_payload, done) => {
       try {
         const user = await User.findByPk(jwt_payload.user.id);
 
         if (user == null) {
-          return done(null, false, { message: 'Could not verify user' });
+          return done(null, false, { message: "Could not verify user" });
         }
 
         return done(null, user);

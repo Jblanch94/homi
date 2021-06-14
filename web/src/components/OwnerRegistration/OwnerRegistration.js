@@ -1,10 +1,11 @@
-import { Grid } from '@material-ui/core';
-import TextInput from '../TextInput';
-import Dropzone from '../Dropzone';
-import useStyles from './OwnerRegistrationStyles';
+import { Grid } from "@material-ui/core";
+import TextInput from "../TextInput";
+import Dropzone from "../Dropzone";
+import useStyles from "./OwnerRegistrationStyles";
 
 const OwnerRegistration = (props) => {
   const classes = useStyles();
+  console.log(props);
 
   return (
     <>

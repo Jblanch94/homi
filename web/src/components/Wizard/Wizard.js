@@ -1,6 +1,6 @@
-import { Button, Grid, Typography } from '@material-ui/core';
-import { Formik, Form } from 'formik';
-import useStyles from './WizardStyles';
+import { Button, Grid, Typography } from "@material-ui/core";
+import { Formik, Form } from "formik";
+import useStyles from "./WizardStyles";
 
 const Wizard = ({
   children,
@@ -40,7 +40,6 @@ const Wizard = ({
                       disabled={stepNumber === 0}
                       onClick={() => {
                         previousPage();
-                        console.log(props);
                       }}>
                       Previous
                     </Button>
@@ -51,7 +50,7 @@ const Wizard = ({
                       color="primary"
                       type="submit"
                       disabled={props.isSubmitting}>
-                      {isLastStep ? 'Submit' : 'Next'}
+                      {isLastStep ? "Submit" : "Next"}
                     </Button>
                   </Grid>
                 </Grid>

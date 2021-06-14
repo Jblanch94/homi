@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { registerFamilyAndUser } from "../state/actions/authActions";
 import familyRegistrationSchema from "../ValidationSchema/SignUpForm/FamilyRegistration";
@@ -6,11 +7,10 @@ import userRegistrationSchema from "../ValidationSchema/SignUpForm/UserRegistrat
 import SignUp from "../pages/SignUp";
 
 const SignUpContainer = () => {
+  const [setValues, getSetValues] = useState();
   const dispatch = useDispatch();
   const handleSubmit = (values, ...args) => {
-    // Handle two asynchorous requests
-    // 1. Register Family and handle any errors
-    // 2. Register User with Family and handle any error
+    getSetValues(args.setValues);
     dispatch(registerFamilyAndUser(values));
   };
 
@@ -28,6 +28,7 @@ const SignUpContainer = () => {
     handleSubmit,
     familyRegistrationSchema,
     userRegistrationSchema,
+    setValues,
   };
 
   return <SignUp {...SignUpProps} />;

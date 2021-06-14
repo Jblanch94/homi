@@ -1,14 +1,15 @@
-import { DropzoneArea } from 'material-ui-dropzone';
+import { DropzoneArea } from "material-ui-dropzone";
 
-const Dropzone = ({ setValues, ...props }) => {
+const Dropzone = (props) => {
+  console.log(props);
   const onFileChange = (file) => {
-    setValues({ ...props.values, profileAvatar: file.path });
+    props.setValues({ ...props.values, profileAvatar: file[0]?.path });
   };
 
   return (
     <DropzoneArea
-      acceptedFiles={['image/*']}
-      dropzoneText={'Drag and drop a profile picture or click'}
+      acceptedFiles={["image/*"]}
+      dropzoneText={"Drag and drop a profile picture or click"}
       onChange={onFileChange}
       filesLimit={1}
       clearOnUnmount

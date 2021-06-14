@@ -24,7 +24,7 @@ export const registerFamilyAndUser = (formValues) => {
         email: formValues.email,
         name: formValues.userName,
         age: formValues?.age,
-        profileAvatar: formValues?.profileAvatar,
+        profileUrl: formValues?.profileAvatar,
       };
 
       const user = await registerUser(authAxiosWrapper, userData, familyId);
