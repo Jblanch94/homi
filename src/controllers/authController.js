@@ -1,25 +1,14 @@
-const HttpResponse = require('../HttpResponse');
-const passport = require('passport');
-const jwtGenerator = require('../utils/jwtGenerator');
-const UserService = require('../services/UserService');
+const HttpResponse = require("../HttpResponse");
+const passport = require("passport");
+const jwtGenerator = require("../utils/jwtGenerator");
 
 class AuthController {
-  constructor() {
-    this.userService = new UserService();
-    this.registerUser = this.registerUser.bind(this);
-  }
   async registerUser(req, res) {
-    // check if user exists
-    const user = await this.userService.fetchUserByEmail(req.body.email);
-    if (user !== null) {
-      return new HttpResponse('User already exists', false).notFound(res);
-    }
-
-    new HttpResponse('Successfully created user', true, req.user).created(res);
+    new HttpResponse("Successfully created user", true, req.user).created(res);
   }
 
   async loginUser(req, res, next) {
-    passport.authenticate('login-user', async (err, user, info) => {
+    passport.authenticate("login-user", async (err, user, info) => {
       try {
         if (!user) {
           return new HttpResponse(info.message, false).notFound(res);
@@ -35,13 +24,13 @@ class AuthController {
           }
 
           //Generate Access and Refresh Tokens
-          const body = { id: user.id, role: user.isAdmin ? 'admin' : 'user' };
+          const body = { id: user.id, role: user.isAdmin ? "admin" : "user" };
           const accessToken = jwtGenerator(body);
           const refreshToken = jwtGenerator(body);
-          res.cookie('refreshToken', refreshToken, {
+          res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
           });
-          return new HttpResponse('Successfully logged in user', true, {
+          return new HttpResponse("Successfully logged in user", true, {
             accessToken,
           }).ok(res);
         });
@@ -53,8 +42,8 @@ class AuthController {
 
   refreshToken(req, res) {
     const { accessToken, refreshToken } = req.user;
-    res.cookie('refreshToken', refreshToken, { httpOnly: true });
-    new HttpResponse('Successfully reauthenticated user', true, {
+    res.cookie("refreshToken", refreshToken, { httpOnly: true });
+    new HttpResponse("Successfully reauthenticated user", true, {
       accessToken,
     }).ok(res);
   }

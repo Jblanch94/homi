@@ -1,7 +1,10 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
+import familyReducer from "./family";
+import authReducer from "./auth";
 
 const reducers = combineReducers({
-  test: () => 'Hi there',
+  family: familyReducer,
+  auth: authReducer,
 });
 
 export default reducers;
