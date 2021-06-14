@@ -1,9 +1,20 @@
 const HttpResponse = require('../HttpResponse');
 const passport = require('passport');
 const jwtGenerator = require('../utils/jwtGenerator');
+const UserService = require('../services/UserService');
 
 class AuthController {
-  registerUser(req, res) {
+  constructor() {
+    this.userService = new UserService();
+    this.registerUser = this.registerUser.bind(this);
+  }
+  async registerUser(req, res) {
+    // check if user exists
+    const user = await this.userService.fetchUserByEmail(req.body.email);
+    if (user !== null) {
+      return new HttpResponse('User already exists', false).notFound(res);
+    }
+
     new HttpResponse('Successfully created user', true, req.user).created(res);
   }
 

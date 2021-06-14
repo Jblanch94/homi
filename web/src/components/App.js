@@ -1,18 +1,17 @@
 import Routes from './Routes';
 import AppThemeProvider from './AppThemeProvider';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import store from '../store';
+
+import { Provider } from 'react-redux';
 
 const App = () => {
-  const queryClient = new QueryClient();
   return (
     <>
-      <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         <AppThemeProvider>
           <Routes />
         </AppThemeProvider>
-        <ReactQueryDevtools initialIsOpen />
-      </QueryClientProvider>
+      </Provider>
     </>
   );
 };

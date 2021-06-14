@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const AuthController = require('../controllers/authController');
+const uniqueUser = require('../middlewares/uniqueUser');
 const passport = require('passport');
 
 const router = Router();
@@ -8,6 +9,7 @@ const authController = new AuthController();
 // Route registers a user for a family
 router.post(
   '/family/:familyId/user/register',
+  uniqueUser,
   passport.authenticate('register-user', { session: false }),
   authController.registerUser
 );

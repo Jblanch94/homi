@@ -35,11 +35,6 @@ class Startup {
       });
     }
 
-    this.app.use(express.static(path.join(__dirname, '../web/build')));
-    this.app.get('*', (req, res) => {
-      res.sendFile(__dirname + '../web/build/index.html');
-    });
-
     // run the application on specificed port
     this.app.listen(this.PORT, () => {
       console.log(`Running on port ${this.PORT}`);

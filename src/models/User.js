@@ -19,7 +19,7 @@ const User = sequelize.define('User', {
   },
   profileUrl: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: true,
   },
   isAdmin: {
     type: DataTypes.BOOLEAN,

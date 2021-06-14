@@ -5,26 +5,11 @@ import userRegistrationSchema from '../ValidationSchema/SignUpForm/UserRegistrat
 import WizardContainer from '../containers/WizardContainer';
 import WizardStep from '../components/WizardStep';
 
-import { useMutation } from 'react-query';
-import familyAxios from '../axios/familyAxios';
-
 const SignUp = () => {
-  const family = useMutation((newFamily) =>
-    familyAxios.post('/homi/api/v1/family', newFamily)
-  );
-
   const handleSubmit = (values, ...args) => {
     // Handle two asynchorous requests
     // 1. Register Family and handle any errors
     // 2. Register User with Family and handle any error
-    try {
-      family.mutate({
-        name: values.familyName,
-        password: values.familyPassword,
-      });
-    } catch (err) {
-      console.error(err.message);
-    }
   };
 
   return (
