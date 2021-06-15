@@ -2,11 +2,13 @@ import familyAxios from "../../axios/familyAxios";
 import authAxios from "../../axios/authAxios";
 import types from "../types";
 import useAxios from "../../hooks/useAxios";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 export const registerFamilyAndUser = (formValues) => {
   return async (dispatch) => {
     const familyAxiosWrapper = useAxios(familyAxios);
     const authAxiosWrapper = useAxios(authAxios);
+    const { setDataInLocalStorage } = useLocalStorage();
     try {
       dispatch({ type: types.IS_LOADING, payload: true });
       const familyData = {
@@ -28,8 +30,6 @@ export const registerFamilyAndUser = (formValues) => {
       };
 
       const user = await registerUser(authAxiosWrapper, userData, familyId);
-      console.log("family", family);
-      console.log("user", user);
 
       const loginData = {
         email: formValues.email,
@@ -42,6 +42,10 @@ export const registerFamilyAndUser = (formValues) => {
 
       // Dispatch actions to update state after registering family, user and getting authentication status
       if (authenticationInformation.data.success) {
+        setDataInLocalStorage("auth", {
+          isAuthenticated: true,
+          accessToken: authenticationInformation.data.data,
+        });
         dispatch({ type: types.REGISTER_FAMILY, payload: family.data.data });
         dispatch({ type: types.REGISTER_USER, payload: user.data.data });
         dispatch({
@@ -49,12 +53,16 @@ export const registerFamilyAndUser = (formValues) => {
           payload: authenticationInformation.data.data,
         });
       }
-
-      dispatch({ type: types.IS_LOADING, payload: false });
     } catch (err) {
       console.log(err.response);
       console.error(err);
+      setDataInLocalStorage("auth", {
+        isAuthenticated: false,
+        accessToken: null,
+      });
       dispatch({ type: types.AUTH_ERROR, payload: err.response.data.msg });
+    } finally {
+      dispatch({ type: types.IS_LOADING, payload: false });
     }
   };
 };
