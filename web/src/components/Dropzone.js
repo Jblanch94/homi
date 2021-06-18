@@ -1,7 +1,6 @@
 import { DropzoneArea } from "material-ui-dropzone";
 
 const Dropzone = (props) => {
-  console.log(props);
   const onFileChange = (file) => {
     props.setValues({ ...props.values, profileAvatar: file[0]?.path });
   };

@@ -5,7 +5,6 @@ import useStyles from "./OwnerRegistrationStyles";
 
 const OwnerRegistration = (props) => {
   const classes = useStyles();
-  console.log(props);
 
   return (
     <>
