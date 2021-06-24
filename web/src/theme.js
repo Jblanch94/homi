@@ -1,20 +1,23 @@
-import { createMuiTheme } from '@material-ui/core';
-import { lightBlue, amber } from '@material-ui/core/colors';
-import { light } from '@material-ui/core/styles/createPalette';
+import { createMuiTheme } from "@material-ui/core";
+import { lightBlue, amber, lightGreen } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      ...light,
+      ...lightBlue,
       main: lightBlue[500],
     },
     secondary: {
       ...amber,
       main: amber[300],
     },
+    success: {
+      ...lightGreen,
+      main: lightGreen[700],
+    },
   },
   typography: {
-    fontFamily: 'Raleway',
+    fontFamily: "Raleway",
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,

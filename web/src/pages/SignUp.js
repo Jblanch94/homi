@@ -2,7 +2,8 @@ import FamilyRegistrationForm from "../components/FamilyRegistrationForm/FamilyR
 import OwnerRegistration from "../components/OwnerRegistration/OwnerRegistration";
 import WizardContainer from "../containers/WizardContainer";
 import WizardStep from "../components/WizardStep";
-import DuplicateAccountModal from "../components/DuplicateAccountModal";
+import Dialog from "../components/Dialog";
+import DuplicateAccountDialog from "../components/DuplicateAccountDialog/DuplicateAccountDialog";
 
 const SignUp = ({
   initialValues,
@@ -17,7 +18,9 @@ const SignUp = ({
   return (
     <>
       {auth.isError && auth.error === "User already exists" && (
-        <DuplicateAccountModal open={modalOpen} modalToggle={modalToggle} />
+        <Dialog open={modalOpen} modalToggle={modalToggle}>
+          <DuplicateAccountDialog modalToggle={modalToggle} />
+        </Dialog>
       )}
       <WizardContainer initialValues={initialValues} onSubmit={handleSubmit}>
         <WizardStep
