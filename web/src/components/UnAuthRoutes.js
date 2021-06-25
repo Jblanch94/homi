@@ -1,6 +1,7 @@
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import SignUp from "../containers/SignUpContainer";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 
 const UnAuthRoutes = () => {
   return (
@@ -11,6 +12,9 @@ const UnAuthRoutes = () => {
         </Route>
         <Route path="/sign-up" exact>
           <SignUp />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
         </Route>
       </Switch>
     </Router>
