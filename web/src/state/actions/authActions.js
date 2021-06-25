@@ -81,6 +81,7 @@ async function registerUser(authAxiosWrapper, userData, familyId) {
 }
 
 async function loginUser(authAxiosWrapper, loginData) {
+  console.log("calling loginUser");
   const authenticationInformation = await authAxiosWrapper.postRequest(
     "/user/login",
     loginData
@@ -88,3 +89,35 @@ async function loginUser(authAxiosWrapper, loginData) {
 
   return authenticationInformation;
 }
+
+export const login = (formValues) => {
+  return async (dispatch) => {
+    const authAxiosWrapper = useAxios(authAxios);
+    const { setDataInLocalStorage } = useLocalStorage();
+    try {
+      dispatch({ type: types.IS_LOADING, payload: true });
+      const authenticatedUser = await loginUser(authAxiosWrapper, formValues);
+
+      if (authenticatedUser.data.success) {
+        setDataInLocalStorage("auth", {
+          accessToken: authenticatedUser.data.data.accessToken,
+          isAuthenticated: true,
+        });
+
+        dispatch({
+          type: types.LOGIN_USER,
+          payload: authenticatedUser.data.data,
+        });
+      }
+    } catch (err) {
+      console.error(err.response.data.msg);
+      setDataInLocalStorage("auth", {
+        isAuthenticated: false,
+        accessToken: null,
+      });
+      dispatch({ type: types.AUTH_ERROR, payload: err.response.data.msg });
+    } finally {
+      dispatch({ type: types.IS_LOADING, payload: false });
+    }
+  };
+};

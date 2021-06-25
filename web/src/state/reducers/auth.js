@@ -16,7 +16,14 @@ const authReducer = (state = initialState, action) => {
     case types.REGISTER_USER:
       return { ...state, isSuccess: true, data: action.payload };
     case types.LOGIN_USER:
-      return { ...state, isSuccess: true, isAuthenticated: true };
+      console.log("calling login user reducer");
+      return {
+        ...state,
+        isSuccess: true,
+        isAuthenticated: true,
+        isError: false,
+        error: "",
+      };
     case types.AUTH_ERROR:
       return {
         ...state,
