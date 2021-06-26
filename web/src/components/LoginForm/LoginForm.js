@@ -1,28 +1,12 @@
 import { Grid } from "@material-ui/core";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
 import TextInput from "../TextInput";
 import Button from "../Button";
 import Typography from "../Typography";
-import useStyles from "./LoginFormStyles";
+
 import { Formik, Form } from "formik";
 import LoginSchema from "../../ValidationSchema/LoginForm/LoginFormSchema";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../state/actions/authActions";
 
-const LoginForm = () => {
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth);
-
-  const onSubmit = (values) => {
-    dispatch(login(values));
-  };
-
-  console.log(user);
-
+const LoginForm = ({ onSubmit, classes, matches }) => {
   return (
     <>
       <Formik
@@ -34,7 +18,7 @@ const LoginForm = () => {
             <Form>
               <div className={classes.gridContainer}>
                 <header className={classes.header}>
-                  <Typography variant="h2" className={classes.header}>
+                  <Typography variant="h2" className={classes?.header}>
                     Login with Homi
                   </Typography>
                 </header>
@@ -53,6 +37,7 @@ const LoginForm = () => {
                       name="email"
                       id="email"
                       variant="outlined"
+                      type="email"
                     />
                   </Grid>
                   <Grid
@@ -65,14 +50,16 @@ const LoginForm = () => {
                       name="password"
                       id="password"
                       variant="outlined"
+                      type="password"
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} className={classes.buttonContainer}>
                     <Button
+                      className={classes.submitButton}
                       type="submit"
                       color="primary"
                       variant="contained"
-                      // disabled={isSubmitting || !isValid}
+                      disabled={isSubmitting || !isValid}
                       fullWidth
                       disableElevation>
                       Login

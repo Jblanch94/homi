@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
 
+  submitButton: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+
   header: {
     marginBottom: theme.spacing(2),
   },

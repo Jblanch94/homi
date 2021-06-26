@@ -1,10 +1,10 @@
-import LoginForm from "../components/LoginForm/LoginForm";
+import LoginFormContainer from "../containers/LoginFormContainer";
 
 const Login = () => {
   return (
     <main>
       <section id="LoginForm">
-        <LoginForm />
+        <LoginFormContainer />
       </section>
     </main>
   );
