@@ -6,19 +6,20 @@ import { useTheme } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import { login } from "../state/actions/authActions";
 
-const LoginFormContainer = () => {
+const LoginFormContainer = (props) => {
+  console.log(props);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const onSubmit = (values) => {
-    dispatch(login(values));
+    dispatch(login(values, props.history));
   };
 
-  const props = { onSubmit, matches, classes };
+  const loginFormProps = { onSubmit, matches, classes };
 
-  return <LoginForm {...props} />;
+  return <LoginForm {...loginFormProps} />;
 };
 
 export default LoginFormContainer;

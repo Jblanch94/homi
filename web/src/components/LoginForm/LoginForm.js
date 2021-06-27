@@ -18,7 +18,7 @@ const LoginForm = ({ onSubmit, classes, matches }) => {
             <Form>
               <div className={classes.gridContainer}>
                 <header className={classes.header}>
-                  <Typography variant="h2" className={classes?.header}>
+                  <Typography variant="h2" className={classes.header}>
                     Login with Homi
                   </Typography>
                 </header>

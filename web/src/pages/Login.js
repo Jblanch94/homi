@@ -1,10 +1,10 @@
 import LoginFormContainer from "../containers/LoginFormContainer";
 
-const Login = () => {
+const Login = (props) => {
   return (
     <main>
       <section id="LoginForm">
-        <LoginFormContainer />
+        <LoginFormContainer {...props} />
       </section>
     </main>
   );

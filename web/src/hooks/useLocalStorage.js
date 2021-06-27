@@ -1,17 +1,17 @@
 const useLocalStorage = () => {
   const setDataInLocalStorage = (key, data) => {
-    localStorage.setItem(key, JSON.stringify(data));
+    window.localStorage.setItem(key, JSON.stringify(data));
   };
 
   const retriveDataFromLocalStorage = (key) => {
-    const data = localStorage.getItem(key);
+    const data = window.localStorage.getItem(key);
     return JSON.parse(data);
   };
 
-  const clearLocalStorage = () => localStorage.clear();
+  const clearLocalStorage = () => window.localStorage.clear();
 
   const removeKey = (key) => {
-    localStorage.removeItem(key);
+    window.localStorage.removeItem(key);
   };
 
   return {

@@ -4,14 +4,18 @@ import Routes from "../components/Routes";
 
 const RoutesContainer = () => {
   const { retriveDataFromLocalStorage } = useLocalStorage();
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    retriveDataFromLocalStorage("auth")?.isAuthenticated
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const auth = retriveDataFromLocalStorage("auth");
-    setIsAuthenticated(auth?.isAuthenticated);
-  }, [isAuthenticated, retriveDataFromLocalStorage]);
+    const setAuthenticationStatus = () => {
+      const auth = retriveDataFromLocalStorage("auth");
+      if (auth && auth.isAuthenticated) {
+        setIsAuthenticated(auth.isAuthenticated);
+      }
+    };
+
+    setAuthenticationStatus();
+  }, [retriveDataFromLocalStorage, isAuthenticated]);
 
   return <Routes isAuthenticated={isAuthenticated} />;
 };

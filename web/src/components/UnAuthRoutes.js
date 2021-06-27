@@ -10,12 +10,16 @@ const UnAuthRoutes = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/sign-up" exact>
+        <Route
+          path="/sign-up"
+          exact
+          render={(routeProps) => <SignUp {...routeProps} />}>
           <SignUp />
         </Route>
-        <Route path="/login" exact>
-          <Login />
-        </Route>
+        <Route
+          path="/login"
+          exact
+          render={(routeProps) => <Login {...routeProps} />}></Route>
       </Switch>
     </Router>
   );

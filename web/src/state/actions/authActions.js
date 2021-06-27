@@ -3,12 +3,14 @@ import authAxios from "../../axios/authAxios";
 import types from "../types";
 import useAxios from "../../hooks/useAxios";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import store from "../../store";
 
 export const registerFamilyAndUser = (formValues) => {
   return async (dispatch) => {
     const familyAxiosWrapper = useAxios(familyAxios);
     const authAxiosWrapper = useAxios(authAxios);
     const { setDataInLocalStorage } = useLocalStorage();
+
     try {
       dispatch({ type: types.IS_LOADING, payload: true });
       const familyData = {
@@ -81,7 +83,6 @@ async function registerUser(authAxiosWrapper, userData, familyId) {
 }
 
 async function loginUser(authAxiosWrapper, loginData) {
-  console.log("calling loginUser");
   const authenticationInformation = await authAxiosWrapper.postRequest(
     "/user/login",
     loginData
@@ -90,7 +91,7 @@ async function loginUser(authAxiosWrapper, loginData) {
   return authenticationInformation;
 }
 
-export const login = (formValues) => {
+export const login = (formValues, history) => {
   return async (dispatch) => {
     const authAxiosWrapper = useAxios(authAxios);
     const { setDataInLocalStorage } = useLocalStorage();
@@ -99,14 +100,16 @@ export const login = (formValues) => {
       const authenticatedUser = await loginUser(authAxiosWrapper, formValues);
 
       if (authenticatedUser.data.success) {
-        setDataInLocalStorage("auth", {
-          accessToken: authenticatedUser.data.data.accessToken,
-          isAuthenticated: true,
-        });
-
         dispatch({
           type: types.LOGIN_USER,
           payload: authenticatedUser.data.data,
+        });
+
+        store.subscribe(() => {
+          setDataInLocalStorage("auth", {
+            accessToken: authenticatedUser.data.data.accessToken,
+            isAuthenticated: true,
+          });
         });
       }
     } catch (err) {
@@ -118,6 +121,9 @@ export const login = (formValues) => {
       dispatch({ type: types.AUTH_ERROR, payload: err.response.data.msg });
     } finally {
       dispatch({ type: types.IS_LOADING, payload: false });
+
+      // after successful login navigate user to dashboard
+      history.push("/");
     }
   };
 };
