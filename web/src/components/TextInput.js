@@ -10,7 +10,7 @@ const TextInput = ({ label, ...props }) => {
         {...field}
         fullWidth
         label={label}
-        error={meta.error && meta.touched}
+        error={(meta.error && meta.touched) || props.error}
         helperText={meta.error}
       />
     </>

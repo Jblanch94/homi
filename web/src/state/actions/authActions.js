@@ -111,6 +111,9 @@ export const login = (formValues, history) => {
             isAuthenticated: true,
           });
         });
+
+        // after successful login navigate user to dashboard
+        history.push("/");
       }
     } catch (err) {
       console.error(err.response.data.msg);
@@ -121,9 +124,6 @@ export const login = (formValues, history) => {
       dispatch({ type: types.AUTH_ERROR, payload: err.response.data.msg });
     } finally {
       dispatch({ type: types.IS_LOADING, payload: false });
-
-      // after successful login navigate user to dashboard
-      history.push("/");
     }
   };
 };
