@@ -1,7 +1,13 @@
-import { Hidden } from '@material-ui/core';
+import { Hidden } from "@material-ui/core";
 
 const HideComponent = (props) => {
-  return <Hidden {...props}>{props.children}</Hidden>;
+  const extractedProps = {};
+  for (let prop in props) {
+    if (prop !== "location" && prop !== "computedMatch") {
+      extractedProps[prop] = props[prop];
+    }
+  }
+  return <Hidden {...extractedProps}>{extractedProps.children}</Hidden>;
 };
 
 export default HideComponent;

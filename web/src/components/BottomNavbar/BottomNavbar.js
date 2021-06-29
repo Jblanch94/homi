@@ -1,8 +1,4 @@
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  CssBaseline,
-} from "@material-ui/core";
+import { BottomNavigation, CssBaseline } from "@material-ui/core";
 import {
   CalendarToday,
   Check,
@@ -11,6 +7,7 @@ import {
   People,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import BottomNavbarAction from "../BottomNavbarAction";
 
 const BottomNavbar = ({ value, classes, onHandleChange }) => {
   return (
@@ -21,30 +18,30 @@ const BottomNavbar = ({ value, classes, onHandleChange }) => {
         showLabels
         className={classes.root}
         onChange={onHandleChange}>
-        <BottomNavigationAction
-          compnent={Link}
+        <BottomNavbarAction
+          component={Link}
           to="/family"
           label="Family"
           value="family"
           icon={<People />}
         />
 
-        <BottomNavigationAction
+        <BottomNavbarAction
           label="Calendar"
           value="calendar"
           icon={<CalendarToday />}
           component={Link}
           to="/calendar"
         />
-        <BottomNavigationAction label="Tasks" value="tasks" icon={<Check />} />
-        <BottomNavigationAction
+        <BottomNavbarAction label="Tasks" value="tasks" icon={<Check />} />
+        <BottomNavbarAction
           label="Groceries"
           icon={<LocalGroceryStore />}
           value="groceries"
           component={Link}
           to="/groceries"
         />
-        <BottomNavigationAction
+        <BottomNavbarAction
           label="Recipes"
           value="recipes"
           icon={<Restaurant />}
