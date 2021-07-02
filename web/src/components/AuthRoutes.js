@@ -7,6 +7,7 @@ import Groceries from "../pages/Groceries";
 import Recipes from "../pages/Recipes";
 import BottomNavbarContainer from "../containers/BottomNavbarContainer";
 import SidebarContainer from "../containers/SidebarContainer";
+import UserAccountCreation from "../pages/UserAccountCreation";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 
 const AuthRoutes = () => {
@@ -35,6 +36,9 @@ const AuthRoutes = () => {
         </Route>
         <Route exact path="/recipes">
           <Recipes />
+        </Route>
+        <Route exact path="/family/create-user-account">
+          <UserAccountCreation />
         </Route>
       </Switch>
     </Router>

@@ -2,6 +2,7 @@ import Typography from "../Typography";
 import { Divider, IconButton } from "@material-ui/core";
 import { AddCircleOutlineRounded } from "@material-ui/icons";
 import useStyles from "./FamilyHeaderStyles";
+import { Link } from "react-router-dom";
 
 const FamilyHeader = ({ name, isAdmin }) => {
   const classes = useStyles();
@@ -13,9 +14,11 @@ const FamilyHeader = ({ name, isAdmin }) => {
           {name}
         </Typography>
         {isAdmin ? (
-          <IconButton color="primary">
-            <AddCircleOutlineRounded fontSize="large" />
-          </IconButton>
+          <Link to="/family/create-user-account">
+            <IconButton color="primary">
+              <AddCircleOutlineRounded fontSize="large" />
+            </IconButton>
+          </Link>
         ) : null}
       </header>
       <Divider />

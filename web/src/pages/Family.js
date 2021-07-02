@@ -1,3 +1,4 @@
+import { memo } from "react";
 import FamilyHeader from "../components/FamilyHeader/FamilyHeader";
 
 const Family = (props) => {
@@ -11,4 +12,12 @@ const Family = (props) => {
   );
 };
 
-export default Family;
+const checkIfPropsChanged = (prevProps, nextProps) => {
+  if (prevProps.family.name !== nextProps.family.name) {
+    return false;
+  }
+
+  return true;
+};
+
+export default memo(Family, checkIfPropsChanged);

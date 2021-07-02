@@ -30,7 +30,11 @@ const FamilyContainer = () => {
     userProfiles: user.userProfiles,
     family,
   };
-  return <Family {...props} />;
+  return (
+    <>
+      <Family {...props} />
+    </>
+  );
 };
 
 export default FamilyContainer;
