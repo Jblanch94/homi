@@ -1,13 +1,14 @@
-const HttpResponse = require('../HttpResponse');
-const UserService = require('../services/UserService');
-const FamilyService = require('../services/FamilyService');
-const cloudinary = require('cloudinary').v2;
+const HttpResponse = require("../HttpResponse");
+const UserService = require("../services/UserService");
+const FamilyService = require("../services/FamilyService");
+const cloudinary = require("cloudinary").v2;
 
 class UserController {
   constructor() {
     this.userService = new UserService();
     this.familyService = new FamilyService();
     this.fetchUserById = this.fetchUserById.bind(this);
+    this.fetchCurrentUser = this.fetchCurrentUser.bind(this);
     this.deleteUserById = this.deleteUserById.bind(this);
     this.fetchUsersByFamilyId = this.fetchUsersByFamilyId.bind(this);
     this.registerUser = this.registerUser.bind(this);
@@ -23,14 +24,25 @@ class UserController {
 
       // if user is null return a not found status
       if (user === null) {
-        return new HttpResponse('User not found', false).notFound(res);
+        return new HttpResponse("User not found", false).notFound(res);
       }
       // return user details
-      new HttpResponse('Successfully fetched user', true, user).ok(res);
+      new HttpResponse("Successfully fetched user", true, user).ok(res);
     } catch (err) {
       console.error(err);
       next(err);
     }
+  }
+
+  async fetchCurrentUser(req, res) {
+    console.log(req.user);
+    if (!req.user) {
+      return new HttpResponse("Not authenticated", false).notAuthenticated(res);
+    }
+
+    new HttpResponse("Successfully retrieved user profile", true, req.user).ok(
+      res
+    );
   }
 
   async fetchUsersByFamilyId(req, res, next) {
@@ -41,7 +53,7 @@ class UserController {
 
       // if family is null return not found
       if (family === null) {
-        return new HttpResponse('Family not found', false).badRequest(res);
+        return new HttpResponse("Family not found", false).badRequest(res);
       }
 
       // call user service to find users for a given family id
@@ -49,7 +61,7 @@ class UserController {
 
       // return associated user profiles
       new HttpResponse(
-        'Successfully fetched all user profiles for associated Family',
+        "Successfully fetched all user profiles for associated Family",
         true,
         users
       ).ok(res);
@@ -67,7 +79,7 @@ class UserController {
 
       // if user is null return not found
       if (user === null) {
-        return new HttpResponse('User not found', false).notFound(res);
+        return new HttpResponse("User not found", false).notFound(res);
       }
 
       // call user service to delete user by id
@@ -78,10 +90,10 @@ class UserController {
 
       // return sucess message if user is deleted
       if (userDeleted <= 0) {
-        throw new Error('User could not be deleted');
+        throw new Error("User could not be deleted");
       }
 
-      new HttpResponse('Successfully deleted user', true).ok(res);
+      new HttpResponse("Successfully deleted user", true).ok(res);
     } catch (err) {
       console.error(err);
       next(err);
@@ -97,12 +109,12 @@ class UserController {
       // if user exists return user already exsits
       const user = await this.userService.fetchUserByEmail(email);
       if (user !== null) {
-        return new HttpResponse('Email already exists', false).badRequest(res);
+        return new HttpResponse("Email already exists", false).badRequest(res);
       }
 
       // take the image and upload it
       const { url } = await cloudinary.uploader.upload(req.file.path, {
-        public_id: 'Homi/development',
+        public_id: "Homi/development",
       });
 
       // register user with family with provided details
@@ -113,10 +125,10 @@ class UserController {
       );
 
       if (newUser === null) {
-        throw new Error('User could not be created');
+        throw new Error("User could not be created");
       }
 
-      new HttpResponse('Successfully created user', true, newUser).created(res);
+      new HttpResponse("Successfully created user", true, newUser).created(res);
     } catch (err) {
       console.error(err);
       next(err);
@@ -135,7 +147,7 @@ class UserController {
         (await this.userService.isAdmin(req.user.id, familyId)) ||
         req.user.id === parseInt(userId);
       if (!hasPermissions) {
-        return new HttpResponse('Not Authorized', false).notAuthorized(res);
+        return new HttpResponse("Not Authorized", false).notAuthorized(res);
       }
 
       const updatedUser = await this.userService.updateUser(
@@ -143,7 +155,7 @@ class UserController {
         userId,
         familyId
       );
-      new HttpResponse('Successfully updated user', true, updatedUser).ok(res);
+      new HttpResponse("Successfully updated user", true, updatedUser).ok(res);
     } catch (err) {
       console.error(err);
       next(err);

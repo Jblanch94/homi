@@ -1,6 +1,6 @@
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
-import Family from "../pages/Family";
+import FamilyContainer from "../containers/FamilyContainer";
 import Calendar from "../pages/Calendar";
 import Tasks from "../pages/Calendar";
 import Groceries from "../pages/Groceries";
@@ -22,7 +22,7 @@ const AuthRoutes = () => {
           <Dashboard />
         </Route>
         <Route exact path="/family">
-          <Family />
+          <FamilyContainer />
         </Route>
         <Route exact path="/calendar">
           <Calendar />

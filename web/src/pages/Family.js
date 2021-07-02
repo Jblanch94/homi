@@ -1,9 +1,12 @@
 import FamilyHeader from "../components/FamilyHeader/FamilyHeader";
 
-const Family = () => {
+const Family = (props) => {
   return (
     <main>
-      <FamilyHeader />
+      <FamilyHeader
+        name={props.family.name}
+        isAdmin={props.currentUser.isAdmin}
+      />
     </main>
   );
 };
