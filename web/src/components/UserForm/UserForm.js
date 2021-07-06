@@ -4,32 +4,14 @@ import Button from "../Button";
 import { Formik, Form } from "formik";
 import { FormControlLabel, Switch, Grid } from "@material-ui/core";
 import UserSignUpSchema from "../../ValidationSchema/UserSignUp/UserSignUpSchema";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../state/actions/userActions";
-import { useHistory } from "react-router-dom";
 
-const UserForm = () => {
+const UserForm = ({ onHandleSwitchChange, onSubmit }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const history = useHistory();
-
-  const onHandleSwitchChange = (e, fn, name) => {
-    fn(name, e.target.checked);
-  };
-
-  const onSubmit = (values) => {
-    const familyId = user.currentUser.FamilyId;
-    const data = { ...values, familyId };
-    dispatch(registerUser(data));
-    if (user.error === "") {
-      history.push("/family");
-    }
-  };
+  const intialValues = { name: "", email: "", admin: false, age: 0 };
 
   return (
     <Formik
-      initialValues={{ name: "", email: "", admin: false, age: 0 }}
+      initialValues={intialValues}
       onSubmit={onSubmit}
       validationSchema={UserSignUpSchema}>
       {({ values, setFieldValue }) => (

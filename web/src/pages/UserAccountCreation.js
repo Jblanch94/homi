@@ -1,12 +1,12 @@
 import FormHeader from "../components/FormHeader/FormHeader";
-import UserForm from "../components/UserForm/UserForm";
+import UserFormContainer from "../containers/UserFormContainer";
 
 const UserAccountCreation = () => {
   return (
     <>
       <FormHeader name="Add User" />
       <main>
-        <UserForm />
+        <UserFormContainer />
       </main>
     </>
   );
