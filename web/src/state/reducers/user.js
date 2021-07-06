@@ -19,6 +19,8 @@ const userReducer = (state = initialState, action) => {
         currentUser: {},
         userProfiles: [],
       };
+    case types.REGISTER_USER:
+      return state;
     default:
       return state;
   }

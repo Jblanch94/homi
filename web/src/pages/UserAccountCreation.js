@@ -1,10 +1,14 @@
 import FormHeader from "../components/FormHeader/FormHeader";
+import UserForm from "../components/UserForm/UserForm";
 
 const UserAccountCreation = () => {
   return (
-    <main>
+    <>
       <FormHeader name="Add User" />
-    </main>
+      <main>
+        <UserForm />
+      </main>
+    </>
   );
 };
 

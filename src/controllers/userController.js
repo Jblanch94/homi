@@ -113,14 +113,18 @@ class UserController {
       }
 
       // take the image and upload it
-      const { url } = await cloudinary.uploader.upload(req.file.path, {
-        public_id: "Homi/development",
-      });
+      let profileUrl = "";
+      if (req.file) {
+        const { url } = await cloudinary.uploader.upload(req.file.path, {
+          public_id: "Homi/development",
+        });
+        profileUrl = url;
+      }
 
       // register user with family with provided details
       // return new user created
       const newUser = await this.userService.registerUser(
-        { ...req.body, profileUrl: url },
+        { ...req.body, profileUrl },
         familyId
       );
 

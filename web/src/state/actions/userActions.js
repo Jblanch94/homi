@@ -47,3 +47,30 @@ export const fetchUserProfiles = (familyId) => {
     }
   };
 };
+
+export const registerUser = (values) => {
+  return async (dispatch) => {
+    const axios = useAxios(userAxios);
+    const token = JSON.parse(window.localStorage.getItem("auth"))?.accessToken;
+    try {
+      if (token) {
+        const newUser = await axios.postRequest(
+          `/register/family/${values.familyId}`,
+          values,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+        return dispatch({
+          type: types.REGISTER_USER,
+          payload: newUser.data.data,
+        });
+      }
+      throw new Error("User could not be authenticated");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};

@@ -2,7 +2,7 @@ import { IconButton, Divider } from "@material-ui/core";
 import { AddCircleOutline, ArrowBack } from "@material-ui/icons";
 import Typography from "../Typography";
 import useStyles from "./FormHeaderStyles";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const FormHeader = ({ name }) => {
   const classes = useStyles();
@@ -10,11 +10,9 @@ const FormHeader = ({ name }) => {
   return (
     <>
       <header className={classes.root}>
-        <Link to="">
-          <IconButton color="primary" onClick={() => history.goBack()}>
-            <ArrowBack fontSize="large" />
-          </IconButton>
-        </Link>
+        <IconButton color="primary" onClick={() => history.goBack()}>
+          <ArrowBack fontSize="large" />
+        </IconButton>
         <Typography variant="h4" color="primary">
           {name}
         </Typography>
