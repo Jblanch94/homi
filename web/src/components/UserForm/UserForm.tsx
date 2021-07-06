@@ -1,13 +1,39 @@
+import { FC } from "react";
 import useStyles from "./UserFormStyles";
 import TextInput from "../TextInput";
 import Button from "../Button";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikValues, FormikHelpers } from "formik";
 import { FormControlLabel, Switch, Grid } from "@material-ui/core";
 import UserSignUpSchema from "../../ValidationSchema/UserSignUp/UserSignUpSchema";
 
-const UserForm = ({ onHandleSwitchChange, onSubmit }) => {
+interface IUserFormProps {
+  onSubmit: (values: FormikValues) => void | Promise<any>;
+  onHandleSwitchChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean
+    ) => void,
+    name: string
+  ) => void;
+}
+
+interface IUserFormValues {
+  name: string;
+  email: string;
+  admin: boolean;
+  age?: number;
+}
+
+const UserForm: FC<IUserFormProps> = ({ onHandleSwitchChange, onSubmit }) => {
   const classes = useStyles();
-  const intialValues = { name: "", email: "", admin: false, age: 0 };
+  const intialValues: IUserFormValues = {
+    name: "",
+    email: "",
+    admin: false,
+    age: 0,
+  };
 
   return (
     <Formik
