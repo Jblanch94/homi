@@ -1,13 +1,14 @@
 import { FC } from "react";
 import UserForm from "../components/UserForm/UserForm";
 import { registerUser } from "../state/actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import useTypedSelector from "../hooks/useTypedSelector";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { FormikValues } from "formik";
 
 const UserFormContainer: FC = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useTypedSelector((state) => state.user);
   const history = useHistory();
 
   const onHandleSwitchChange = (
@@ -19,8 +20,13 @@ const UserFormContainer: FC = () => {
   };
 
   const onSubmit = (values: FormikValues) => {
-    const familyId = user.currentUser.FamilyId;
-    const data = { ...values, familyId };
+    const familyId: number = user.currentUser.FamilyId;
+    const data = {
+      name: values.name,
+      email: values.email,
+      admin: values.admin,
+      familyId,
+    };
     dispatch(registerUser(data));
     if (user.error === "") {
       history.push("/family");

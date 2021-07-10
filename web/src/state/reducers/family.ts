@@ -1,6 +1,7 @@
 import types from "../types";
+import { AnyAction } from "redux";
 
-const familyReducer = (state = {}, action) => {
+const familyReducer = (state = {}, action: AnyAction) => {
   switch (action.type) {
     case types.REGISTER_FAMILY:
       return action.payload;

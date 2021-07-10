@@ -1,15 +1,23 @@
 import useAxios from "../../hooks/useAxios";
 import userAxios from "../../axios/userAxios";
 import familyAxios from "../../axios/familyAxios";
-import types from "../types";
+import types, { AppThunk } from "../types";
 
-export const fetchCurrentUser = () => {
+interface IRegisterUser {
+  name: string;
+  email: string;
+  age?: number;
+  admin: boolean;
+  familyId: number;
+}
+
+export const fetchCurrentUser = (): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(userAxios);
     try {
       const currentUser = await axios.getRequest("/");
 
-      const userId = currentUser.data.data?.id;
+      const userId: number = currentUser.data.data?.id;
 
       // if current user has a valid id and family id exists then query for the family data
       if (userId) {
@@ -25,7 +33,7 @@ export const fetchCurrentUser = () => {
   };
 };
 
-export const fetchUserProfiles = (familyId) => {
+export const fetchUserProfiles = (familyId: number): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(familyAxios);
     try {
@@ -48,7 +56,7 @@ export const fetchUserProfiles = (familyId) => {
   };
 };
 
-export const registerUser = (values) => {
+export const registerUser = (values: IRegisterUser): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(userAxios);
     const token = JSON.parse(window.localStorage.getItem("auth"))?.accessToken;

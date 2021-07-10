@@ -1,4 +1,20 @@
 import types from "../types";
+import { AnyAction } from "redux";
+
+interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  profileUrl: string | null;
+  age: number | null;
+  FamilyId: number;
+}
+
+interface IUserState {
+  currentUser: IUser | {};
+  userProfiles: Array<IUser> | [];
+  error: string;
+}
 
 const initialState = {
   currentUser: {},
@@ -6,7 +22,7 @@ const initialState = {
   error: "",
 };
 
-const userReducer = (state = initialState, action) => {
+const userReducer = (state: IUserState = initialState, action: AnyAction) => {
   switch (action.type) {
     case types.FETCH_CURRENT_USER:
       return { ...state, currentUser: action.payload };

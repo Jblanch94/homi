@@ -1,11 +1,37 @@
 import familyAxios from "../../axios/familyAxios";
 import authAxios from "../../axios/authAxios";
-import types from "../types";
+import types, { AppThunk } from "../types";
 import useAxios from "../../hooks/useAxios";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import store from "../../store";
 
-export const registerFamilyAndUser = (formValues) => {
+interface IFormValues {
+  familyName: string;
+  familyPassword: string;
+  email: string;
+  userName: string;
+  age?: number;
+  profileAvatar?: string;
+}
+
+interface IFamilyData {
+  name: string;
+  password: string;
+}
+
+interface IUserData {
+  email: string;
+  name: string;
+  age?: number;
+  profileAvatar?: string;
+}
+
+interface ILoginData {
+  email: string;
+  password: string;
+}
+
+export const registerFamilyAndUser = (formValues: IFormValues): AppThunk => {
   return async (dispatch) => {
     const familyAxiosWrapper = useAxios(familyAxios);
     const authAxiosWrapper = useAxios(authAxios);
@@ -21,7 +47,7 @@ export const registerFamilyAndUser = (formValues) => {
       const familyId = family.data.data?.id;
 
       if (familyId === null) {
-        throw new Error({ message: "Family could not be registered" });
+        throw new Error("Family could not be registered");
       }
 
       const userData = {
@@ -69,12 +95,19 @@ export const registerFamilyAndUser = (formValues) => {
   };
 };
 
-async function registerFamily(familyAxiosWrapper, familyData) {
+async function registerFamily(
+  familyAxiosWrapper: ReturnType<typeof useAxios>,
+  familyData: IFamilyData
+) {
   const family = await familyAxiosWrapper.postRequest("/", familyData);
   return family;
 }
 
-async function registerUser(authAxiosWrapper, userData, familyId) {
+async function registerUser(
+  authAxiosWrapper: ReturnType<typeof useAxios>,
+  userData: IUserData,
+  familyId: number
+) {
   const user = await authAxiosWrapper.postRequest(
     `/${familyId}/user/register`,
     userData
@@ -82,7 +115,10 @@ async function registerUser(authAxiosWrapper, userData, familyId) {
   return user;
 }
 
-async function loginUser(authAxiosWrapper, loginData) {
+async function loginUser(
+  authAxiosWrapper: ReturnType<typeof useAxios>,
+  loginData: ILoginData
+) {
   const authenticationInformation = await authAxiosWrapper.postRequest(
     "/user/login",
     loginData
@@ -91,7 +127,7 @@ async function loginUser(authAxiosWrapper, loginData) {
   return authenticationInformation;
 }
 
-export const login = (formValues, history) => {
+export const login = (formValues: ILoginData, history): AppThunk => {
   return async (dispatch) => {
     const authAxiosWrapper = useAxios(authAxios);
     const { setDataInLocalStorage } = useLocalStorage();

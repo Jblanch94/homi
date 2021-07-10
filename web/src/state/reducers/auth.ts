@@ -1,6 +1,16 @@
 import types from "../types";
+import { AnyAction } from "redux";
 
-const initialState = {
+interface IAuth {
+  isError: boolean;
+  isSuccess: boolean;
+  data: {};
+  error: string;
+  isLoading: boolean;
+  isAuthenticated: boolean;
+}
+
+const initialState: IAuth = {
   isError: false,
   isSuccess: false,
   data: {},
@@ -9,7 +19,7 @@ const initialState = {
   isAuthenticated: false,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case types.IS_LOADING:
       return { ...state, isLoading: action.payload };

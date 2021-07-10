@@ -1,8 +1,8 @@
-import types from "../types";
+import types, { AppThunk } from "../types";
 import familyAxios from "../../axios/familyAxios";
 import useAxios from "../../hooks/useAxios";
 
-export const fetchFamily = (familyId) => {
+export const fetchFamily = (familyId: number): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(familyAxios);
     try {
