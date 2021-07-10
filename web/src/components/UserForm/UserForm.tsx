@@ -2,7 +2,7 @@ import { FC } from "react";
 import useStyles from "./UserFormStyles";
 import TextInput from "../TextInput";
 import Button from "../Button";
-import { Formik, Form, FormikValues, FormikHelpers } from "formik";
+import { Formik, Form, FormikValues } from "formik";
 import { FormControlLabel, Switch, Grid } from "@material-ui/core";
 import UserSignUpSchema from "../../ValidationSchema/UserSignUp/UserSignUpSchema";
 

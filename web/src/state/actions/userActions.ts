@@ -26,6 +26,7 @@ export const fetchCurrentUser = (): AppThunk => {
           payload: currentUser.data.data,
         });
       }
+      throw new Error("User does not exsist");
     } catch (err) {
       console.error(err);
       dispatch({ type: types.USER_ERROR, payload: err.response.msg });
@@ -37,18 +38,22 @@ export const fetchUserProfiles = (familyId: number): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(familyAxios);
     try {
-      const family = await axios.getRequest(`/${familyId}`, {
-        headers: {
-          Authorization:
-            "Bearer " +
-            JSON.parse(window.localStorage.getItem("auth"))?.accessToken,
-        },
-      });
+      const auth = JSON.parse(window.localStorage.getItem("auth") || "{}");
+      const token = auth.accessToken;
 
-      dispatch({
-        type: types.FETCH_USER_PROFILES,
-        payload: family.data.data.users,
-      });
+      if (token) {
+        const family = await axios.getRequest(`/${familyId}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        return dispatch({
+          type: types.FETCH_USER_PROFILES,
+          payload: family.data.data.users,
+        });
+      }
+      dispatch({ type: types.USER_ERROR, payload: "User not found" });
     } catch (err) {
       console.error(err.response.msg);
       dispatch({ type: types.USER_ERROR, payload: err.response.msg });
@@ -59,7 +64,8 @@ export const fetchUserProfiles = (familyId: number): AppThunk => {
 export const registerUser = (values: IRegisterUser): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(userAxios);
-    const token = JSON.parse(window.localStorage.getItem("auth"))?.accessToken;
+    const auth = JSON.parse(window.localStorage.getItem("auth") || "{}");
+    const token = auth.accessToken;
     try {
       if (token) {
         const newUser = await axios.postRequest(
@@ -71,7 +77,7 @@ export const registerUser = (values: IRegisterUser): AppThunk => {
             },
           }
         );
-        return dispatch({
+        dispatch({
           type: types.REGISTER_USER,
           payload: newUser.data.data,
         });

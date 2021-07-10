@@ -4,7 +4,7 @@ const useLocalStorage = () => {
   };
 
   const retriveDataFromLocalStorage = (key: string) => {
-    const data = window.localStorage.getItem(key);
+    const data = window.localStorage.getItem(key) || "{}";
     return JSON.parse(data);
   };
 

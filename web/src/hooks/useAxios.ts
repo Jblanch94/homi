@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { AxiosInstance, AxiosRequestConfig } from "axios";
 
 const useAxios = (axiosInstance: AxiosInstance) => {
   const postRequest = (

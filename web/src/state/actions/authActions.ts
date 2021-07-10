@@ -4,6 +4,7 @@ import types, { AppThunk } from "../types";
 import useAxios from "../../hooks/useAxios";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import store from "../../store";
+import { History } from "history";
 
 interface IFormValues {
   familyName: string;
@@ -127,7 +128,7 @@ async function loginUser(
   return authenticationInformation;
 }
 
-export const login = (formValues: ILoginData, history): AppThunk => {
+export const login = (formValues: ILoginData, history: History): AppThunk => {
   return async (dispatch) => {
     const authAxiosWrapper = useAxios(authAxios);
     const { setDataInLocalStorage } = useLocalStorage();

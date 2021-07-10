@@ -1,4 +1,5 @@
 import { BottomNavigation, CssBaseline } from "@material-ui/core";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import {
   CalendarToday,
   Check,
@@ -6,12 +7,23 @@ import {
   Restaurant,
   People,
 } from "@material-ui/icons";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import BottomNavbarAction from "../BottomNavbarAction";
 
-const BottomNavbar = ({ value, classes, onHandleChange }) => {
+interface IBottomNavbar {
+  classes: ClassNameMap<"root">;
+  value: string;
+  onHandleChange: (e: React.ChangeEvent<{}>, value: string) => void;
+}
+
+const BottomNavbar: React.FC<IBottomNavbar> = ({
+  value,
+  classes,
+  onHandleChange,
+}) => {
   return (
-    <>
+    <Fragment>
       <CssBaseline />
       <BottomNavigation
         value={value}
@@ -49,7 +61,7 @@ const BottomNavbar = ({ value, classes, onHandleChange }) => {
           to="/recipes"
         />
       </BottomNavigation>
-    </>
+    </Fragment>
   );
 };
 
