@@ -1,21 +1,27 @@
+import { FC } from "react";
 import LoginForm from "../components/LoginForm/LoginForm";
 import useStyles from "../components/LoginForm/LoginFormStyles";
 import { useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
+import { History } from "history";
 
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../state/actions/authActions";
+import useTypedSelector from "../hooks/useTypedSelector";
+import useActions from "../hooks/useActions";
+import actions from "../state/actions";
+import { FormikValues } from "formik";
 
-const LoginFormContainer = (props) => {
+interface ILoginFormContainer {
+  history: History;
+}
+
+const LoginFormContainer: FC<ILoginFormContainer> = ({ history }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const auth = useTypedSelector((state) => state.auth);
+  const { loginUser } = useActions(actions.authActions);
 
-  const onSubmit = (values) => {
-    dispatch(login(values, props.history));
-  };
+  const onSubmit: void = (values: FormikValues) => loginUser(values, history);
 
   const loginFormProps = {
     onSubmit,

@@ -3,11 +3,32 @@ import TextInput from "../TextInput";
 import Button from "../Button";
 import Typography from "../Typography";
 
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikValues } from "formik";
 import LoginSchema from "../../ValidationSchema/LoginForm/LoginFormSchema";
+import { FC } from "react";
+import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 
-const LoginForm = ({ onSubmit, classes, matches, ...props }) => {
-  console.log(props);
+interface ILoginForm {
+  onSubmit: (values: FormikValues) => void;
+  classes: ClassNameMap<
+    | "gridContainer"
+    | "textFieldContainer"
+    | "buttonContainer"
+    | "submitButton"
+    | "header"
+  >;
+  matches: boolean;
+  isError: boolean;
+  errorMsg: string;
+  loading: boolean;
+}
+
+const LoginForm: FC<ILoginForm> = ({
+  onSubmit,
+  classes,
+  matches,
+  ...props
+}) => {
   return (
     <>
       <Formik
