@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   Drawer,
   CssBaseline,
@@ -11,7 +12,18 @@ import {
 import { NavLink } from "react-router-dom";
 import useStyles from "./SidebarStyles";
 
-const Sidebar = ({ currentPage, sidebarLinks }) => {
+interface ISidebarLink {
+  text: string;
+  icon: JSX.Element;
+  to: string;
+}
+
+interface ISidebar {
+  currentPage: string | null;
+  sidebarLinks: ISidebarLink[];
+}
+
+const Sidebar: FC<ISidebar> = ({ currentPage, sidebarLinks }) => {
   const classes = useStyles();
 
   const sidebarLinksList = sidebarLinks.map((link, index) => {

@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
@@ -10,13 +11,15 @@ import {
 
 import Sidebar from "../components/Sidebar/Sidebar";
 
-const SidebarContainer = () => {
+const SidebarContainer: FC<{}> = () => {
   const location = useLocation();
-  const [currentPage, setCurrentPage] = useState(location.pathname);
+  const [currentPage, setCurrentPage] = useState<string | null>(
+    location.pathname
+  );
 
   useEffect(() => {
     setCurrentPage(location.pathname);
-  }, [location]);
+  }, [location, location.pathname]);
 
   const sidebarLinks = [
     { text: "Family", icon: <People />, to: "/family" },

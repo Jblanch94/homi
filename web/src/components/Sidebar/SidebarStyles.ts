@@ -1,6 +1,6 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: "flex",
   },
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    color: theme.palette.grey,
+    color: theme.palette.grey[400],
   },
 
   listItemIcon: {
