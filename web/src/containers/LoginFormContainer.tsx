@@ -21,7 +21,7 @@ const LoginFormContainer: FC<ILoginFormContainer> = ({ history }) => {
   const auth = useTypedSelector((state) => state.auth);
   const { loginUser } = useActions(actions.authActions);
 
-  const onSubmit: void = (values: FormikValues) => loginUser(values, history);
+  const onSubmit = (values: FormikValues): void => loginUser(values, history);
 
   const loginFormProps = {
     onSubmit,
