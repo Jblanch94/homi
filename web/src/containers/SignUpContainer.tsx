@@ -1,22 +1,26 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { registerFamilyAndUser } from "../state/actions/authActions";
+import { useState, FC, SetStateAction } from "react";
+import actions from "../state/actions";
 import familyRegistrationSchema from "../ValidationSchema/SignUpForm/FamilyRegistration";
 import userRegistrationSchema from "../ValidationSchema/SignUpForm/UserRegistration";
 import useToggle from "../hooks/useToggle";
-
+import useTypedSelector from "../hooks/useTypedSelector";
+import useActions from "../hooks/useActions";
 import SignUp from "../pages/SignUp";
 
-const SignUpContainer = () => {
+import { FormikValues } from "formik";
+
+const SignUpContainer: FC<{}> = () => {
   const [setValues, getSetValues] = useState();
-  const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const auth = useTypedSelector((state) => state.auth);
+  const { registerFamilyAndUser } = useActions(actions.authActions);
   const [modalOpen, modalToggle] = useToggle(false);
 
-  const handleSubmit = (values, ...args) => {
-    getSetValues(args.setValues);
-    dispatch(registerFamilyAndUser(values));
+  const handleSubmit = (
+    values: FormikValues,
+    setValues: SetStateAction<undefined>
+  ) => {
+    getSetValues(setValues);
+    registerFamilyAndUser(values);
     if (auth.isError && auth.error === "User already exists") {
       modalToggle();
     }

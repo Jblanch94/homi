@@ -1,4 +1,4 @@
-import React, { FC, KeyboardEvent, MouseEventHandler } from "react";
+import { FC, KeyboardEvent, MouseEventHandler } from "react";
 import { useState } from "react";
 import SideDrawer from "../components/SideDrawer";
 
