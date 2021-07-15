@@ -1,10 +1,11 @@
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import useStyles from './NavbarStyles';
-import SideDrawerContainer from '../../containers/SideDrawerContainer';
-import HideComponent from '../HideComponent';
+import { FC } from "react";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import useStyles from "./NavbarStyles";
+import SideDrawerContainer from "../../containers/SideDrawerContainer";
+import HideComponent from "../HideComponent";
 
-const Navbar = () => {
+const Navbar: FC<{}> = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -29,8 +30,8 @@ const Navbar = () => {
           <HideComponent smUp>
             <SideDrawerContainer
               navLinks={[
-                { title: 'Log in to Homi', path: '/login' },
-                { title: 'Sign up for Homi', path: '/sign-up' },
+                { title: "Log in to Homi", path: "/login" },
+                { title: "Sign up for Homi", path: "/sign-up" },
               ]}
             />
           </HideComponent>

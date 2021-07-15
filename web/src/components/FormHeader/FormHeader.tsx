@@ -1,10 +1,15 @@
+import { FC } from "react";
 import { IconButton, Divider } from "@material-ui/core";
 import { AddCircleOutline, ArrowBack } from "@material-ui/icons";
 import Typography from "../Typography";
 import useStyles from "./FormHeaderStyles";
 import { useHistory } from "react-router-dom";
 
-const FormHeader = ({ name }) => {
+interface IFormHeaderProps {
+  name: string;
+}
+
+const FormHeader: FC<IFormHeaderProps> = ({ name }) => {
   const classes = useStyles();
   const history = useHistory();
   return (

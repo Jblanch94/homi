@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   DialogActions,
   DialogContent,
@@ -8,7 +9,13 @@ import {
 import { Link } from "react-router-dom";
 import useStyles from "./DuplicateAccountDialogStyles";
 
-const DuplicateAccountDialog = ({ modalToggle }) => {
+interface IDuplicateAccountDialogProps {
+  modalToggle: () => void;
+}
+
+const DuplicateAccountDialog: FC<IDuplicateAccountDialogProps> = ({
+  modalToggle,
+}) => {
   const classes = useStyles();
   return (
     <>

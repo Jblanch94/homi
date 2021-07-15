@@ -8,8 +8,16 @@ import useActions from "../hooks/useActions";
 import SignUp from "../pages/SignUp";
 
 import { FormikValues } from "formik";
+import { History, Location } from "history";
+import { match } from "react-router-dom";
 
-const SignUpContainer: FC<{}> = () => {
+interface ISignUpContainer {
+  history: History<unknown>;
+  location: Location<unknown>;
+  match: match<{}>;
+}
+
+const SignUpContainer: FC<ISignUpContainer> = () => {
   const [setValues, getSetValues] = useState();
   const auth = useTypedSelector((state) => state.auth);
   const { registerFamilyAndUser } = useActions(actions.authActions);

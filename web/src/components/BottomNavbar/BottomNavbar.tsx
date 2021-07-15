@@ -30,15 +30,11 @@ const BottomNavbar: React.FC<IBottomNavbar> = ({
         showLabels
         className={classes.root}
         onChange={onHandleChange}>
-        <BottomNavbarAction
-          component={Link}
-          to="/family"
-          label="Family"
-          value="family"
-          icon={<People />}
-        />
+        <Link to="/family">
+          <BottomNavbarAction label="Family" value="family" icon={<People />} />
+        </Link>
 
-        <BottomNavbarAction
+        {/* <BottomNavbarAction
           label="Calendar"
           value="calendar"
           icon={<CalendarToday />}
@@ -59,7 +55,7 @@ const BottomNavbar: React.FC<IBottomNavbar> = ({
           icon={<Restaurant />}
           component={Link}
           to="/recipes"
-        />
+        /> */}
       </BottomNavigation>
     </Fragment>
   );

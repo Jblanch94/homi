@@ -1,9 +1,10 @@
+import { FC } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import SignUp from "../containers/SignUpContainer";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 
-const UnAuthRoutes = () => {
+const UnAuthRoutes: FC<{}> = () => {
   return (
     <Router>
       <Switch>
@@ -13,9 +14,8 @@ const UnAuthRoutes = () => {
         <Route
           path="/sign-up"
           exact
-          render={(routeProps) => <SignUp {...routeProps} />}>
-          <SignUp />
-        </Route>
+          render={(routeProps) => <SignUp {...routeProps} />}
+        />
         <Route
           path="/login"
           exact

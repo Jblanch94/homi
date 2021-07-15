@@ -1,10 +1,16 @@
+import { FC } from "react";
 import Typography from "../Typography";
 import { Divider, IconButton } from "@material-ui/core";
 import { AddCircleOutlineRounded } from "@material-ui/icons";
 import useStyles from "./FamilyHeaderStyles";
 import { Link } from "react-router-dom";
 
-const FamilyHeader = ({ name, isAdmin }) => {
+interface IFamilyHeaderProps {
+  name: string;
+  isAdmin: boolean;
+}
+
+const FamilyHeader: FC<IFamilyHeaderProps> = ({ name, isAdmin }) => {
   const classes = useStyles();
 
   return (

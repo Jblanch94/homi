@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   header: {
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },

@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import FamilyContainer from "../containers/FamilyContainer";
@@ -10,7 +11,7 @@ import SidebarContainer from "../containers/SidebarContainer";
 import UserAccountCreation from "../pages/UserAccountCreation";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 
-const AuthRoutes = () => {
+const AuthRoutes: FC<{}> = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   return (

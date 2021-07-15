@@ -1,48 +1,48 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
     flexGrow: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   links: {
-    marginLeft: 'auto',
-    display: 'flex',
-    alignItems: 'center',
+    marginLeft: "auto",
+    display: "flex",
+    alignItems: "center",
   },
 
   menuActive: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
 
   logo: {
-    textDecoration: 'none',
-    '&:hover': {
+    textDecoration: "none",
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
     flexGrow: 1,
   },
 
   loginLink: {
-    textDecoration: 'none',
+    textDecoration: "none",
     marginRight: theme.spacing(4),
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.secondary.main,
     },
   },
 
   signUpLink: {
-    textDecoration: 'none',
+    textDecoration: "none",
     marginRight: theme.spacing(2),
-    display: 'inline-block',
+    display: "inline-block",
     background: theme.palette.secondary.main,
     padding: theme.spacing(1),
     borderRadius: theme.spacing(1),
-    '&:hover': {
+    "&:hover": {
       opacity: 0.7,
     },
   },

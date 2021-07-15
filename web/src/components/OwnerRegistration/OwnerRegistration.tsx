@@ -1,9 +1,16 @@
+import { FC } from "react";
 import { Grid } from "@material-ui/core";
 import TextInput from "../TextInput";
 import Dropzone from "../Dropzone";
 import useStyles from "./OwnerRegistrationStyles";
+import { FormikValues } from "formik";
 
-const OwnerRegistration = (props) => {
+interface IOwnerRegistrationProps {
+  setValues: (values: FormikValues) => void;
+  values: FormikValues;
+}
+
+const OwnerRegistration: FC<IOwnerRegistrationProps> = (props) => {
   const classes = useStyles();
 
   return (

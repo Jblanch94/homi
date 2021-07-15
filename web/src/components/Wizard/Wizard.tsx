@@ -1,8 +1,22 @@
+import { FC } from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikValues, FormikProps } from "formik";
 import useStyles from "./WizardStyles";
 
-const Wizard = ({
+import { ReactElement } from "react";
+
+interface IWizardProps {
+  step: ReactElement;
+  handleSubmit: (values: FormikValues, bag: any) => void;
+  renderFormChildren: (props: FormikProps<{}>) => ReactElement[];
+  stepNumber: number;
+  previousPage: (values: FormikValues) => void;
+  nextPage: (values: FormikValues) => void;
+  isLastStep: boolean;
+  snapshot: any;
+}
+
+const Wizard: FC<IWizardProps> = ({
   children,
   step,
   snapshot,
@@ -27,7 +41,7 @@ const Wizard = ({
         {(props) => (
           <Form>
             <div className={classes.formGridContainer}>
-              <Grid container direction="column">
+              <Grid container direction="column" spacing={2}>
                 {renderFormChildren(props)}
                 <Grid
                   container
@@ -39,7 +53,7 @@ const Wizard = ({
                       color="primary"
                       disabled={stepNumber === 0}
                       onClick={() => {
-                        previousPage();
+                        previousPage(props.values);
                       }}>
                       Previous
                     </Button>

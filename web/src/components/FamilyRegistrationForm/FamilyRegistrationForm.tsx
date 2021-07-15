@@ -1,8 +1,9 @@
-import { Grid } from '@material-ui/core';
-import TextInput from '../TextInput';
-import useStyles from './FamilyRegistrationStyles';
+import { FC } from "react";
+import { Grid } from "@material-ui/core";
+import TextInput from "../TextInput";
+import useStyles from "./FamilyRegistrationStyles";
 
-const FamilyRegistrationForm = () => {
+const FamilyRegistrationForm: FC<{}> = () => {
   const classes = useStyles();
   return (
     <>
