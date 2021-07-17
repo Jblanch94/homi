@@ -19,9 +19,9 @@ const LoginFormContainer: FC<ILoginFormContainer> = ({ history }) => {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const classes = useStyles();
   const auth = useTypedSelector((state) => state.auth);
-  const { loginUser } = useActions(actions.authActions);
+  const { login } = useActions(actions.authActions);
 
-  const onSubmit = (values: FormikValues): void => loginUser(values, history);
+  const onSubmit = (values: FormikValues): void => login(values, history);
 
   const loginFormProps = {
     onSubmit,

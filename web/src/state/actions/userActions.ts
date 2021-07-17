@@ -21,15 +21,18 @@ export const fetchCurrentUser = (): AppThunk => {
 
       // if current user has a valid id and family id exists then query for the family data
       if (userId) {
-        dispatch({
+        return dispatch({
           type: types.FETCH_CURRENT_USER,
           payload: currentUser.data.data,
         });
       }
-      throw new Error("User does not exsist");
+      throw new Error("User does not exist");
     } catch (err) {
       console.error(err);
-      dispatch({ type: types.USER_ERROR, payload: err.response.msg });
+      dispatch({
+        type: types.USER_ERROR,
+        payload: err.response?.msg || err,
+      });
     }
   };
 };

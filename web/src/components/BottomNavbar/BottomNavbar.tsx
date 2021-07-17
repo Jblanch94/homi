@@ -8,7 +8,6 @@ import {
   People,
 } from "@material-ui/icons";
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 import BottomNavbarAction from "../BottomNavbarAction";
 
 interface IBottomNavbar {
@@ -30,32 +29,24 @@ const BottomNavbar: React.FC<IBottomNavbar> = ({
         showLabels
         className={classes.root}
         onChange={onHandleChange}>
-        <Link to="/family">
-          <BottomNavbarAction label="Family" value="family" icon={<People />} />
-        </Link>
+        <BottomNavbarAction label="Family" value="family" icon={<People />} />
 
-        {/* <BottomNavbarAction
+        <BottomNavbarAction
           label="Calendar"
           value="calendar"
           icon={<CalendarToday />}
-          component={Link}
-          to="/calendar"
         />
         <BottomNavbarAction label="Tasks" value="tasks" icon={<Check />} />
         <BottomNavbarAction
           label="Groceries"
           icon={<LocalGroceryStore />}
           value="groceries"
-          component={Link}
-          to="/groceries"
         />
         <BottomNavbarAction
           label="Recipes"
           value="recipes"
           icon={<Restaurant />}
-          component={Link}
-          to="/recipes"
-        /> */}
+        />
       </BottomNavigation>
     </Fragment>
   );

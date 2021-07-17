@@ -1,6 +1,12 @@
+import { FC } from "react";
 import LoginFormContainer from "../containers/LoginFormContainer";
+import { History } from "history";
 
-const Login = (props) => {
+interface ILoginProps {
+  history: History;
+}
+
+const Login: FC<ILoginProps> = (props) => {
   return (
     <main>
       <section id="LoginForm">

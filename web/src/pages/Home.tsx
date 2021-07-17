@@ -1,6 +1,7 @@
+import { FC } from "react";
 import Navbar from "../components/Navbar/Navbar";
 
-const Home = () => {
+const Home: FC<{}> = () => {
   return (
     <>
       <Navbar />

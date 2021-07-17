@@ -3,7 +3,7 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import FamilyContainer from "../containers/FamilyContainer";
 import Calendar from "../pages/Calendar";
-import Tasks from "../pages/Calendar";
+import Tasks from "../pages/Tasks";
 import Groceries from "../pages/Groceries";
 import Recipes from "../pages/Recipes";
 import BottomNavbarContainer from "../containers/BottomNavbarContainer";

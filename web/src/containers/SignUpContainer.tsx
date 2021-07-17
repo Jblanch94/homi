@@ -26,7 +26,7 @@ const SignUpContainer: FC<ISignUpContainer> = () => {
   const handleSubmit = (
     values: FormikValues,
     setValues: SetStateAction<undefined>
-  ) => {
+  ): void => {
     getSetValues(setValues);
     registerFamilyAndUser(values);
     if (auth.isError && auth.error === "User already exists") {

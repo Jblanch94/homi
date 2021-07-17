@@ -1,6 +1,7 @@
+import { FC } from "react";
 import { makeStyles } from "@material-ui/core";
 
-const Recipes = () => {
+const Recipes: FC<{}> = () => {
   const width = 240;
   const useStyles = makeStyles((theme) => ({
     root: {

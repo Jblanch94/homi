@@ -6,7 +6,7 @@ import useStyles from "./OwnerRegistrationStyles";
 import { FormikValues } from "formik";
 
 interface IOwnerRegistrationProps {
-  setValues: (values: FormikValues) => void;
+  setValues: undefined;
   values: FormikValues;
 }
 

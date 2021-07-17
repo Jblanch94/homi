@@ -1,7 +1,12 @@
-import { memo } from "react";
+import { memo, FC } from "react";
 import FamilyHeader from "../components/FamilyHeader/FamilyHeader";
 
-const Family = (props) => {
+interface IFamilyProps {
+  family: { name: string };
+  currentUser: { isAdmin: boolean };
+}
+
+const Family: FC<IFamilyProps> = (props) => {
   return (
     <main>
       <FamilyHeader
@@ -12,7 +17,10 @@ const Family = (props) => {
   );
 };
 
-const checkIfPropsChanged = (prevProps, nextProps) => {
+const checkIfPropsChanged = (
+  prevProps: IFamilyProps,
+  nextProps: IFamilyProps
+) => {
   if (prevProps.family.name !== nextProps.family.name) {
     return false;
   }
