@@ -21,6 +21,7 @@ const FormHeader: FC<IFormHeaderProps> = ({ name }) => {
         <Typography variant="h4" color="primary">
           {name}
         </Typography>
+
         <IconButton color="primary">
           <AddCircleOutline fontSize="large" />
         </IconButton>
