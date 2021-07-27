@@ -1,8 +1,8 @@
-const FamilyService = require('../services/FamilyService');
-const GroceryService = require('../services/GroceryService');
-const CategoryService = require('../services/CategoryService');
-const GroceryCategoriesService = require('../services/GroceryCategoriesService');
-const HttpResponse = require('../HttpResponse');
+const FamilyService = require("../services/FamilyService");
+const GroceryService = require("../services/GroceryService");
+const CategoryService = require("../services/CategoryService");
+const GroceryCategoriesService = require("../services/GroceryCategoriesService");
+const HttpResponse = require("../HttpResponse");
 
 class GroceryController {
   constructor() {
@@ -21,12 +21,12 @@ class GroceryController {
     const { item, categories, quantity } = req.body;
     try {
       if (!item || !quantity) {
-        return new HttpResponse('Invalid data provided', false).badRequest(res);
+        return new HttpResponse("Invalid data provided", false).badRequest(res);
       }
 
       const family = await this.familyService.fetchFamilyById(familyId);
       if (family === null) {
-        return new HttpResponse('Family not found', false).notFound(res);
+        return new HttpResponse("Family not found", false).notFound(res);
       }
 
       // Call Grocery Service to create a new Grocery object
@@ -39,7 +39,7 @@ class GroceryController {
       if (categories) {
         const foundOrCreatedCategories =
           await this.categoryService.insertCategories(categories);
-        console.log('categories', foundOrCreatedCategories);
+        console.log("categories", foundOrCreatedCategories);
         await this.groceryCategoriesService.insertGroceryCategories(
           grocery.id,
           foundOrCreatedCategories
@@ -48,7 +48,7 @@ class GroceryController {
 
       // return newly created Grocery Object
       new HttpResponse(
-        'Successfully created new grocery item',
+        "Successfully created new grocery item",
         true,
         grocery
       ).created(res);
@@ -63,12 +63,12 @@ class GroceryController {
     try {
       const family = await this.familyService.fetchFamilyById(familyId);
       if (family === null) {
-        return new HttpResponse('Family not found', false).notFound(res);
+        return new HttpResponse("Family not found", false).notFound(res);
       }
 
       const groceries = await this.groceryService.fetchGroceries(familyId);
       new HttpResponse(
-        'Successfully fetched all groceries',
+        "Successfully fetched all groceries",
         true,
         groceries
       ).ok(res);
@@ -83,12 +83,12 @@ class GroceryController {
     try {
       const family = await this.familyService.fetchFamilyById(familyId);
       if (family === null) {
-        return new HttpResponse('Family not found', false).notFound(res);
+        return new HttpResponse("Family not found", false).notFound(res);
       }
 
       const grocery = await this.groceryService.fetchGroceryById(groceryId);
       if (grocery === null) {
-        return new HttpResponse('Grocery not found', false).notFound(res);
+        return new HttpResponse("Grocery not found", false).notFound(res);
       }
 
       const groceryDeletedCount = await this.groceryService.deleteGrocery(
@@ -97,10 +97,10 @@ class GroceryController {
       );
       console.log(groceryDeletedCount);
       if (groceryDeletedCount <= 0) {
-        throw new Error('Could not delete resource');
+        throw new Error("Could not delete resource");
       }
 
-      new HttpResponse('Successfully deleted grocery', false).ok(res);
+      new HttpResponse("Successfully deleted grocery", false).ok(res);
     } catch (err) {
       console.error(err);
       next(err);
@@ -108,20 +108,26 @@ class GroceryController {
   }
 
   async updateGrocery(req, res, next) {
+    console.log("body", req.body);
     const { familyId, groceryId } = req.params;
     try {
       const family = await this.familyService.fetchFamilyById(familyId);
       if (family === null) {
-        return new HttpResponse('Family not found', false).notFound(res);
+        return new HttpResponse("Family not found", false).notFound(res);
       }
 
       const grocery = await this.groceryService.fetchGroceryById(groceryId);
       if (grocery === null) {
-        return new HttpResponse('Grocery not found', false).notFound(res);
+        return new HttpResponse("Grocery not found", false).notFound(res);
       }
 
-      await this.groceryService.updateGrocery(req.body, groceryId);
-      new HttpResponse('Successfully updated grocery', true).ok(res);
+      const newGrocery = await this.groceryService.updateGrocery(
+        req.body,
+        groceryId
+      );
+      new HttpResponse("Successfully updated grocery", true, newGrocery).ok(
+        res
+      );
     } catch (err) {
       console.error(err);
       next(err);

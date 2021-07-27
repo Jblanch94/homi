@@ -1,5 +1,5 @@
-const sequelize = require('../config/db');
-const Category = require('../models/Category');
+const sequelize = require("../config/db");
+const Category = require("../models/Category");
 
 class GroceryService {
   async createGroceryItem(grocery, familyId, userId) {
@@ -16,6 +16,7 @@ class GroceryService {
     return await Grocery.findAll({
       where: { FamilyId: familyId },
       include: Category,
+      order: [["createdAt", "DESC"]],
     });
   }
 
@@ -33,12 +34,13 @@ class GroceryService {
 
   async updateGrocery(data, groceryId) {
     const grocery = await this.fetchGroceryById(groceryId);
-    await grocery.update({
+    const updatedGrocery = await grocery.update({
       name: data.name || grocery.name,
       quantity: data.quantity || grocery.quantity,
       details: data.details || grocery.details,
-      bought: data.bought || grocery.bought,
+      bought: data.bought === null ? grocery.bought : data.bought,
     });
+    return updatedGrocery;
   }
 }
 

@@ -12,6 +12,7 @@ interface IFamilyHeaderProps {
 
 const FamilyHeader: FC<IFamilyHeaderProps> = ({ name, isAdmin }) => {
   const classes = useStyles();
+  console.log(name);
 
   return (
     <>

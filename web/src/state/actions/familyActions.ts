@@ -7,7 +7,7 @@ export const fetchFamily = (familyId: number): AppThunk => {
     const axios = useAxios(familyAxios);
     try {
       const auth = JSON.parse(window.localStorage.getItem("auth") || "{}");
-      const token = auth.token;
+      const token = auth.accessToken;
 
       if (token) {
         const family = await axios.getRequest(`/${familyId}`, {
@@ -15,12 +15,12 @@ export const fetchFamily = (familyId: number): AppThunk => {
             Authorization: "Bearer " + token,
           },
         });
-        dispatch({
+        return dispatch({
           type: types.FETCH_FAMILY,
           payload: family.data.data.family,
         });
-        throw new Error("User not authenticated");
       }
+      throw new Error("User not authenticated");
     } catch (error) {
       console.error(error.message);
       dispatch({ type: types.FAMILY_ERROR, payload: "" });
