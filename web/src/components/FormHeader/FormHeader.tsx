@@ -22,7 +22,7 @@ const FormHeader: FC<IFormHeaderProps> = ({ name }) => {
           {name}
         </Typography>
 
-        <IconButton color="primary">
+        <IconButton color="primary" type="submit">
           <AddCircleOutline fontSize="large" />
         </IconButton>
       </header>

@@ -10,6 +10,7 @@ import Recipes from "../pages/Recipes";
 import BottomNavbarContainer from "../containers/BottomNavbarContainer";
 import SidebarContainer from "../containers/SidebarContainer";
 import UserAccountCreation from "../pages/UserAccountCreation";
+import AddGroceryItem from "../pages/AddGroceryItem";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 
 const AuthRoutes: FC<{}> = () => {
@@ -41,6 +42,9 @@ const AuthRoutes: FC<{}> = () => {
         </Route>
         <Route exact path="/family/create-user-account">
           <UserAccountCreation />
+        </Route>
+        <Route exact path="/add-grocery">
+          <AddGroceryItem />
         </Route>
       </Switch>
     </Router>
