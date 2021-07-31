@@ -1,12 +1,12 @@
 import { FC } from "react";
 
-import GroceryItemForm from "../components/GroceryItemForm/GroceryItemForm";
+import GroceryItemFormContainer from "../containers/GroceryItemFormContainer";
 
 const AddGroceryItem: FC<{}> = () => {
   return (
     <>
       <main>
-        <GroceryItemForm />
+        <GroceryItemFormContainer />
       </main>
     </>
   );

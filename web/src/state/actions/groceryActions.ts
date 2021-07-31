@@ -1,6 +1,8 @@
 import types, { AppThunk } from "../types";
 import useAxios from "../../hooks/useAxios";
 import groceryAxios from "../../axios/groceryAxios";
+import { FormikValues } from "formik";
+import { History } from "history";
 
 export const fetchGroceries = (familyId: number): AppThunk => {
   return async (dispatch) => {
@@ -47,6 +49,27 @@ export const updateGroceryItem = (
         type: types.GROCERIES_ERROR,
         payload: err.response?.msg ?? "Could not update grocery",
       });
+    }
+  };
+};
+
+export const addGroceryItem = (
+  familyId: number,
+  data: FormikValues,
+  history: History
+): AppThunk => {
+  return async (dispatch) => {
+    const axios = useAxios(groceryAxios);
+    try {
+      await axios.postRequest(`/family/${familyId}`, data);
+    } catch (err) {
+      console.error(err);
+      dispatch({
+        type: types.GROCERIES_ERROR,
+        payload: err.response?.msg ?? "Server Error",
+      });
+    } finally {
+      history.push("/groceries");
     }
   };
 };

@@ -14,8 +14,9 @@ const TextInput: FC<ITextInputProps & FieldHookConfig<string>> = (props) => {
         id={props.id}
         variant={props.variant}
         type={props.type}
-        fullWidth
+        fullWidth={props.fullWidth ?? true}
         label={props.label}
+        disabled={props.disabled}
         error={(meta.error && meta.touched) || props.error}
         helperText={meta.error}
       />
