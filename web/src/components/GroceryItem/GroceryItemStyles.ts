@@ -19,6 +19,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   crossedOff: {
     textDecoration: "line-through",
   },
+
+  chipContainer: {
+    display: "flex",
+    justifyContent: "start",
+    flexWrap: "wrap",
+    "& > *": {
+      margin: theme.spacing(0.5),
+    },
+  },
+
+  chip: {
+    padding: theme.spacing(0.5),
+    textAlign: "center",
+  },
 }));
 
 export default useStyles;

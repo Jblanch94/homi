@@ -4,6 +4,11 @@ import { useDispatch } from "react-redux";
 import actions from "../state/actions";
 import { SyntheticEvent } from "react";
 
+interface ICategory {
+  id: number;
+  title: string;
+}
+
 interface IGroceryItemContainerProps {
   hasBeenBought: boolean;
   item: string;
@@ -13,6 +18,7 @@ interface IGroceryItemContainerProps {
   quantity: number;
   details: string;
   familyId: number;
+  categories: ICategory[];
 }
 
 const GroceryItemContainer: FC<IGroceryItemContainerProps> = (props) => {

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { FieldHookConfig, useField } from "formik";
-import { TextField, BaseTextFieldProps } from "@material-ui/core";
+import { TextField, OutlinedTextFieldProps } from "@material-ui/core";
 
-interface ITextInputProps extends BaseTextFieldProps {}
+interface ITextInputProps extends OutlinedTextFieldProps {}
 
 const TextInput: FC<ITextInputProps & FieldHookConfig<string>> = (props) => {
   const [field, meta] = useField(props);
@@ -19,6 +19,10 @@ const TextInput: FC<ITextInputProps & FieldHookConfig<string>> = (props) => {
         disabled={props.disabled}
         error={(meta.error && meta.touched) || props.error}
         helperText={meta.error}
+        placeholder={props.placeholder}
+        InputProps={props.InputProps}
+        multiline={props.multiline ?? false}
+        minRows={props.minRows}
       />
     </>
   );

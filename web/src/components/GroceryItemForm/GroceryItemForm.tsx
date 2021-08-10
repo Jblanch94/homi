@@ -1,9 +1,12 @@
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 
 import { Grid, IconButton } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
 import TextInput from "../TextInput";
 import Typography from "../Typography";
+import Button from "../Button";
+import { InputAdornment } from "@material-ui/core";
+import Chip from "../Chip";
 import FormHeader from "../FormHeader/FormHeader";
 import { Formik, Form, FormikValues } from "formik";
 import useStyles from "./GroceryItemFormStyles";
@@ -13,15 +16,55 @@ interface IGroceryItemFormProps {
   onFormSubmit: (values: FormikValues) => void;
   isError: boolean;
   error: string;
+  onHandleDelete: (
+    index: number,
+    setFieldValue: any,
+    values: FormikValues
+  ) => void;
+  onHandleCategoryClick: (
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean | undefined
+    ) => void,
+    values: FormikValues,
+    name: string
+  ) => void;
 }
 
 const GroceryItemFrom: FC<IGroceryItemFormProps> = ({
   onFormSubmit,
   isError,
   error,
+  onHandleDelete,
+  onHandleCategoryClick,
 }) => {
-  const initialValues = { item: "", details: "", quantity: 0, categories: [] };
+  const initialValues = {
+    item: "",
+    details: "",
+    quantity: 0,
+    category: "",
+    categories: [] as string[],
+  };
   const classes = useStyles();
+
+  function renderChips(
+    values: FormikValues,
+    setFieldValue: any
+  ): ReactElement[] {
+    const categories = values["categories"];
+    return categories.map((c: string, index: number) => {
+      return (
+        <Chip
+          key={index}
+          size="small"
+          color="primary"
+          label={c}
+          onDelete={() => onHandleDelete(index, setFieldValue, values)}
+        />
+      );
+    });
+  }
 
   return (
     <>
@@ -98,6 +141,36 @@ const GroceryItemFrom: FC<IGroceryItemFormProps> = ({
                     placeholder="Enter some details about the item..."
                   />
                 </Grid>
+                <Grid item className={classes.textInput} xs={12} md={10}>
+                  <TextInput
+                    name="category"
+                    id="category"
+                    label="Category"
+                    variant="outlined"
+                    placeholder="Enter a category..."
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Button
+                            variant="text"
+                            color="primary"
+                            onClick={() =>
+                              onHandleCategoryClick(
+                                setFieldValue,
+                                values,
+                                "category"
+                              )
+                            }>
+                            Add
+                          </Button>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+                <div className={classes.chipContainer}>
+                  {renderChips(values, setFieldValue)}
+                </div>
               </Grid>
             </div>
           </Form>

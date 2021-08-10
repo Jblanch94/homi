@@ -14,7 +14,7 @@ const ResourceHeader: FC<IResourceHeaderProps> = ({ title, path }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Typography variant="h4" className={classes.title}>
+      <Typography variant="h4" className={classes.title} color="primary">
         {title}
       </Typography>
       <Link to={path}>

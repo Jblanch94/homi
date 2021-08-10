@@ -17,12 +17,35 @@ const GroceryItemFormContainer = () => {
       groceryActions.addGroceryItem(currentUser.FamilyId, values, history)
     );
   };
-  console.log(groceries);
+
+  const onHandleCategoryClick = (
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean | undefined
+    ) => void,
+    values: FormikValues,
+    name: string
+  ) => {
+    //  add category to categories array
+    const category = values[name];
+    setFieldValue("categories", [...values["categories"], category]);
+
+    // clear category text input
+    setFieldValue("category", "");
+  };
+
+  const onHandleDelete = (index: number, setFieldValue: any, values: any) => {
+    values["categories"].splice(index, 1);
+    setFieldValue("categories", values["categories"]);
+  };
 
   const props = {
     onFormSubmit,
     isError: groceries.isError,
     error: groceries.error,
+    onHandleDelete,
+    onHandleCategoryClick,
   };
   return <GroceryItemForm {...props} />;
 };

@@ -2,15 +2,11 @@ import { makeStyles, Theme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
   gridContainer: {
-    marginRight: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
+    [theme.breakpoints.down("md")]: {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+    },
   },
-
   textFieldContainer: {
     width: "100%",
   },
@@ -26,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   header: {
     marginBottom: theme.spacing(2),
+    textAlign: "center",
   },
 }));
 

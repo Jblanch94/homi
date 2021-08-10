@@ -35,6 +35,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   quanityInput: {
     textAlign: "center",
   },
+
+  categoryContainer: {
+    display: "flex",
+  },
+
+  categoryButton: {
+    marginRight: theme.spacing(2),
+  },
+
+  chipContainer: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    "& > *": {
+      margin: theme.spacing(0.5),
+    },
+  },
 }));
 
 export default useStyles;

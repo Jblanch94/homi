@@ -3,6 +3,11 @@ import { Grid } from "@material-ui/core";
 import GroceryItemContainer from "../../containers/GroceryItemContainer";
 import useStyles from "./GroceryListStyles";
 
+interface ICategory {
+  id: number;
+  title: string;
+}
+
 interface IGrocery {
   id: number;
   item: string;
@@ -11,6 +16,7 @@ interface IGrocery {
   UserId: number;
   FamilyId: number;
   bought: boolean;
+  Categories: ICategory[];
 }
 
 interface IGroceryListProps {
@@ -32,6 +38,7 @@ const GroceryList: FC<IGroceryListProps> = ({ groceries, users, familyId }) => {
       quantity: g.quantity,
       details: g.details,
       familyId,
+      categories: g.Categories,
     };
     return <GroceryItemContainer key={g.id} {...props} />;
   });

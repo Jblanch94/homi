@@ -39,20 +39,20 @@ const LoginForm: FC<ILoginForm> = ({
           return (
             <>
               <Form>
-                <div className={classes.gridContainer}>
-                  <header className={classes.header}>
-                    <>
-                      <Typography variant="h2" className={classes.header}>
-                        Login with Homi
+                <header className={classes.header}>
+                  <>
+                    <Typography variant="h2" className={classes.header}>
+                      Login with Homi
+                    </Typography>
+                    {props.isError && (
+                      <Typography variant="h4" align="center" color="error">
+                        {props.errorMsg}
                       </Typography>
-                      {props.isError && (
-                        <Typography variant="h4" align="center" color="error">
-                          {props.errorMsg}
-                        </Typography>
-                      )}
-                    </>
-                  </header>
+                    )}
+                  </>
+                </header>
 
+                <div className={classes.gridContainer}>
                   <Grid
                     container
                     spacing={2}
