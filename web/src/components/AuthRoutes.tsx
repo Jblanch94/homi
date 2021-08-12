@@ -13,6 +13,7 @@ import UserAccountCreation from "../pages/UserAccountCreation";
 import AddGroceryItem from "../pages/AddGroceryItem";
 import AddRecipe from "../pages/AddRecipe";
 import RecipeItemDetails from "../pages/RecipeItemDetails";
+import AddEvent from "../pages/AddEvent";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 
 const AuthRoutes: FC<{}> = () => {
@@ -53,6 +54,9 @@ const AuthRoutes: FC<{}> = () => {
         </Route>
         <Route exact path="/recipe/:recipe">
           <RecipeItemDetails />
+        </Route>
+        <Route exact path="/add-event">
+          <AddEvent />
         </Route>
       </Switch>
     </Router>
