@@ -1,5 +1,7 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Formik, Form, FormikValues, Field } from "formik";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import DateFnsUtils from "@date-io/date-fns";
 
 import FormHeader from "../FormHeader/FormHeader";
@@ -9,8 +11,15 @@ import { Grid } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import useStyles from "./EventFormStyles";
 import AddEventSchema from "../../ValidationSchema/EventForm/AddEventSchema";
+import actions from "../../state/actions";
+import useTypedSelector from "../../hooks/useTypedSelector";
 
 const EventForm: FC<{}> = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { currentUser } = useTypedSelector((state) => state.user);
+  const { isError, error } = useTypedSelector((state) => state.event);
+  const { eventActions, userActions } = actions;
   const initialValues = {
     title: "",
     description: "",
@@ -20,16 +29,33 @@ const EventForm: FC<{}> = () => {
   };
   const classes = useStyles();
 
+  useEffect(() => {
+    const fetchCurrentUser = () => dispatch(userActions.fetchCurrentUser());
+
+    fetchCurrentUser();
+  }, [dispatch, userActions]);
+
+  function onSubmit(values: FormikValues) {
+    const familyId = currentUser?.FamilyId;
+
+    if (familyId) {
+      dispatch(eventActions.addEvent(values, familyId, history));
+    }
+  }
+
   return (
     <>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <Formik
           validationSchema={AddEventSchema}
           initialValues={initialValues}
-          onSubmit={(values) => console.log(values)}>
+          onSubmit={onSubmit}>
           {(values: FormikValues, setFieldValue: any) => (
             <Form>
               <FormHeader name="Add Event" />
+              {isError && (
+                <div style={{ textAlign: "center", color: "red" }}>{error}</div>
+              )}
               <Grid
                 container
                 spacing={2}
