@@ -21,8 +21,10 @@ const TextInput: FC<ITextInputProps & FieldHookConfig<string>> = (props) => {
         helperText={meta.error}
         placeholder={props.placeholder}
         InputProps={props.InputProps}
+        InputLabelProps={props.InputLabelProps}
         multiline={props.multiline ?? false}
         minRows={props.minRows}
+        defaultValue={props.defaultValue}
       />
     </>
   );

@@ -21,6 +21,8 @@ enum types {
   RECIPE_ERROR = "RECIPE_ERROR",
   FETCH_RECIPES = "FETCH_RECIPES",
   DELETE_RECIPE = "DELETE_RECIPES",
+  ADD_EVENT = "ADD_EVENT",
+  EVENT_ERROR = "EVENT_ERROR",
 }
 
 export type AppThunk<ReturnType = void> = ThunkAction<

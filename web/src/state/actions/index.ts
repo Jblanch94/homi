@@ -3,6 +3,7 @@ import * as familyActions from "./familyActions";
 import * as userActions from "./userActions";
 import * as groceryActions from "./groceryActions";
 import * as recipeActions from "./recipeActions";
+import * as eventActions from "./eventActions";
 
 const actionCreators = {
   authActions,
@@ -10,6 +11,7 @@ const actionCreators = {
   userActions,
   groceryActions,
   recipeActions,
+  eventActions,
 };
 
 export default actionCreators;
