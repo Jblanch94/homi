@@ -1,5 +1,5 @@
-const Event = require('../models/Event');
-const { Op } = require('sequelize');
+const Event = require("../models/Event");
+const { Op } = require("sequelize");
 
 class EventService {
   async createEvent(event, familyId, userId) {
@@ -44,6 +44,21 @@ class EventService {
       });
     } catch (err) {
       console.error(err.message);
+    }
+  }
+
+  async fetchEventsByDay(day, familyId) {
+    console.log(day);
+    try {
+      return await Event.findAll({
+        where: {
+          FamilyId: familyId,
+          date: day,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      return err;
     }
   }
 }

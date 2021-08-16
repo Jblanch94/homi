@@ -28,3 +28,22 @@ export const addEvent = (
     }
   };
 };
+
+export const fetchEventsByDay = (day: Date, familyId: number): AppThunk => {
+  return async (dispatch) => {
+    const axios = useAxios(eventAxios);
+    try {
+      const response = await axios.getRequest(`/family/${familyId}`, {
+        params: {
+          day,
+        },
+      });
+
+      if (response.status >= 200 && response.status < 400) {
+        dispatch({ type: types.FETCH_EVENTS, payload: response.data.data });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+};
