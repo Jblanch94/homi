@@ -14,6 +14,7 @@ import AddGroceryItem from "../pages/AddGroceryItem";
 import AddRecipe from "../pages/AddRecipe";
 import RecipeItemDetails from "../pages/RecipeItemDetails";
 import AddEvent from "../pages/AddEvent";
+import Events from "../pages/Events";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 
 const AuthRoutes: FC<{}> = () => {
@@ -57,6 +58,9 @@ const AuthRoutes: FC<{}> = () => {
         </Route>
         <Route exact path="/add-event">
           <AddEvent />
+        </Route>
+        <Route exact path="/event-day">
+          <Events />
         </Route>
       </Switch>
     </Router>

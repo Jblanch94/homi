@@ -19,6 +19,14 @@ const initialState: IState = {
 
 const eventReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
+    case types.FETCH_EVENTS:
+      return {
+        ...state,
+        isError: false,
+        error: "",
+        isSuccess: true,
+        data: action.payload,
+      };
     case types.ADD_EVENT:
       return {
         ...state,
