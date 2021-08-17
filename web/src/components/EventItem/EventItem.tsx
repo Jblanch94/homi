@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Divider, Grid, Avatar } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
@@ -14,9 +14,15 @@ interface IEventItemProps {
   startTime: string;
   endTime: string;
   date: string;
-  UserId: string;
+  UserId: number;
   id: number;
   familyId: number;
+}
+
+interface IUserProfile {
+  id: number;
+  name: string;
+  profileUrl: string;
 }
 
 const EventItem: FC<IEventItemProps> = ({
@@ -31,6 +37,7 @@ const EventItem: FC<IEventItemProps> = ({
   const { userActions } = actions;
   const dispatch = useDispatch();
   const { userProfiles } = useTypedSelector((state) => state.user);
+  const [eventOwner, setEventOwner] = useState<IUserProfile | null>(null);
 
   const parsedStartTime = new Date(startTime).toLocaleTimeString([], {
     hour: "2-digit",
@@ -47,9 +54,8 @@ const EventItem: FC<IEventItemProps> = ({
       dispatch(userActions.fetchUserProfiles(familyId));
 
     fetchUserProfiles();
-  }, [userActions, dispatch, familyId]);
-
-  const eventOwner = userProfiles.find((u: any) => u.id === UserId);
+    setEventOwner(userProfiles.find((u: IUserProfile) => u.id === UserId));
+  }, [userActions, dispatch, familyId, UserId, userProfiles]);
 
   return (
     <>
@@ -61,10 +67,10 @@ const EventItem: FC<IEventItemProps> = ({
             color="textSecondary">{`${parsedStartTime} - ${parsedEndTime}`}</Typography>
         </Grid>
         <Grid item className={classes.avatarContainer}>
-          <Tooltip title={eventOwner.name ?? ""} placement="left-end">
+          <Tooltip title={eventOwner?.name ?? ""} placement="left-end">
             <Avatar
-              src={eventOwner.profileUrl ?? ""}
-              alt={eventOwner.name ?? ""}
+              src={eventOwner?.profileUrl ?? ""}
+              alt={eventOwner?.name ?? ""}
               className={classes.avatar}>
               {eventOwner?.name.charAt(0)}
             </Avatar>
