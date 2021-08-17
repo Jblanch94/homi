@@ -18,13 +18,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
   },
 
-  root: {
-    [theme.breakpoints.up("md")]: {
-      width: "calc(100% - 240px)",
-      marginLeft: "240px",
-    },
-  },
-
   titleContainer: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -115,7 +108,7 @@ const EventList: FC<{}> = () => {
   );
 
   return (
-    <div className={classes.root}>
+    <div>
       {isSuccess && data.length > 0 && (
         <>
           <div className={classes.titleContainer}>
