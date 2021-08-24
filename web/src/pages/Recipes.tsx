@@ -1,19 +1,19 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import ResourceHeader from "../components/ResourceHeader/ResourceHeader";
-import RecipeListContainer from "../containers/RecipeListContainer";
-import { Divider } from "@material-ui/core";
+import ResourceHeader from '../components/ResourceHeader/ResourceHeader'
+import RecipeList from '../components/RecipeList'
+import { Divider } from '@material-ui/core'
 
 const Recipes: FC<{}> = () => {
   return (
     <>
-      <ResourceHeader path="/add-recipe" title="Recipes" />
+      <ResourceHeader path='/add-recipe' title='Recipes' />
       <Divider />
       <main>
-        <RecipeListContainer />
+        <RecipeList />
       </main>
     </>
-  );
-};
+  )
+}
 
-export default Recipes;
+export default Recipes

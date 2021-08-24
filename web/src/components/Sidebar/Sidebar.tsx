@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState, useEffect } from 'react'
 import {
   Drawer,
   CssBaseline,
@@ -7,24 +7,36 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from "@material-ui/core";
+} from '@material-ui/core'
+import {
+  People,
+  CalendarToday,
+  Check,
+  LocalGroceryStore,
+  Restaurant,
+} from '@material-ui/icons'
+import { NavLink, useLocation } from 'react-router-dom'
 
-import { NavLink } from "react-router-dom";
-import useStyles from "./SidebarStyles";
+import useStyles from './SidebarStyles'
 
-interface ISidebarLink {
-  text: string;
-  icon: JSX.Element;
-  to: string;
-}
+const Sidebar: FC<{}> = () => {
+  const classes = useStyles()
+  const location = useLocation()
+  const [currentPage, setCurrentPage] = useState<string | null>(
+    location.pathname
+  )
 
-interface ISidebar {
-  currentPage: string | null;
-  sidebarLinks: ISidebarLink[];
-}
+  useEffect(() => {
+    setCurrentPage(location.pathname)
+  }, [location, location.pathname])
 
-const Sidebar: FC<ISidebar> = ({ currentPage, sidebarLinks }) => {
-  const classes = useStyles();
+  const sidebarLinks = [
+    { text: 'Family', icon: <People />, to: '/family' },
+    { text: 'Calendar', icon: <CalendarToday />, to: '/calendar' },
+    { text: 'Tasks', icon: <Check />, to: '/tasks' },
+    { text: 'Groceries', icon: <LocalGroceryStore />, to: '/groceries' },
+    { text: 'Recipes', icon: <Restaurant />, to: '/recipes' },
+  ]
 
   const sidebarLinksList = sidebarLinks.map((link, index) => {
     return (
@@ -36,28 +48,28 @@ const Sidebar: FC<ISidebar> = ({ currentPage, sidebarLinks }) => {
           to={link.to}
           className={classes.listItem}>
           <ListItemIcon
-            className={currentPage === link.to ? classes.activeLink : ""}>
+            className={currentPage === link.to ? classes.activeLink : ''}>
             {link.icon}
           </ListItemIcon>
           <ListItemText primary={link.text} />
         </ListItem>
         <Divider />
       </div>
-    );
-  });
+    )
+  })
   return (
     <div className={classes.root}>
       <CssBaseline />
 
       <Drawer
-        variant="permanent"
-        anchor="left"
+        variant='permanent'
+        anchor='left'
         className={classes.drawer}
         classes={{ paper: classes.drawerPaper }}>
         <List className={classes.list}>{sidebarLinksList}</List>
       </Drawer>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

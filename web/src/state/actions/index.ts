@@ -1,9 +1,10 @@
-import * as authActions from "./authActions";
-import * as familyActions from "./familyActions";
-import * as userActions from "./userActions";
-import * as groceryActions from "./groceryActions";
-import * as recipeActions from "./recipeActions";
-import * as eventActions from "./eventActions";
+import * as authActions from './authActions'
+import * as familyActions from './familyActions'
+import * as userActions from './userActions'
+import * as groceryActions from './groceryActions'
+import * as recipeActions from './recipeActions'
+import * as eventActions from './eventActions'
+import * as taskActions from './taskActions'
 
 const actionCreators = {
   authActions,
@@ -12,6 +13,7 @@ const actionCreators = {
   groceryActions,
   recipeActions,
   eventActions,
-};
+  taskActions,
+}
 
-export default actionCreators;
+export default actionCreators

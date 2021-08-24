@@ -1,35 +1,47 @@
-import { FC } from "react";
+import { FC, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-import RecipeItem from "./RecipeItem/RecipeItem";
+import RecipeItem from './RecipeItem/RecipeItem'
+import actions from '../state/actions'
+import useTypedSelector from '../hooks/useTypedSelector'
 
 interface IUser {
-  id: number;
-  name: string;
-  profileUrl: string | null;
+  id: number
+  name: string
+  profileUrl: string | null
 }
 
-interface IRecipeListProps {
-  isError: boolean;
-  isSuccess: boolean;
-  data: any[];
-  error: string;
-  userProfiles: IUser[];
-  currentUserId: number;
-  familyId: number;
+interface IRecipe {
+  id: number
+  name: string
+  description: string
+  notes: string
+  preparation: string
+  ingredients: string
 }
 
-const RecipeList: FC<IRecipeListProps> = ({
-  isError,
-  isSuccess,
-  data,
-  error,
-  userProfiles,
-  currentUserId,
-  familyId,
-}) => {
-  const recipes = data.map((recipe) => {
-    const user = userProfiles.find((x) => x.id === currentUserId);
-    console.log(recipe);
+const RecipeList: FC<{}> = () => {
+  const dispatch = useDispatch()
+  const { userActions, recipeActions } = actions
+  const { currentUser, userProfiles } = useTypedSelector((state) => state.user)
+  const { data, isSuccess, isError, error } = useTypedSelector(
+    (state) => state.recipe
+  )
+
+  const familyId = currentUser?.FamilyId
+
+  useEffect(() => {
+    const fetchCurrentUser = () => dispatch(userActions.fetchCurrentUser())
+
+    fetchCurrentUser()
+
+    if (familyId) {
+      dispatch(userActions.fetchUserProfiles(familyId))
+      dispatch(recipeActions.fetchRecipes(familyId))
+    }
+  }, [dispatch, recipeActions, userActions, familyId])
+  const recipes = data.map((recipe: IRecipe) => {
+    const user = userProfiles.find((x: IUser) => x.id === currentUser.id)
 
     return (
       <div key={recipe.id}>
@@ -41,15 +53,15 @@ const RecipeList: FC<IRecipeListProps> = ({
           familyId={familyId}
         />
       </div>
-    );
-  });
+    )
+  })
 
   return (
     <>
       {isSuccess && recipes}
       {isError && <div>{error}</div>}
     </>
-  );
-};
+  )
+}
 
-export default RecipeList;
+export default RecipeList

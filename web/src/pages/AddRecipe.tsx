@@ -1,12 +1,12 @@
-import { FC } from "react";
-import AddRecipeFormContainer from "../containers/AddRecipeFormContainer";
+import { FC } from 'react'
+import AddRecipeForm from '../components/AddRecipeForm/AddRecipeForm'
 
 const AddRecipe: FC<{}> = () => {
   return (
     <main>
-      <AddRecipeFormContainer />
+      <AddRecipeForm />
     </main>
-  );
-};
+  )
+}
 
-export default AddRecipe;
+export default AddRecipe

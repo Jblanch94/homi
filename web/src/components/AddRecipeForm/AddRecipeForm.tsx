@@ -1,16 +1,46 @@
-import { FC } from "react";
-import FormHeader from "../FormHeader/FormHeader";
-import { Grid, InputAdornment } from "@material-ui/core";
-import TextInput from "../TextInput";
-import Button from "../Button";
+import { FC, useEffect } from 'react'
+import FormHeader from '../FormHeader/FormHeader'
+import { Grid, InputAdornment, Chip } from '@material-ui/core'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { Formik, Form, FormikValues } from "formik";
-import useStyles from "./AddRecipeFormStyles";
-import AddRecipeSchema from "../../ValidationSchema/RecipeForm/AddRecipeSchema";
+import TextInput from '../TextInput'
+import Button from '../Button'
+import { Formik, Form, FormikValues } from 'formik'
+import useStyles from './AddRecipeFormStyles'
+import AddRecipeSchema from '../../ValidationSchema/RecipeForm/AddRecipeSchema'
+import useTypedSelector from '../../hooks/useTypedSelector'
+import actions from '../../state/actions'
 
-interface IAddRecipeFormProps {
-  onFormSubmit: (values: FormikValues) => void;
-  addTag: (
+const AddRecipeForm: FC<{}> = () => {
+  const classes = useStyles()
+  const initialValues = {
+    name: '',
+    description: '',
+    ingredients: '',
+    preparation: '',
+    notes: '',
+    tag: '',
+    tags: [] as string[],
+  }
+
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const { currentUser } = useTypedSelector((state) => state.user)
+  const { isSuccess } = useTypedSelector((state) => state.recipe)
+  const { recipeActions, userActions } = actions
+
+  const addRecipeUrl = `/family/${currentUser.FamilyId}/user/${currentUser.id}`
+
+  const onFormSubmit = (values: FormikValues): void => {
+    dispatch(recipeActions.addRecipe(values, addRecipeUrl))
+
+    if (isSuccess) {
+      history.push('/recipes')
+    }
+  }
+
+  function addTag(
     name: string,
     values: FormikValues,
     setFieldValue: (
@@ -18,25 +48,36 @@ interface IAddRecipeFormProps {
       value: any,
       shouldValidate?: boolean | undefined
     ) => void
-  ) => void;
-  renderChips: (tags: string[]) => JSX.Element[];
-}
+  ) {
+    //   get the value of the tag and append to the tags array
+    const tag = values[name]
+    const tags = values['tags']
 
-const AddRecipeForm: FC<IAddRecipeFormProps> = ({
-  onFormSubmit,
-  renderChips,
-  addTag,
-}) => {
-  const classes = useStyles();
-  const initialValues = {
-    name: "",
-    description: "",
-    ingredients: "",
-    preparation: "",
-    notes: "",
-    tag: "",
-    tags: [] as string[],
-  };
+    if (tag.length <= 0) return
+    setFieldValue('tags', [...tags, tag])
+
+    //   clear the input field
+    setFieldValue(name, '')
+  }
+
+  function renderChips(tags: string[]) {
+    return tags.map((tag: string, index: number) => {
+      return (
+        <Chip
+          size='small'
+          title={tag}
+          label={tag}
+          key={index}
+          color='primary'
+        />
+      )
+    })
+  }
+
+  useEffect(() => {
+    const fetchCurrentUser = () => dispatch(userActions.fetchCurrentUser())
+    fetchCurrentUser()
+  }, [dispatch, userActions])
 
   return (
     <Formik
@@ -45,48 +86,48 @@ const AddRecipeForm: FC<IAddRecipeFormProps> = ({
       onSubmit={onFormSubmit}>
       {({ values, setFieldValue }) => (
         <Form>
-          <FormHeader name="Add Recipe" />
+          <FormHeader name='Add Recipe' />
           <Grid container spacing={2} className={classes.root}>
             <Grid item md={6} xs={12}>
               <TextInput
-                name="name"
-                id="name"
-                label="Recipe"
-                placeholder="Enter name for recipe..."
-                variant="outlined"
-                type="text"
+                name='name'
+                id='name'
+                label='Recipe'
+                placeholder='Enter name for recipe...'
+                variant='outlined'
+                type='text'
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextInput
-                name="description"
-                id="description"
-                variant="outlined"
-                label="Description"
-                placeholder="Enter description of recipe..."
-                type="text"
+                name='description'
+                id='description'
+                variant='outlined'
+                label='Description'
+                placeholder='Enter description of recipe...'
+                type='text'
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextInput
-                variant="outlined"
-                name="ingredients"
-                id="ingredients"
-                label="Ingredients"
-                placeholder="Enter ingredients for recipe..."
-                type="text"
+                variant='outlined'
+                name='ingredients'
+                id='ingredients'
+                label='Ingredients'
+                placeholder='Enter ingredients for recipe...'
+                type='text'
                 multiline
                 minRows={4}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextInput
-                variant="outlined"
-                name="preparation"
-                id="preparation"
-                label="Preparation"
-                placeholder="Enter preparation details..."
-                type="text"
+                variant='outlined'
+                name='preparation'
+                id='preparation'
+                label='Preparation'
+                placeholder='Enter preparation details...'
+                type='text'
                 multiline
                 minRows={4}
               />
@@ -99,45 +140,45 @@ const AddRecipeForm: FC<IAddRecipeFormProps> = ({
               className={classes.notesTagsContainer}>
               <Grid item xs={12}>
                 <TextInput
-                  name="notes"
-                  id="notes"
-                  label="Notes"
-                  variant="outlined"
-                  placeholder="Enter some notes..."
-                  type="text"
+                  name='notes'
+                  id='notes'
+                  label='Notes'
+                  variant='outlined'
+                  placeholder='Enter some notes...'
+                  type='text'
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextInput
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">
+                      <InputAdornment position='start'>
                         <Button
-                          variant="text"
-                          color="primary"
-                          onClick={() => addTag("tag", values, setFieldValue)}>
+                          variant='text'
+                          color='primary'
+                          onClick={() => addTag('tag', values, setFieldValue)}>
                           Add
                         </Button>
                       </InputAdornment>
                     ),
                   }}
-                  name="tag"
-                  id="tag"
-                  label="Tag"
-                  variant="outlined"
-                  placeholder="Enter a tag..."
-                  type="text"
+                  name='tag'
+                  id='tag'
+                  label='Tag'
+                  variant='outlined'
+                  placeholder='Enter a tag...'
+                  type='text'
                 />
               </Grid>
               <Grid item className={classes.chipContainer}>
-                {renderChips(values["tags"])}
+                {renderChips(values['tags'])}
               </Grid>
             </Grid>
           </Grid>
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
-export default AddRecipeForm;
+export default AddRecipeForm

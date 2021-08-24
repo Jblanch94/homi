@@ -1,34 +1,29 @@
-import { FC, Fragment, SyntheticEvent } from "react";
-import { Grid, IconButton, Avatar, Divider, Tooltip } from "@material-ui/core";
-import { CheckCircleOutline } from "@material-ui/icons";
-import Typography from "../Typography";
-import Chip from "../Chip";
-import EditGroceryItemDialogContainer from "../../containers/EditGroceryItemDialogContainer";
-import useStyles from "./GroceryItemStyles";
+import { FC, Fragment, SyntheticEvent, useState } from 'react'
+import { Grid, IconButton, Avatar, Divider, Tooltip } from '@material-ui/core'
+import { CheckCircleOutline } from '@material-ui/icons'
+import { useDispatch } from 'react-redux'
+
+import Typography from '../Typography'
+import Chip from '../Chip'
+import EditGroceryItemDialog from '../EditGroceryItemDialog/EditGroceryItemDialog'
+import useStyles from './GroceryItemStyles'
+import actions from '../../state/actions'
 
 interface ICategory {
-  id: number;
-  title: string;
+  id: number
+  title: string
 }
 
 interface IGroceryItemProps {
-  hasBeenBought: boolean;
-  item: string;
-  name: string;
-  profileUrl: string;
-  id: number;
-  quantity: number;
-  details: string;
-  categories: ICategory[];
-  updateGroceryItem: (
-    e: SyntheticEvent,
-    id: number,
-    familyId: number,
-    data: any
-  ) => void;
-  familyId: number;
-  open: boolean;
-  toggleDialog: () => void;
+  hasBeenBought: boolean
+  item: string
+  name: string
+  profileUrl: string
+  id: number
+  quantity: number
+  details: string
+  familyId: number
+  categories: ICategory[]
 }
 
 const GroceryItem: FC<IGroceryItemProps> = ({
@@ -39,31 +34,44 @@ const GroceryItem: FC<IGroceryItemProps> = ({
   id,
   quantity,
   details,
-  updateGroceryItem,
   familyId,
-  open,
-  toggleDialog,
   categories,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const categoryChips = categories.map((c: ICategory, idx: number) => {
     return (
       <Chip
         className={classes.chip}
-        size="small"
+        size='small'
         title={c.title}
         key={c.id}
-        color="secondary"
+        color='secondary'
         label={c.title}
       />
-    );
-  });
+    )
+  })
+
+  const dispatch = useDispatch()
+  const { groceryActions } = actions
+  const [open, setOpen] = useState(false)
+
+  const updateGroceryItem = (
+    e: SyntheticEvent,
+    id: number,
+    familyId: number,
+    data: any
+  ) => {
+    e.stopPropagation()
+    dispatch(groceryActions.updateGroceryItem(id, familyId, data))
+  }
+
+  const toggleDialog = () => setOpen(!open)
 
   return (
     <Fragment key={id}>
-      <div onClick={toggleDialog} style={{ cursor: "pointer" }}>
-        <Grid container alignItems="center">
+      <div onClick={toggleDialog} style={{ cursor: 'pointer' }}>
+        <Grid container alignItems='center'>
           <Grid item className={classes.root}>
             <IconButton
               onClick={(e) =>
@@ -72,22 +80,22 @@ const GroceryItem: FC<IGroceryItemProps> = ({
                 })
               }>
               <CheckCircleOutline
-                color={hasBeenBought ? "primary" : "disabled"}
+                color={hasBeenBought ? 'primary' : 'disabled'}
               />
             </IconButton>
           </Grid>
           <Grid item>
             <Typography
-              variant="body1"
-              color={hasBeenBought ? "textSecondary" : "textPrimary"}
-              className={hasBeenBought ? classes.crossedOff : ""}>
+              variant='body1'
+              color={hasBeenBought ? 'textSecondary' : 'textPrimary'}
+              className={hasBeenBought ? classes.crossedOff : ''}>
               {item}
             </Typography>
           </Grid>
 
           <Grid item className={classes.avatar}>
-            <Tooltip title={name} placement="bottom">
-              <Avatar alt={name} src={profileUrl ?? ""}>
+            <Tooltip title={name} placement='bottom'>
+              <Avatar alt={name} src={profileUrl ?? ''}>
                 {name.charAt(0)}
               </Avatar>
             </Tooltip>
@@ -95,17 +103,17 @@ const GroceryItem: FC<IGroceryItemProps> = ({
         </Grid>
         <Grid
           container
-          alignItems="center"
+          alignItems='center'
           spacing={2}
           className={classes.quantity}>
           <Grid item>
-            <Typography variant="body2" color="textSecondary">
+            <Typography variant='body2' color='textSecondary'>
               {quantity}
             </Typography>
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="subtitle2" color="textSecondary">
-              {details ?? ""}
+            <Typography variant='subtitle2' color='textSecondary'>
+              {details ?? ''}
             </Typography>
           </Grid>
           <Grid item className={classes.chipContainer} xs={8}>
@@ -115,7 +123,7 @@ const GroceryItem: FC<IGroceryItemProps> = ({
         <Divider />
       </div>
 
-      <EditGroceryItemDialogContainer
+      <EditGroceryItemDialog
         open={open}
         modalToggle={toggleDialog}
         item={item}
@@ -125,7 +133,7 @@ const GroceryItem: FC<IGroceryItemProps> = ({
         familyId={familyId}
       />
     </Fragment>
-  );
-};
+  )
+}
 
-export default GroceryItem;
+export default GroceryItem

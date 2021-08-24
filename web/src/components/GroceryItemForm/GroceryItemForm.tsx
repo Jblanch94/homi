@@ -1,27 +1,61 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement } from 'react'
+import { Grid, IconButton, InputAdornment } from '@material-ui/core'
+import { Add, Remove } from '@material-ui/icons'
+import { Formik, Form, FormikValues } from 'formik'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { Grid, IconButton } from "@material-ui/core";
-import { Add, Remove } from "@material-ui/icons";
-import TextInput from "../TextInput";
-import Typography from "../Typography";
-import Button from "../Button";
-import { InputAdornment } from "@material-ui/core";
-import Chip from "../Chip";
-import FormHeader from "../FormHeader/FormHeader";
-import { Formik, Form, FormikValues } from "formik";
-import useStyles from "./GroceryItemFormStyles";
-import AddGroceryItemSchema from "../../ValidationSchema/GroceryForm/AddGroceryItemSchema";
+import TextInput from '../TextInput'
+import Typography from '../Typography'
+import Button from '../Button'
+import Chip from '../Chip'
+import FormHeader from '../FormHeader/FormHeader'
+import useStyles from './GroceryItemFormStyles'
+import AddGroceryItemSchema from '../../ValidationSchema/GroceryForm/AddGroceryItemSchema'
+import useTypedSelector from '../../hooks/useTypedSelector'
+import actions from '../../state/actions'
 
-interface IGroceryItemFormProps {
-  onFormSubmit: (values: FormikValues) => void;
-  isError: boolean;
-  error: string;
-  onHandleDelete: (
-    index: number,
-    setFieldValue: any,
-    values: FormikValues
-  ) => void;
-  onHandleCategoryClick: (
+const GroceryItemFrom: FC<{}> = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const { groceryActions } = actions
+  const { currentUser } = useTypedSelector((state) => state.user)
+  const groceries = useTypedSelector((state) => state.grocery)
+
+  const initialValues = {
+    item: '',
+    details: '',
+    quantity: 0,
+    category: '',
+    categories: [] as string[],
+  }
+  const classes = useStyles()
+
+  function renderChips(
+    values: FormikValues,
+    setFieldValue: any
+  ): ReactElement[] {
+    const categories = values['categories']
+    return categories.map((c: string, index: number) => {
+      return (
+        <Chip
+          key={index}
+          size='small'
+          color='primary'
+          label={c}
+          onDelete={() => onHandleDelete(index, setFieldValue, values)}
+        />
+      )
+    })
+  }
+
+  const onFormSubmit = (values: FormikValues): void => {
+    dispatch(
+      groceryActions.addGroceryItem(currentUser.FamilyId, values, history)
+    )
+  }
+
+  const onHandleCategoryClick = (
     setFieldValue: (
       field: string,
       value: any,
@@ -29,79 +63,58 @@ interface IGroceryItemFormProps {
     ) => void,
     values: FormikValues,
     name: string
-  ) => void;
-}
+  ) => {
+    //  add category to categories array
+    const category = values[name]
+    setFieldValue('categories', [...values['categories'], category])
 
-const GroceryItemFrom: FC<IGroceryItemFormProps> = ({
-  onFormSubmit,
-  isError,
-  error,
-  onHandleDelete,
-  onHandleCategoryClick,
-}) => {
-  const initialValues = {
-    item: "",
-    details: "",
-    quantity: 0,
-    category: "",
-    categories: [] as string[],
-  };
-  const classes = useStyles();
+    // clear category text input
+    setFieldValue('category', '')
+  }
 
-  function renderChips(
-    values: FormikValues,
-    setFieldValue: any
-  ): ReactElement[] {
-    const categories = values["categories"];
-    return categories.map((c: string, index: number) => {
-      return (
-        <Chip
-          key={index}
-          size="small"
-          color="primary"
-          label={c}
-          onDelete={() => onHandleDelete(index, setFieldValue, values)}
-        />
-      );
-    });
+  const onHandleDelete = (index: number, setFieldValue: any, values: any) => {
+    values['categories'].splice(index, 1)
+    setFieldValue('categories', values['categories'])
   }
 
   return (
     <>
-      {isError && <Typography variant="h4">{error}</Typography>}
+      {groceries.isError && (
+        <Typography variant='h4'>{groceries.error}</Typography>
+      )}
       <Formik
         initialValues={initialValues}
         onSubmit={onFormSubmit}
         validationSchema={AddGroceryItemSchema}>
         {({ setFieldValue, values }) => (
           <Form>
-            <FormHeader name="Grocery Item" />
+            <FormHeader name='Grocery Item' />
 
             <div className={classes.root}>
-              <Grid container direction="column" spacing={4}>
+              <Grid container direction='column' spacing={4}>
                 <Grid item xs={12} md={10} className={classes.textInput}>
                   <TextInput
-                    name="item"
-                    id="item"
-                    label="Item"
-                    variant="outlined"
-                    placeholder="Enter a grocery item..."
+                    name='item'
+                    id='item'
+                    label='Item'
+                    variant='outlined'
+                    placeholder='Enter a grocery item...'
                   />
                 </Grid>
                 <div className={classes.quantityContainer}>
                   <Grid
                     container
                     item
-                    justify="space-between"
-                    alignItems="center"
+                    justify='space-between'
+                    alignItems='center'
                     xs={12}
                     md={10}>
                     <Grid item xs={2} className={classes.quantityButton}>
                       <IconButton
                         onClick={() =>
-                          setFieldValue("quantity", values["quantity"] - 1)
+                          setFieldValue('quantity', values['quantity'] - 1)
                         }>
-                        <Remove fontSize="medium" />
+                        <Remove fontSize='medium' />
                       </IconButton>
                     </Grid>
                     <Grid
@@ -109,56 +122,56 @@ const GroceryItemFrom: FC<IGroceryItemFormProps> = ({
                       xs={4}
                       md={6}
                       className={classes.textInput}
-                      style={{ textAlign: "center" }}>
+                      style={{ textAlign: 'center' }}>
                       <TextInput
-                        name="quantity"
-                        id="quantity"
-                        label="Quantity"
-                        variant="outlined"
-                        type="number"
+                        name='quantity'
+                        id='quantity'
+                        label='Quantity'
+                        variant='outlined'
+                        type='number'
                         disabled
                         fullWidth={false}
-                        placeholder="Enter a quantity..."
-                        error={values["quantity"] < 0}
+                        placeholder='Enter a quantity...'
+                        error={values['quantity'] < 0}
                       />
                     </Grid>
                     <Grid item xs={2} className={classes.quantityButton}>
                       <IconButton
                         onClick={() =>
-                          setFieldValue("quantity", values["quantity"] + 1)
+                          setFieldValue('quantity', values['quantity'] + 1)
                         }>
-                        <Add fontSize="medium" />
+                        <Add fontSize='medium' />
                       </IconButton>
                     </Grid>
                   </Grid>
                 </div>
                 <Grid item className={classes.textInput} xs={12} md={10}>
                   <TextInput
-                    name="details"
-                    id="details"
-                    label="Details"
-                    variant="outlined"
-                    placeholder="Enter some details about the item..."
+                    name='details'
+                    id='details'
+                    label='Details'
+                    variant='outlined'
+                    placeholder='Enter some details about the item...'
                   />
                 </Grid>
                 <Grid item className={classes.textInput} xs={12} md={10}>
                   <TextInput
-                    name="category"
-                    id="category"
-                    label="Category"
-                    variant="outlined"
-                    placeholder="Enter a category..."
+                    name='category'
+                    id='category'
+                    label='Category'
+                    variant='outlined'
+                    placeholder='Enter a category...'
                     InputProps={{
                       startAdornment: (
-                        <InputAdornment position="start">
+                        <InputAdornment position='start'>
                           <Button
-                            variant="text"
-                            color="primary"
+                            variant='text'
+                            color='primary'
                             onClick={() =>
                               onHandleCategoryClick(
                                 setFieldValue,
                                 values,
-                                "category"
+                                'category'
                               )
                             }>
                             Add
@@ -177,7 +190,7 @@ const GroceryItemFrom: FC<IGroceryItemFormProps> = ({
         )}
       </Formik>
     </>
-  );
-};
+  )
+}
 
-export default GroceryItemFrom;
+export default GroceryItemFrom

@@ -1,70 +1,72 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
-import FamilyContainer from "../containers/FamilyContainer";
-import Calendar from "../pages/Calendar";
-import Tasks from "../pages/Tasks";
-import Groceries from "../pages/Groceries";
-import Recipes from "../pages/Recipes";
-import BottomNavbarContainer from "../containers/BottomNavbarContainer";
-import SidebarContainer from "../containers/SidebarContainer";
-import UserAccountCreation from "../pages/UserAccountCreation";
-import AddGroceryItem from "../pages/AddGroceryItem";
-import AddRecipe from "../pages/AddRecipe";
-import RecipeItemDetails from "../pages/RecipeItemDetails";
-import AddEvent from "../pages/AddEvent";
-import Events from "../pages/Events";
-import { useMediaQuery, useTheme } from "@material-ui/core";
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import Dashboard from '../pages/Dashboard'
+import Family from '../pages/Family'
+import Calendar from '../pages/Calendar'
+import AddEvent from '../pages/AddEvent'
+import Events from '../pages/Events'
+import Tasks from '../pages/Tasks'
+import AddTask from '../pages/AddTask'
+import Groceries from '../pages/Groceries'
+import Recipes from '../pages/Recipes'
+import BottomNavbar from './BottomNavbar/BottomNavbar'
+import Sidebar from './Sidebar/Sidebar'
+import UserAccountCreation from '../pages/UserAccountCreation'
+import AddGroceryItem from '../pages/AddGroceryItem'
+import AddRecipe from '../pages/AddRecipe'
+import RecipeItemDetails from '../pages/RecipeItemDetails'
+import { useMediaQuery, useTheme } from '@material-ui/core'
 
 const AuthRoutes: FC<{}> = () => {
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('md'))
   return (
     <Router>
-      <header>
-        {matches ? <SidebarContainer /> : <BottomNavbarContainer />}
-      </header>
+      <header>{matches ? <Sidebar /> : <BottomNavbar />}</header>
       <Switch>
-        <Route path="/" exact>
+        <Route path='/' exact>
           <Dashboard />
         </Route>
-        <Route exact path="/family">
-          <FamilyContainer />
+        <Route exact path='/family'>
+          <Family />
         </Route>
-        <Route exact path="/calendar">
+        <Route exact path='/calendar'>
           <Calendar />
         </Route>
-        <Route exact path="/tasks">
+        <Route exact path='/tasks'>
           <Tasks />
         </Route>
-        <Route exact path="/groceries">
+        <Route exact path='/add-task'>
+          <AddTask />
+        </Route>
+        <Route exact path='/groceries'>
           <Groceries />
         </Route>
-        <Route exact path="/recipes">
+        <Route exact path='/recipes'>
           <Recipes />
         </Route>
-        <Route exact path="/family/create-user-account">
+        <Route exact path='/family/create-user-account'>
           <UserAccountCreation />
         </Route>
-        <Route exact path="/add-grocery">
+        <Route exact path='/add-grocery'>
           <AddGroceryItem />
         </Route>
-        <Route exact path="/add-recipe">
+        <Route exact path='/add-recipe'>
           <AddRecipe />
         </Route>
-        <Route exact path="/recipe/:recipe">
+        <Route exact path='/recipe/:recipe'>
           <RecipeItemDetails />
         </Route>
-        <Route exact path="/add-event">
+        <Route exact path='/add-event'>
           <AddEvent />
         </Route>
-        <Route exact path="/event-day">
+        <Route exact path='/event-day'>
           <Events />
         </Route>
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
-export default AuthRoutes;
+export default AuthRoutes
