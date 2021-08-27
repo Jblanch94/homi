@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Theme, makeStyles, Divider } from '@material-ui/core'
 
 import ResourceHeader from '../components/ResourceHeader/ResourceHeader'
+import TaskList from '../components/TaskList'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -18,7 +19,9 @@ const Tasks: FC<{}> = () => {
     <>
       <ResourceHeader title='Tasks' path='add-task' />
       <Divider />
-      <main className={classes.root}>Tasks Page</main>
+      <main className={classes.root}>
+        <TaskList />
+      </main>
     </>
   )
 }

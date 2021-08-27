@@ -26,6 +26,8 @@ enum types {
   FETCH_EVENTS = 'FETCH_EVENTS',
   ADD_TASK = 'ADD_TASK',
   TASK_ERROR = 'TASK_ERROR',
+  FETCH_TASKS = 'FETCH_TASKS',
+  UPDATE_TASK = 'UPDATE_TASK',
 }
 
 export type AppThunk<ReturnType = void> = ThunkAction<
