@@ -8,11 +8,7 @@ import Chip from '../Chip'
 import EditGroceryItemDialog from '../EditGroceryItemDialog/EditGroceryItemDialog'
 import useStyles from './GroceryItemStyles'
 import actions from '../../state/actions'
-
-interface ICategory {
-  id: number
-  title: string
-}
+import { ICategory } from '../../types'
 
 interface IGroceryItemProps {
   hasBeenBought: boolean

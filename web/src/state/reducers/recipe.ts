@@ -1,24 +1,20 @@
-import types from "../types";
-import { AnyAction } from "redux";
+import types from '../types'
+import { AnyAction } from 'redux'
+import { IRecipe, IReducerState } from '../../types'
 
-interface IRecipeData {
-  id: number;
-  name: string;
-  description?: string;
-  notes?: string;
-  preparation?: string;
-  ingredients?: string;
-  UserId: number;
-  FamilyId: number;
-  tags: string[];
+//TODO: need to have loading states
+
+interface IRecipeState extends IReducerState {
+  data: IRecipe[]
 }
 
-const initialState = {
+const initialState: IRecipeState = {
   isError: false,
-  error: "",
+  error: '',
   isSuccess: false,
-  data: [] as IRecipeData[],
-};
+  isLoading: false,
+  data: [],
+}
 
 const recipeReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
@@ -26,28 +22,28 @@ const recipeReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         isError: false,
-        error: "",
+        error: '',
         isSuccess: true,
         data: [...state.data, action.payload],
-      };
+      }
     case types.DELETE_RECIPE:
       return {
         ...state,
-        error: "",
+        error: '',
         isError: false,
         isSuccess: true,
         data: state.data.filter(
           (recipe) => recipe.id !== action.payload.recipeId
         ),
-      };
+      }
     case types.FETCH_RECIPES:
       return {
         ...state,
         isError: false,
-        error: "",
+        error: '',
         isSuccess: true,
         data: action.payload,
-      };
+      }
     case types.RECIPE_ERROR:
       return {
         ...state,
@@ -55,10 +51,10 @@ const recipeReducer = (state = initialState, action: AnyAction) => {
         isError: true,
         error: action.payload,
         data: [],
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default recipeReducer;
+export default recipeReducer

@@ -3,10 +3,7 @@ import { Menu } from '@material-ui/icons'
 import { FC, KeyboardEvent, useState } from 'react'
 import SideDrawerList from './SideDrawerList'
 
-interface INavLink {
-  title: string
-  path: string
-}
+import { INavLink } from '../types'
 
 interface ISideDrawer {
   navLinks: INavLink[]

@@ -4,21 +4,7 @@ import { useDispatch } from 'react-redux'
 import RecipeItem from './RecipeItem/RecipeItem'
 import actions from '../state/actions'
 import useTypedSelector from '../hooks/useTypedSelector'
-
-interface IUser {
-  id: number
-  name: string
-  profileUrl: string | null
-}
-
-interface IRecipe {
-  id: number
-  name: string
-  description: string
-  notes: string
-  preparation: string
-  ingredients: string
-}
+import { IUser, IRecipe } from '../types'
 
 const RecipeList: FC<{}> = () => {
   const dispatch = useDispatch()

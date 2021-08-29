@@ -1,45 +1,37 @@
-import types from "../types";
-import { AnyAction } from "redux";
-
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-  profileUrl: string | null;
-  age: number | null;
-  FamilyId: number;
-}
+import types from '../types'
+import { AnyAction } from 'redux'
+import { IUser } from '../../types'
 
 interface IUserState {
-  currentUser: IUser | {};
-  userProfiles: Array<IUser> | [];
-  error: string;
+  currentUser: IUser | {}
+  userProfiles: Array<IUser> | []
+  error: string
 }
 
 const initialState = {
   currentUser: {},
   userProfiles: [],
-  error: "",
-};
+  error: '',
+}
 
 const userReducer = (state: IUserState = initialState, action: AnyAction) => {
   switch (action.type) {
     case types.FETCH_CURRENT_USER:
-      return { ...state, currentUser: action.payload };
+      return { ...state, currentUser: action.payload }
     case types.FETCH_USER_PROFILES:
-      return { ...state, userProfiles: action.payload };
+      return { ...state, userProfiles: action.payload }
     case types.USER_ERROR:
       return {
         ...state,
         error: action.payload,
         currentUser: {},
         userProfiles: [],
-      };
+      }
     case types.REGISTER_USER:
-      return state;
+      return state
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default userReducer;
+export default userReducer

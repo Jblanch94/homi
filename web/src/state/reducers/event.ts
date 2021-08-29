@@ -1,21 +1,18 @@
-import types from "../types";
-import { AnyAction } from "redux";
+import types from '../types'
+import { AnyAction } from 'redux'
+import { IReducerState } from '../../types'
 
-interface IState {
-  isLoading: boolean;
-  isError: boolean;
-  error: string;
-  isSuccess: boolean;
-  data: any[];
+interface IState extends IReducerState {
+  data: any[]
 }
 
 const initialState: IState = {
   isLoading: false,
   isError: false,
-  error: "",
+  error: '',
   isSuccess: false,
   data: [],
-};
+}
 
 const eventReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
@@ -23,18 +20,18 @@ const eventReducer = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         isError: false,
-        error: "",
+        error: '',
         isSuccess: true,
         data: action.payload,
-      };
+      }
     case types.ADD_EVENT:
       return {
         ...state,
         isError: false,
-        error: "",
+        error: '',
         isSuccess: true,
         data: [...state.data, action.payload],
-      };
+      }
     case types.EVENT_ERROR:
       return {
         ...state,
@@ -42,10 +39,10 @@ const eventReducer = (state = initialState, action: AnyAction) => {
         isSuccess: false,
         data: [],
         error: action.payload,
-      };
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default eventReducer;
+export default eventReducer

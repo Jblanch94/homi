@@ -1,19 +1,8 @@
 import types from '../types'
 import { AnyAction } from 'redux'
+import { ITask, IReducerState } from '../../types'
 
-interface ITask {
-  id: number
-  FamilyId: number
-  name: string
-  notes: string
-  completed: boolean
-}
-
-interface IState {
-  isSuccess: boolean
-  isError: boolean
-  isLoading: boolean
-  error: string | null
+interface IState extends IReducerState {
   tasks: ITask[]
 }
 

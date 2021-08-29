@@ -3,10 +3,7 @@ import { List, ListItem, ListItemText, Divider, Slide } from '@material-ui/core'
 import useStyles from './Navbar/NavbarStyles'
 import { Link } from 'react-router-dom'
 
-interface INavLink {
-  title: string
-  path: string
-}
+import { INavLink } from '../types'
 
 interface ISideDrawerListProps {
   navLinks: INavLink[]

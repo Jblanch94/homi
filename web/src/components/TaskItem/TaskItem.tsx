@@ -9,23 +9,7 @@ import Tooltip from '../Tooltip'
 import Chip from '../Chip'
 import useStyles from './TaskItemStyles'
 import actions from '../../state/actions'
-
-interface IAssignedTask {
-  TaskId: number
-  UserId: number
-}
-
-interface ICategory {
-  id: number
-  title: string
-}
-
-interface IUser {
-  id: number
-  name: string
-  profileUrl: string | null
-  AssignedTasks?: IAssignedTask
-}
+import { IUser, ICategory } from '../../types'
 
 interface ITaskItemProps {
   id: number
@@ -65,7 +49,7 @@ const TaskItem: FC<ITaskItemProps> = ({
     )
   })
 
-  const avatars = Users.map((user: any) => {
+  const avatars = Users.map((user: IUser) => {
     return (
       <Tooltip
         id={user.name}

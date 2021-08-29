@@ -7,28 +7,7 @@ import useStyles from './GroceryListStyles'
 import useTypedSelector from '../../hooks/useTypedSelector'
 import actions from '../../state/actions'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
-
-interface ICategory {
-  id: number
-  title: string
-}
-
-interface IUser {
-  id: number
-  name: string
-  profileUrl: string | null
-}
-
-interface IGrocery {
-  id: number
-  item: string
-  quantity: number
-  details: string
-  UserId: number
-  FamilyId: number
-  bought: boolean
-  Categories: ICategory[]
-}
+import { IGrocery, IUser } from '../../types'
 
 const GroceryList: FC<{}> = () => {
   const classes = useStyles()
