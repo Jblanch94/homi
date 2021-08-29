@@ -4,18 +4,14 @@ import { useDispatch } from 'react-redux'
 import TaskItem from './TaskItem/TaskItem'
 import actions from '../state/actions'
 import useTypedSelector from '../hooks/useTypedSelector'
+import useCurrentUser from '../hooks/useCurrentUser'
 
 const TaskList: FC<{}> = () => {
   const dispatch = useDispatch()
-  const { currentUser, userProfiles } = useTypedSelector((state) => state.user)
+  const { userProfiles } = useTypedSelector((state) => state.user)
+  const { currentUser } = useCurrentUser()
   const { tasks } = useTypedSelector((state) => state.task)
-  const { userActions, taskActions } = actions
-
-  useEffect(() => {
-    const fetchCurrentUser = () => dispatch(userActions.fetchCurrentUser())
-
-    fetchCurrentUser()
-  }, [dispatch, userActions])
+  const { taskActions } = actions
 
   useEffect(() => {
     const fetchTasks = (familyId: number) =>

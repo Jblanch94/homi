@@ -20,6 +20,7 @@ import useTypedSelector from '../../hooks/useTypedSelector'
 import actions from '../../state/actions'
 import Typography from '../Typography'
 import AddTaskSchema from '../../ValidationSchema/TaskForm/AddTaskSchema'
+import useCurrentUser from '../../hooks/useCurrentUser'
 
 interface IInitialValues {
   name: string
@@ -40,17 +41,16 @@ const AddTaskForm: FC<{}> = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const history = useHistory()
-  const { userProfiles, currentUser } = useTypedSelector((state) => state.user)
+  const { currentUser } = useCurrentUser()
+  const { userProfiles } = useTypedSelector((state) => state.user)
   const { isSuccess, isError, error } = useTypedSelector((state) => state.task)
   const { userActions, taskActions } = actions
   const theme = useTheme()
 
   useEffect(() => {
-    const fetchCurrentUser = () => dispatch(userActions.fetchCurrentUser())
     const fetchUserProfiles = (id: number) =>
       dispatch(userActions.fetchUserProfiles(id))
 
-    fetchCurrentUser()
     if (currentUser.FamilyId) {
       fetchUserProfiles(currentUser.FamilyId)
     }

@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 import FormHeader from '../FormHeader/FormHeader'
 import { Grid, InputAdornment, Chip } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
@@ -10,6 +10,7 @@ import { Formik, Form, FormikValues } from 'formik'
 import useStyles from './AddRecipeFormStyles'
 import AddRecipeSchema from '../../ValidationSchema/RecipeForm/AddRecipeSchema'
 import useTypedSelector from '../../hooks/useTypedSelector'
+import useCurrentUser from '../../hooks/useCurrentUser'
 import actions from '../../state/actions'
 
 const AddRecipeForm: FC<{}> = () => {
@@ -26,9 +27,9 @@ const AddRecipeForm: FC<{}> = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
-  const { currentUser } = useTypedSelector((state) => state.user)
   const { isSuccess } = useTypedSelector((state) => state.recipe)
-  const { recipeActions, userActions } = actions
+  const { currentUser } = useCurrentUser()
+  const { recipeActions } = actions
 
   const addRecipeUrl = `/family/${currentUser.FamilyId}/user/${currentUser.id}`
 
@@ -73,11 +74,6 @@ const AddRecipeForm: FC<{}> = () => {
       )
     })
   }
-
-  useEffect(() => {
-    const fetchCurrentUser = () => dispatch(userActions.fetchCurrentUser())
-    fetchCurrentUser()
-  }, [dispatch, userActions])
 
   return (
     <Formik
