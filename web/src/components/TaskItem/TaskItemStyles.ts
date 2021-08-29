@@ -12,8 +12,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   }),
 
   avatarContainer: {
-    marginLeft: 'auto',
     paddingRight: theme.spacing(2),
+    marginLeft: 'auto',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+
+  avatar: {
+    marginRight: theme.spacing(1),
+    background: theme.palette.primary.main,
+
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
 
   chipContainer: {

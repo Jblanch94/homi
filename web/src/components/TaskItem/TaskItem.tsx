@@ -33,7 +33,7 @@ interface ITaskItemProps {
   name: string
   notes: string
   completed: boolean
-  users: IUser[]
+  Users: IUser[]
   userProfiles: IUser[]
   Categories: ICategory[]
 }
@@ -44,8 +44,7 @@ const TaskItem: FC<ITaskItemProps> = ({
   name,
   notes,
   completed,
-  users,
-  userProfiles,
+  Users,
   Categories,
 }) => {
   const classes = useStyles({ completed })
@@ -66,6 +65,23 @@ const TaskItem: FC<ITaskItemProps> = ({
     )
   })
 
+  const avatars = Users.map((user: any) => {
+    return (
+      <Tooltip
+        id={user.name}
+        title={user.name}
+        key={user.id}
+        placement='bottom'>
+        <Avatar
+          alt={user.name}
+          src={user.profileUrl ?? ''}
+          className={classes.avatar}>
+          {user.name.charAt(0)}
+        </Avatar>
+      </Tooltip>
+    )
+  })
+
   return (
     <>
       <Grid container alignItems='center'>
@@ -79,17 +95,17 @@ const TaskItem: FC<ITaskItemProps> = ({
         </Grid>
         <Grid item xs={6}>
           <Typography variant='h6'>{name}</Typography>
-          <Grid item xs={12}>
+          <Grid item xs>
             <Typography variant='subtitle1' color='textSecondary'>
               {notes}
             </Typography>
           </Grid>
-          <Grid item className={classes.chipContainer} xs={12}>
+          <Grid item className={classes.chipContainer} xs>
             {categoryChips}
           </Grid>
         </Grid>
-        <Grid item className={classes.avatarContainer} xs={2}>
-          <Avatar>J</Avatar>
+        <Grid item className={classes.avatarContainer} lg={6} md={4} xs={2}>
+          {avatars}
         </Grid>
       </Grid>
       <Divider />
