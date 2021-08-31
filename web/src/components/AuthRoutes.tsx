@@ -1,22 +1,22 @@
-import { FC } from 'react'
-
+import { FC, lazy } from 'react'
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
-import Dashboard from '../pages/Dashboard'
-import Family from '../pages/Family'
-import Calendar from '../pages/Calendar'
-import AddEvent from '../pages/AddEvent'
-import Events from '../pages/Events'
-import Tasks from '../pages/Tasks'
-import AddTask from '../pages/AddTask'
-import Groceries from '../pages/Groceries'
-import Recipes from '../pages/Recipes'
-import BottomNavbar from './BottomNavbar/BottomNavbar'
-import Sidebar from './Sidebar/Sidebar'
-import UserAccountCreation from '../pages/UserAccountCreation'
-import AddGroceryItem from '../pages/AddGroceryItem'
-import AddRecipe from '../pages/AddRecipe'
-import RecipeItemDetails from '../pages/RecipeItemDetails'
 import { useMediaQuery, useTheme } from '@material-ui/core'
+
+const Dashboard = lazy(() => import('../pages/Dashboard'))
+const Family = lazy(() => import('../pages/Family'))
+const Calendar = lazy(() => import('../pages/Calendar'))
+const AddEvent = lazy(() => import('../pages/AddEvent'))
+const Events = lazy(() => import('../pages/Events'))
+const Tasks = lazy(() => import('../pages/Tasks'))
+const AddTask = lazy(() => import('../pages/AddTask'))
+const Groceries = lazy(() => import('../pages/Groceries'))
+const Recipes = lazy(() => import('../pages/Recipes'))
+const BottomNavbar = lazy(() => import('./BottomNavbar/BottomNavbar'))
+const Sidebar = lazy(() => import('./Sidebar/Sidebar'))
+const UserAccountCreation = lazy(() => import('../pages/UserAccountCreation'))
+const AddGroceryItem = lazy(() => import('../pages/AddGroceryItem'))
+const AddRecipe = lazy(() => import('../pages/AddRecipe'))
+const RecipeItemDetails = lazy(() => import('../pages/RecipeItemDetails'))
 
 const AuthRoutes: FC<{}> = () => {
   const theme = useTheme()

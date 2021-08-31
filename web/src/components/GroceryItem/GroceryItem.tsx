@@ -35,7 +35,7 @@ const GroceryItem: FC<IGroceryItemProps> = ({
 }) => {
   const classes = useStyles()
 
-  const categoryChips = categories.map((c: ICategory, idx: number) => {
+  const categoryChips = categories.map((c: ICategory) => {
     return (
       <Chip
         className={classes.chip}

@@ -1,6 +1,13 @@
-import ReactDOM from "react-dom";
-import App from "./components/App";
+import { Suspense } from 'react'
+import ReactDOM from 'react-dom'
+import App from './components/App'
+import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
 
-import "./index.css";
+import './index.css'
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <Suspense fallback={<LoadingSpinner />}>
+    <App />
+  </Suspense>,
+  document.getElementById('root')
+)

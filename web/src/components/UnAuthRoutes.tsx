@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import { FC, lazy } from 'react'
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
-import SignUp from '../pages/SignUp'
-import Home from '../pages/Home'
-import Login from '../pages/Login'
+
+const SignUp = lazy(() => import('../pages/SignUp'))
+const Home = lazy(() => import('../pages/Home'))
+const Login = lazy(() => import('../pages/Login'))
 
 const UnAuthRoutes: FC<{}> = () => {
   return (
