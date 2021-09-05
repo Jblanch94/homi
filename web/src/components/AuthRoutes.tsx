@@ -1,8 +1,12 @@
 import { FC, lazy } from 'react'
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+} from 'react-router-dom'
 import { useMediaQuery, useTheme } from '@material-ui/core'
 
-const Dashboard = lazy(() => import('../pages/Dashboard'))
 const Family = lazy(() => import('../pages/Family'))
 const Calendar = lazy(() => import('../pages/Calendar'))
 const AddEvent = lazy(() => import('../pages/AddEvent'))
@@ -21,13 +25,11 @@ const RecipeItemDetails = lazy(() => import('../pages/RecipeItemDetails'))
 const AuthRoutes: FC<{}> = () => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('md'))
+
   return (
     <Router>
       <header>{matches ? <Sidebar /> : <BottomNavbar />}</header>
       <Switch>
-        <Route path='/' exact>
-          <Dashboard />
-        </Route>
         <Route exact path='/family'>
           <Family />
         </Route>
@@ -64,6 +66,7 @@ const AuthRoutes: FC<{}> = () => {
         <Route exact path='/event-day'>
           <Events />
         </Route>
+        <Route exact path='/' render={() => <Redirect to='/family' />} />
       </Switch>
     </Router>
   )

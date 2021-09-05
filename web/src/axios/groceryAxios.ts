@@ -1,12 +1,8 @@
-import axios from "axios";
-
-const auth = JSON.parse(window.localStorage.getItem("auth") ?? "{}");
-const token = auth?.accessToken;
+import axios from 'axios'
 
 export default axios.create({
-  baseURL: "/homi/api/v1/grocery",
+  baseURL: '/homi/api/v1/grocery',
   headers: {
-    "content-type": "application/json",
-    Authorization: "Bearer " + token,
+    'content-type': 'application/json',
   },
-});
+})

@@ -4,6 +4,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 const SignUp = lazy(() => import('../pages/SignUp'))
 const Home = lazy(() => import('../pages/Home'))
 const Login = lazy(() => import('../pages/Login'))
+const NotFound = lazy(() => import('./NotFound'))
 
 const UnAuthRoutes: FC<{}> = () => {
   return (
@@ -21,6 +22,9 @@ const UnAuthRoutes: FC<{}> = () => {
           path='/login'
           exact
           render={(routeProps) => <Login {...routeProps} />}></Route>
+        <Route path='/'>
+          <NotFound />
+        </Route>
       </Switch>
     </Router>
   )

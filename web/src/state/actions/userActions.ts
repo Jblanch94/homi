@@ -14,8 +14,15 @@ interface IRegisterUser {
 export const fetchCurrentUser = (): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(userAxios)
+    const token = JSON.parse(
+      window.localStorage.getItem('auth') ?? '{}'
+    ).accessToken
     try {
-      const currentUser = await axios.getRequest('/')
+      const currentUser = await axios.getRequest('/', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
       const userId: number = currentUser.data.data?.id
 

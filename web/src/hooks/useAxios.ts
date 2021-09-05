@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig } from "axios";
+import { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 const useAxios = (axiosInstance: AxiosInstance) => {
   const postRequest = (
@@ -6,26 +6,27 @@ const useAxios = (axiosInstance: AxiosInstance) => {
     data: any = {},
     config?: AxiosRequestConfig
   ) => {
-    return axiosInstance.post(url, data, config);
-  };
+    console.log(url)
+    return axiosInstance.post(url, data, config)
+  }
 
   const getRequest = (url: string, config?: AxiosRequestConfig) => {
-    return axiosInstance.get(url, config);
-  };
+    return axiosInstance.get(url, config)
+  }
 
   const deleteRequest = (url: string, config?: AxiosRequestConfig) => {
-    return axiosInstance.delete(url, config);
-  };
+    return axiosInstance.delete(url, config)
+  }
 
   const updateRequest = (
     url: string,
     data: any = {},
     config?: AxiosRequestConfig
   ) => {
-    return axiosInstance.patch(url, data, config);
-  };
+    return axiosInstance.patch(url, data, config)
+  }
 
-  return { postRequest, getRequest, deleteRequest, updateRequest };
-};
+  return { postRequest, getRequest, deleteRequest, updateRequest }
+}
 
-export default useAxios;
+export default useAxios

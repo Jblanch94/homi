@@ -1,39 +1,40 @@
-import types from "../types";
-import { AnyAction } from "redux";
+import types from '../types'
+import { AnyAction } from 'redux'
 
 interface IAuth {
-  isError: boolean;
-  isSuccess: boolean;
-  data: {};
-  error: string;
-  isLoading: boolean;
-  isAuthenticated: boolean;
+  isError: boolean
+  isSuccess: boolean
+  data: {}
+  error: string
+  isLoading: boolean
+  isAuthenticated: boolean
+  accessToken: string
 }
 
 const initialState: IAuth = {
   isError: false,
   isSuccess: false,
   data: {},
-  error: "",
+  error: '',
   isLoading: false,
   isAuthenticated: false,
-};
+  accessToken: '',
+}
 
 const authReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case types.IS_LOADING:
-      return { ...state, isLoading: action.payload };
+      return { ...state, isLoading: action.payload }
     case types.REGISTER_USER:
-      return { ...state, isSuccess: true, data: action.payload };
+      return { ...state, isSuccess: true, data: action.payload }
     case types.LOGIN_USER:
-      console.log("calling login user reducer");
       return {
         ...state,
         isSuccess: true,
         isAuthenticated: true,
         isError: false,
-        error: "",
-      };
+        error: '',
+      }
     case types.AUTH_ERROR:
       return {
         ...state,
@@ -42,10 +43,17 @@ const authReducer = (state = initialState, action: AnyAction) => {
         data: {},
         error: action.payload,
         isAuthenticated: false,
-      };
+      }
+    case types.AUTH_REFRESH_TOKEN:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isError: false,
+        accessToken: action.payload.accessToken,
+      }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default authReducer;
+export default authReducer

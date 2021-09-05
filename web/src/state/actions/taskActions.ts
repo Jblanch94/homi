@@ -6,8 +6,16 @@ import taskAxios from '../../axios/taskAxios'
 export const addTask = (values: FormikValues, familyId: number): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(taskAxios)
+    const token = JSON.parse(
+      window.localStorage.getItem('auth') ?? '{}'
+    )?.accessToken
+
     try {
-      const response = await axios.postRequest(`/family/${familyId}`, values)
+      const response = await axios.postRequest(`/family/${familyId}`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
       dispatch({ type: types.ADD_TASK, payload: response.data.data })
     } catch (err) {
@@ -20,9 +28,17 @@ export const addTask = (values: FormikValues, familyId: number): AppThunk => {
 export const fetchTasks = (familyId: number): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(taskAxios)
+    const token = JSON.parse(
+      window.localStorage.getItem('auth') ?? '{}'
+    )?.accessToken
+
     try {
       dispatch({ type: types.IS_LOADING, payload: true })
-      const response = await axios.getRequest(`/family/${familyId}`)
+      const response = await axios.getRequest(`/family/${familyId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       if (response.status >= 200 && response.status < 400) {
         return dispatch({
           type: types.FETCH_TASKS,
@@ -47,10 +63,19 @@ export const updateTasks = (
 ): AppThunk => {
   return async (dispatch) => {
     const axios = useAxios(taskAxios)
+    const token = JSON.parse(
+      window.localStorage.getItem('auth') ?? '{}'
+    )?.accessToken
+
     try {
       const response = await axios.updateRequest(
         `/${taskId}/family/${familyId}`,
-        values
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
       dispatch({ type: types.UPDATE_TASK, payload: response.data.data })
     } catch (err) {

@@ -1,29 +1,26 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-import useLocalStorage from '../hooks/useLocalStorage'
 import UnAuthRoutes from './UnAuthRoutes'
 import AuthRoutes from './AuthRoutes'
+import actions from '../state/actions'
+import useTypedSelector from '../hooks/useTypedSelector'
 
 const Routes: FC<{}> = () => {
-  const { retriveDataFromLocalStorage } = useLocalStorage()
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    retriveDataFromLocalStorage('auth')?.isAuthenticated
-  )
+  const { isAuthenticated } = useTypedSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  const { authActions } = actions
+  const accessToken = JSON.parse(
+    window.localStorage.getItem('auth') ?? '{}'
+  )?.accessToken
 
   useEffect(() => {
-    const setAuthenticationStatus = () => {
-      const auth = retriveDataFromLocalStorage('auth')
-      if (auth && auth.isAuthenticated) {
-        setIsAuthenticated(auth.isAuthenticated)
-      }
+    const refreshToken = () => dispatch(authActions.refreshToken())
+
+    if (accessToken) {
+      refreshToken()
     }
-
-    setAuthenticationStatus()
-
-    window.addEventListener('storage', setAuthenticationStatus)
-
-    return () => window.removeEventListener('storage', setAuthenticationStatus)
-  }, [retriveDataFromLocalStorage, isAuthenticated])
+  }, [dispatch, authActions, accessToken, isAuthenticated])
 
   return <>{isAuthenticated ? <AuthRoutes /> : <UnAuthRoutes />}</>
 }
