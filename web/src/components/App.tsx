@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import { FC } from "react";
 
-import Routes from './Routes'
-import AppThemeProvider from './AppThemeProvider'
-import store from '../store'
-import { Provider } from 'react-redux'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
+import Routes from "./Routes";
+import AppThemeProvider from "./AppThemeProvider";
+import store from "../store";
+import { Provider } from "react-redux";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const App: FC = () => {
   return (
@@ -18,7 +18,7 @@ const App: FC = () => {
         </AppThemeProvider>
       </Provider>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
