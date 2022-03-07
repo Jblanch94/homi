@@ -121,10 +121,12 @@ class UserController {
         profileUrl = url;
       }
 
+      const age = req.body.age === "" ? null : req.body.age;
+
       // register user with family with provided details
       // return new user created
       const newUser = await this.userService.registerUser(
-        { ...req.body, profileUrl },
+        { ...req.body, profileUrl, age },
         familyId
       );
 
