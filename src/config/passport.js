@@ -29,6 +29,7 @@ passport.use(
           FamilyId: parseInt(req.params.familyId),
         };
         const newUser = await User.create(userData);
+        console.log(newUser);
         return done(null, newUser);
       } catch (err) {
         console.error(err);
